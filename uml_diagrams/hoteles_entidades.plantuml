@@ -1,0 +1,92 @@
+@startuml hoteles_entidades
+skinparam classAttributeIconSize 0
+
+class Hotel {
+    -name: String
+    -address: String
+    -description: String
+    -rating: Float
+}
+
+class Reservation {
+    -checkInDate: Date
+    -checkOutDate: Date
+    -status: String
+    +addService(service: Service): void
+    +addService(roomNumber: Int, service: Service): void
+    +removeService(service: Service): void
+}
+
+class User {
+    -fullname: String
+    -password: String
+    -email: String
+    -phone: String
+    -nationalId: String
+    +login(): boolean
+    +logout(): void
+    +updateProfile(): void
+}
+
+class Client {
+    +viewReservations(pastReservations: boolean): List<Reservation>
+    +makeReservation(hotel: Hotel, checkIn: Date, checkOut: Date, roomType:RoomType): Reservation
+    +cancelReservation(reservation: Reservation): void
+    +payment(reservation:Reservation)
+}
+
+class Staff {
+    -role: String
+    -departament: String
+}
+
+class Departament {
+    -name: String
+    -description: String
+}
+
+class Service {
+    -name: String
+    -description: String
+    -basePrice: Double
+}
+
+class Ammenity {
+    -name: String
+    -description: String
+}
+
+class Room {
+    -hotel: Hotel
+    -roomType: String
+    -number: Int
+}
+
+class RoomType {
+    -name: String
+    -capacity: Int
+    -basePrice: Double
+    -description: String
+}
+
+' --- Relaciones ---
+User <|-- Client
+User <|-- Staff
+
+Hotel "1" *-- "*" Room : contains
+Hotel "1" *-- "*" Service : offers
+Hotel "1" *-- "*" Reservation : holds
+Hotel "1" *-- "*" Staff : employs
+Hotel "1" o-- "*" Departament : has
+Hotel "1" o-- "*" Ammenity : provides
+
+Departament "1" o-- "*" Staff : employs
+Staff "1" o-- "*" Reservation : manages
+
+Reservation "0..*" o-- "1" Client : made by
+Reservation "1" o-- "*" Service: charges
+
+Room "1" o-- "1" RoomType : is of type
+Room "1" o-- "*" Reservation : booked in
+
+@enduml
