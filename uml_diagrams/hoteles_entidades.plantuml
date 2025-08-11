@@ -1,19 +1,26 @@
 @startuml hoteles_entidades
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam nodesep 60    
+skinparam ranksep 60   
+skinparam arrowLabelMargin 15
 
 class Hotel {
     -name: String
-    -address: String
+    -latitude: double
+    -longitude: double
     -description: String
     -rating: Float
+    +Hotel(name: String, latitude: double, longitude: double, description: String)
 }
 
 class Reservation {
     -checkInDate: Date
     -checkOutDate: Date
     -status: String
+    +Reservation(checkInDate: Date, checkOutDate: Date, status: String)
     +addService(service: Service): void
-    +addService(roomNumber: Int, service: Service): void
+    +addService(roomNumber: int, service: Service): void
     +removeService(service: Service): void
 }
 
@@ -23,12 +30,35 @@ class User {
     -email: String
     -phone: String
     -nationalId: String
+    +User(fullname: String, password: String, email: String, phone: String, nationalId: String)
     +login(): boolean
     +logout(): void
     +updateProfile(): void
 }
 
+class Review {
+    -rating: int
+    -comment: String
+    +Review(rating: int, comment: String)
+}
+
+class Payment {
+    -amount: Double
+    -status: String
+    -method: PaymentMethod
+    +Payment(amount: Double, status: String, method: PaymentMethod)
+}
+
+class PaymentMethod {
+    -type: String
+    -last4: String
+    -holderName: String
+    -billingAddress: String
+    +PaymentMethod(type: String, last4: String, holderName: String, billingAddress: String)
+}
+
 class Client {
+    +Client(user: User)
     +viewReservations(pastReservations: boolean): List<Reservation>
     +makeReservation(hotel: Hotel, checkIn: Date, checkOut: Date, roomType:RoomType): Reservation
     +cancelReservation(reservation: Reservation): void
@@ -37,29 +67,54 @@ class Client {
 
 class Staff {
     -role: String
-    -departament: String
+    +Staff(user: User, role: String)
 }
 
 class Departament {
     -name: String
     -description: String
+    +Departament(name: String, description: String)
+}
+
+class Admin {
+    +Admin(user: User)
+    +createStaffAccount(fullname: String, password: String, email:String, phone:String, nationalId:String, role: String)
+    +updateStaffAccount(staffMember: Staff)
+    +deleteStaffAccount(staffMember: Staff)
+    +createService(name: String, description: String, scheduleDate: LocalDate, scheduleTime: LocalTime, capacity: Int, basePrice: Double)
+    +updateService(service: Service)
+    +deleteService(service: Service)
 }
 
 class Service {
     -name: String
     -description: String
+    -scheduledDate: LocalDate
+    -scheduleTime: LocalTime
+    -capacity: int
     -basePrice: Double
+    +Service(name: String, description: String, scheduledDate: LocalDate, scheduleTime: LocalTime, capacity: int, basePrice: Double)
+}
+
+class Task {
+    -type: String
+    -status: String
+    +Task(type: String, status: String)
 }
 
 class Ammenity {
     -name: String
     -description: String
+    +Ammenity(name: String, description: String)
 }
 
 class Room {
     -hotel: Hotel
     -roomType: String
-    -number: Int
+    -number: String
+    -floor: int
+    -status: String
+    +Room(hotel: Hotel, roomType: String, number: String, floor: int, status: String)
 }
 
 class RoomType {
@@ -67,26 +122,37 @@ class RoomType {
     -capacity: Int
     -basePrice: Double
     -description: String
+    +RoomType(name: String, capacity: Int, basePrice: Double, description: String)
 }
 
-' --- Relaciones ---
-User <|-- Client
-User <|-- Staff
+' --- Simplified Relationships ---
+Client "1" --> "1" User : has
+Staff "1" --> "1" User : has
+Admin "1" --> "1" Hotel : manages
+
+Payment "1" --> "1" Reservation : covers
+Payment "1" --> "1" PaymentMethod : processed via
 
 Hotel "1" *-- "*" Room : contains
 Hotel "1" *-- "*" Service : offers
 Hotel "1" *-- "*" Reservation : holds
 Hotel "1" *-- "*" Staff : employs
-Hotel "1" o-- "*" Departament : has
-Hotel "1" o-- "*" Ammenity : provides
+Hotel "1" *-- "*" Departament : has
+Hotel "1" *-- "*" Ammenity : provides
+Hotel "0..1" *-- "*" Review : receives 
 
-Departament "1" o-- "*" Staff : employs
-Staff "1" o-- "*" Reservation : manages
+Departament "1" *-- "*" Staff : employs
+Departament "1" *-- "*" Admin : employs
+Staff "0..1" *-- "*" Task : manages
+
+Task "*" --> "*" Reservation : holds
+Task "*" --> "*" Service : holds
+
+Service "0..1" *-- "*" Review : receives
 
 Reservation "0..*" o-- "1" Client : made by
-Reservation "1" o-- "*" Service: charges
+Reservation "1" o-- "*" Service : charges
 
-Room "1" o-- "1" RoomType : is of type
+Room "1" --> "1" RoomType : is of type
 Room "1" o-- "*" Reservation : booked in
-
 @enduml
