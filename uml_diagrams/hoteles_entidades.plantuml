@@ -84,6 +84,9 @@ class Admin {
     +createService(name: String, description: String, scheduleDate: LocalDate, scheduleTime: LocalTime, capacity: Int, basePrice: Double)
     +updateService(service: Service)
     +deleteService(service: Service)
+    +createRoom(hotel: Hotel, roomType: RoomType, number: String, floor: int, status: String)
+    +changeRoomType(room: Room, roomType: RoomType)
+    +disableRoom(room: Room)
 }
 
 class Service {
