@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Runa Sagrada - Hoteles Ancestrales de Colombia</title>
+  </head>
+  <body>
+    <h1>Servicios</h1>
+
+    <ul>
+      <li th:each="srv : ${services}" th:text="${srv.name}"></li>
+    </ul>
+  </body>
+</html>
