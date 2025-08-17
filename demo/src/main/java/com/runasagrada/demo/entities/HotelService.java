@@ -11,6 +11,7 @@ import lombok.Data;
 public class HotelService {
     private Integer id;
     private String name;
+    private String category;
     private String description;
     private LocalDate sheduledDate;
     private LocalTime scheduledTime;
@@ -18,4 +19,6 @@ public class HotelService {
     private double basePrice;
     private String status;
     private String imageUrl;
+    private double latitude;
+    private double longitude;
 }
