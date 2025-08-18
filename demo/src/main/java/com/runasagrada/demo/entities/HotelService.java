@@ -2,6 +2,7 @@ package com.runasagrada.demo.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class HotelService {
     private int capacity;
     private double basePrice;
     private String status;
-    private String imageUrl;
+    private List<String> imageUrls;
     private double latitude;
     private double longitude;
 }

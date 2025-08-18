@@ -121,22 +121,24 @@
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="amenity: ${amenities}"
             >
-              <div class="services-card" style="width: 18rem">
-                <div
-                  class="services-image"
-                  th:style="|background-image: url('${amenity.imageUrl}');|"
-                ></div>
+              <a th:href="@{/service/available/{id}(id=${amenity.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${amenity.imageUrls[0]}');|"
+                  ></div>
 
-                <div class="services-overlay services-overlay-amenities">
-                  <div class="card-body">
-                    <h5 class="services-title" th:text="${amenity.name}"></h5>
-                    <p
-                      class="services-description"
-                      th:text="${amenity.description}"
-                    ></p>
+                  <div class="services-overlay services-overlay-amenities">
+                    <div class="card-body">
+                      <h5 class="services-title" th:text="${amenity.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${amenity.description}"
+                      ></p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -153,25 +155,27 @@
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="restaurant: ${gastronomy}"
             >
-              <div class="services-card" style="width: 18rem">
-                <div
-                  class="services-image"
-                  th:style="|background-image: url('${restaurant.imageUrl}');|"
-                ></div>
+              <a th:href="@{/service/available/{id}(id=${restaurant.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${restaurant.imageUrls[0]}');|"
+                  ></div>
 
-                <div class="services-overlay services-overlay-restaurants">
-                  <div class="card-body">
-                    <h5
-                      class="services-title"
-                      th:text="${restaurant.name}"
-                    ></h5>
-                    <p
-                      class="services-description"
-                      th:text="${restaurant.description}"
-                    ></p>
+                  <div class="services-overlay services-overlay-restaurants">
+                    <div class="card-body">
+                      <h5
+                        class="services-title"
+                        th:text="${restaurant.name}"
+                      ></h5>
+                      <p
+                        class="services-description"
+                        th:text="${restaurant.description}"
+                      ></p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -188,22 +192,24 @@
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="tour: ${tours}"
             >
-              <div class="services-card" style="width: 18rem">
-                <div
-                  class="services-image"
-                  th:style="|background-image: url('${tour.imageUrl}');|"
-                ></div>
+              <a th:href="@{/service/available/{id}(id=${tour.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${tour.imageUrls[0]}');|"
+                  ></div>
 
-                <div class="services-overlay services-overlay-tours">
-                  <div class="card-body">
-                    <h5 class="services-title" th:text="${tour.name}"></h5>
-                    <p
-                      class="services-description"
-                      th:text="${tour.description}"
-                    ></p>
+                  <div class="services-overlay services-overlay-tours">
+                    <div class="card-body">
+                      <h5 class="services-title" th:text="${tour.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${tour.description}"
+                      ></p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
