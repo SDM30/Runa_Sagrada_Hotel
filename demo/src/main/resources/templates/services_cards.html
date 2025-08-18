@@ -61,13 +61,18 @@
           </button>
 
           <nav class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav mx-auto nav-underline gap-4" role="menubar">
+            <ul class="navbar-nav mx-auto nav-underline gap-3" role="menubar">
               <li class="nav-item" role="none">
                 <a
                   class="nav-link active"
                   aria-current="page"
                   href="#hero"
                   role="menuitem"
+                  >Servicios</a
+                >
+              </li>
+              <li class="nav-item" role="none">
+                <a class="nav-link" href="#amenities" role="menuitem"
                   >Comodidades</a
                 >
               </li>
@@ -88,10 +93,10 @@
       <section
         id="services"
         class="services-section py-5"
-        aria-labelledby="servicios-heading"
+        aria-labelledby="services-heading"
       >
         <div class="container">
-          <header class="text-center mb-5">
+          <header class="text-center mb-5 services-title-banner">
             <h1 id="servicios-heading" class="display-5 fw-semibold mb-3">
               Serivicios
             </h1>
@@ -111,9 +116,9 @@
           <header class="text-center mb-5">
             <h3 id="amenities-heading" class="display-5 mb-3">Comodidades</h3>
           </header>
-          <div class="row g-2 justify-content-center">
+          <div class="row gap-3 justify-content-center">
             <div
-              class="col-xxl-3 col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center"
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="amenity: ${amenities}"
             >
               <div class="services-card" style="width: 18rem">
@@ -122,7 +127,7 @@
                   th:style="|background-image: url('${amenity.imageUrl}');|"
                 ></div>
 
-                <div class="services-overlay">
+                <div class="services-overlay services-overlay-amenities">
                   <div class="card-body">
                     <h5 class="services-title" th:text="${amenity.name}"></h5>
                     <p
@@ -143,9 +148,9 @@
           <header class="text-center mb-5">
             <h3 id="restaurants-heading" class="display-5 mb-3">Gastronomía</h3>
           </header>
-          <div class="row g-2 justify-content-center">
+          <div class="row gap-3 justify-content-center">
             <div
-              class="col-xxl-3 col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center"
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="restaurant: ${gastronomy}"
             >
               <div class="services-card" style="width: 18rem">
@@ -154,7 +159,7 @@
                   th:style="|background-image: url('${restaurant.imageUrl}');|"
                 ></div>
 
-                <div class="services-overlay">
+                <div class="services-overlay services-overlay-restaurants">
                   <div class="card-body">
                     <h5
                       class="services-title"
@@ -173,14 +178,14 @@
       </section>
 
       <!--===== TOURS =====-->
-      <section id="restaurants" class="py-5">
+      <section id="tours" class="py-5">
         <div class="container">
           <header class="text-center mb-5">
             <h3 id="tour-heading" class="display-5 mb-3">Tours</h3>
           </header>
-          <div class="row g-4 justify-content-center">
+          <div class="row gap-3 justify-content-center">
             <div
-              class="col-xxl-3 col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center"
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
               th:each="tour: ${tours}"
             >
               <div class="services-card" style="width: 18rem">
@@ -189,7 +194,7 @@
                   th:style="|background-image: url('${tour.imageUrl}');|"
                 ></div>
 
-                <div class="services-overlay">
+                <div class="services-overlay services-overlay-tours">
                   <div class="card-body">
                     <h5 class="services-title" th:text="${tour.name}"></h5>
                     <p

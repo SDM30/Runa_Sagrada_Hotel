@@ -922,22 +922,37 @@ footer {
   -webkit-backdrop-filter: blur(10px); /* Safari */
 }
 
+/* for white background in the content section */
+.navbar-services.navbar-white-bg {
+  background: rgba(255, 255, 255, 0.6);
+  --bs-navbar-color: var(--color-text-dark);
+  --bs-navbar-hover-color: var(--color-secondary);
+  transition: background-color var(--transition-normal),
+    backdrop-filter var(--transition-normal);
+}
+
+.navbar-services .nav-link,
+.navbar-services .navbar-brand {
+  transition: color var(--transition-normal);
+}
+
 .hero-with-bg {
   background-image: url("/images/servicios-bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 30vh;
-  min-width: 100vh;
+  min-height: 300px;
+  min-width: 200px;
 }
 
-#servicios-heading {
-  margin-top: 15vh;
+.services-title-banner {
+  text-align: center;
+  margin: 200px;
 }
 
 .services-card {
   position: relative;
-  height: 300px;
+  height: 250px;
   border-radius: 15px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -970,11 +985,6 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(252, 148, 25, 0.9) 0%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -982,6 +992,30 @@ footer {
   text-align: center;
   padding: 2rem;
   transition: all 0.3s ease;
+}
+
+.services-overlay-amenities {
+  background: linear-gradient(
+    135deg,
+    rgba(252, 148, 25, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.services-overlay-restaurants {
+  background: linear-gradient(
+    135deg,
+    rgb(42, 94, 121, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.services-overlay-tours {
+  background: linear-gradient(
+    135deg,
+    rgb(223, 54, 9, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
 }
 
 .services-title {

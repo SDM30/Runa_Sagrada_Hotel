@@ -765,3 +765,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   console.log("Application initialized successfully");
 });
+
+const nav = document.querySelector(".navbar-services");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 150) {
+    nav.classList.add("navbar-white-bg");
+    nav.classList.remove("navbar-dark");
+    nav.classList.add("navbar-light");
+  } else {
+    nav.classList.remove("navbar-white-bg");
+    nav.classList.remove("navbar-light");
+    nav.classList.add("navbar-dark");
+  }
+});
