@@ -909,8 +909,8 @@ footer {
 
 /* * {outline: 2px solid magenta;} */
 #main-content-cards {
-  background: #ffffff;
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   position: relative;
   overflow: hidden;
 }
@@ -920,20 +920,6 @@ footer {
   background: rgba(0, 0, 0, 0.788);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* Safari */
-}
-
-/* for white background in the content section */
-.navbar-services.navbar-white-bg {
-  background: rgba(255, 255, 255, 0.6);
-  --bs-navbar-color: var(--color-text-dark);
-  --bs-navbar-hover-color: var(--color-secondary);
-  transition: background-color var(--transition-normal),
-    backdrop-filter var(--transition-normal);
-}
-
-.navbar-services .nav-link,
-.navbar-services .navbar-brand {
-  transition: color var(--transition-normal);
 }
 
 .hero-with-bg {
@@ -1031,6 +1017,11 @@ footer {
   color: white;
   line-height: 1.6;
   max-width: 280px;
+}
+
+#divider-footer {
+  margin: 0px !important;
+  padding: 0px;
 }
 
 /* SERVICES DETAIL*/
