@@ -158,15 +158,13 @@
                   <td th:text="${servicio.id}"></td>
                   <td th:text="${servicio.name}"></td>
                   <td>
-                    <span class="badge-glass badge-success">
+                    <span>
                       $<span
                         th:text="${#numbers.formatDecimal(servicio.basePrice, 0, 'COMMA', 0, 'POINT')}"></span>
                     </span>
                   </td>
                   <td>
-                    <span
-                      class="badge-glass badge-info"
-                      th:text="${servicio.capacity} + ' personas'"></span>
+                    <span th:text="${servicio.capacity} + ' personas'"></span>
                   </td>
                   <td>
                     <span
