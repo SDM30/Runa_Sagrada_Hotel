@@ -906,3 +906,95 @@ footer {
     margin-top: 1rem;
   }
 }
+
+/* * {outline: 2px solid magenta;} */
+#main-content-cards {
+  background: #ffffff;
+  color: #000000;
+  position: relative;
+  overflow: hidden;
+}
+
+/* SERVICES CARDS*/
+.navbar-services {
+  background: rgba(0, 0, 0, 0.788);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+}
+
+.hero-with-bg {
+  background-image: url("/images/servicios-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 30vh;
+  min-width: 100vh;
+}
+
+#servicios-heading {
+  margin-top: 15vh;
+}
+
+.services-card {
+  position: relative;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.services-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.services-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease;
+}
+
+.services-card:hover .services-image {
+  transform: scale(1.05);
+}
+
+.services-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(252, 148, 25, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.services-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+.services-description {
+  font-size: 1rem;
+  color: white;
+  line-height: 1.6;
+  max-width: 280px;
+}
