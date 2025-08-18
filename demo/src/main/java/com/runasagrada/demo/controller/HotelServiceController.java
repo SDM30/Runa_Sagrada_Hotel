@@ -16,10 +16,10 @@ public class HotelServiceController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     public String showServices(Model model) {
         model.addAttribute("services", service.getAllServices());
-        return "services";
+        return "adminPage";
     }
 
 }
