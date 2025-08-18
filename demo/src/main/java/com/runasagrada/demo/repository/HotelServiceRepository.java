@@ -23,7 +23,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(19, 0),
                                 20,
-                                45.99,
+                                45900,
                                 "Disponible",
                                 "https://example.com/images/gastronomia.jpg"));
 
@@ -34,7 +34,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(8, 30),
                                 15,
-                                65.50,
+                                65500,
                                 "Disponible",
                                 "https://example.com/images/tours.jpg"));
 
@@ -45,7 +45,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(16, 0),
                                 10,
-                                75.00,
+                                75000,
                                 "Disponible",
                                 "https://example.com/images/rituales.jpg"));
 
@@ -56,7 +56,7 @@ public class HotelServiceRepository {
                                 LocalDate.now(),
                                 LocalTime.of(15, 0),
                                 1,
-                                120.00,
+                                120000,
                                 "Disponible",
                                 "https://example.com/images/hospedaje.jpg"));
 
@@ -67,7 +67,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(9, 0),
                                 12,
-                                55.75,
+                                55000,
                                 "Disponible",
                                 "https://example.com/images/ecoturismo.jpg"));
 
@@ -78,7 +78,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(3),
                                 LocalTime.of(14, 0),
                                 25,
-                                35.00,
+                                35000,
                                 "Disponible",
                                 "https://example.com/images/cultura.jpg"));
 
@@ -89,7 +89,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(17, 30),
                                 8,
-                                85.00,
+                                85000,
                                 "Disponible",
                                 "https://example.com/images/cacao.jpg"));
 
@@ -100,7 +100,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(6, 0),
                                 10,
-                                40.00,
+                                40000,
                                 "Disponible",
                                 "https://example.com/images/aves.jpg"));
 
@@ -111,7 +111,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(7, 0),
                                 15,
-                                50.00,
+                                50000,
                                 "Disponible",
                                 "https://example.com/images/senderismo.jpg"));
         }

@@ -141,13 +141,79 @@
         </div>
 
         <div class="tabla-content">
-          <div class="tabla-placeholder">
-            <i class="fas fa-table"></i>
-            <h3>Tabla de Datos</h3>
+          <div class="table-responsive h-100" th:if="${services != null}">
+            <table class="table table-striped mb-0 h-100">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio Base</th>
+                  <th scope="col">Capacidad</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="servicio : ${services}">
+                  <td th:text="${servicio.id}"></td>
+                  <td th:text="${servicio.name}"></td>
+                  <td>
+                    <span class="badge-glass badge-success">
+                      $<span
+                        th:text="${#numbers.formatDecimal(servicio.basePrice, 0, 'COMMA', 0, 'POINT')}"></span>
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge-glass badge-info"
+                      th:text="${servicio.capacity} + ' personas'"></span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge-glass badge-success"
+                      th:if="${servicio.status == 'Disponible'}"
+                      th:text="${servicio.status}"></span>
+                    <span
+                      class="badge-glass badge-warning"
+                      th:if="${servicio.status != 'Disponible'}"
+                      th:text="${servicio.status}"></span>
+                  </td>
+                  <td>
+                    <div class="btn-group-glass" role="group">
+                      <button
+                        type="button"
+                        class="btn-glass btn-glass-primary"
+                        title="Editar">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn-glass btn-glass-info"
+                        title="Ver detalles">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn-glass btn-glass-danger"
+                        title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tabla-placeholder" th:if="${services == null}">
+            <i class="fas fa-concierge-bell fa-3x mb-3 text-muted"></i>
+            <h3>Gestión de Servicios</h3>
             <p>
-              Selecciona una opción del menú lateral para cargar los datos
-              correspondientes.
+              En esta sección puedes gestionar todos los servicios del hotel.
             </p>
+            <button class="btn btn-gradient mt-3">
+              <i class="fas fa-plus me-2"></i>Crear Primer Servicio
+            </button>
           </div>
         </div>
       </section>
@@ -159,60 +225,5 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"></script>
     <script th:src="@{/js/script.js}" defer></script>
-
-    <!-- Dashboard Script -->
-    <script>
-      // Mobile sidebar toggle
-      document.addEventListener("DOMContentLoaded", function () {
-        const sidebarToggle = document.getElementById("sidebarToggle");
-        const sidebar = document.getElementById("sidebar");
-
-        if (sidebarToggle && sidebar) {
-          sidebarToggle.addEventListener("click", function () {
-            sidebar.classList.toggle("show");
-          });
-        }
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener("click", function (event) {
-          if (window.innerWidth <= 768) {
-            if (
-              sidebar &&
-              sidebarToggle &&
-              !sidebar.contains(event.target) &&
-              !sidebarToggle.contains(event.target)
-            ) {
-              sidebar.classList.remove("show");
-            }
-          }
-        });
-
-        // Sidebar navigation
-        document
-          .querySelectorAll(".sidebar-nav-link[data-section]")
-          .forEach((link) => {
-            link.addEventListener("click", function (e) {
-              e.preventDefault();
-
-              // Remove active class from all links
-              document
-                .querySelectorAll(".sidebar-nav-link")
-                .forEach((l) => l.classList.remove("active"));
-
-              // Add active class to clicked link
-              this.classList.add("active");
-
-              // Get section name
-              const section = this.getAttribute("data-section");
-              console.log("Sección seleccionada:", section);
-
-              // Close sidebar on mobile
-              if (window.innerWidth <= 768 && sidebar) {
-                sidebar.classList.remove("show");
-              }
-            });
-          });
-      });
-    </script>
   </body>
 </html>
