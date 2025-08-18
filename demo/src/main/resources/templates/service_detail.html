@@ -194,12 +194,12 @@
 
         <!-- Descriction and state -->
         <div class="row align-items-start mb-5">
-          <div class="col-md-8">
-            <p th:text="${serviceDetail.description}">
+          <div class="col-md-8 offset-md-2">
+            <p class="text-center" th:text="${serviceDetail.description}">
               Aquí va la descripción del servicio. Explica en detalle qué
               incluye, beneficios, duración, y lo que el usuario necesita saber.
             </p>
-            <p>
+            <p class="text-start">
               <strong th:text="'Estado: ' + ${serviceDetail.status}"
                 >Estado</strong
               >

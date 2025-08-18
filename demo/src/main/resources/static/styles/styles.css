@@ -1042,24 +1042,9 @@ footer {
   display: none;
 }
 
-#serviceCarousel .carousel-item {
-  height: 60vh;
-}
-#serviceCarousel .carousel-item img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
 @media (max-width: 576px) {
   #serviceCarousel .carousel-item {
     height: 30vh;
-  }
-
-  #serviceCarousel .carousel-control-prev-icon,
-  #serviceCarousel .carousel-control-next-icon {
-    width: 4vw;
-    height: 4vw;
   }
 }
 @media (min-width: 577px) and (max-width: 992px) {
