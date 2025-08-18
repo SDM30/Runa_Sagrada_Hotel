@@ -99,7 +99,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(19, 0),
                                 20,
-                                45.99,
+                                45900,
                                 "Disponible",
                                 List.of(ImageUrls.GASTRONOMIA_1, ImageUrls.GASTRONOMIA_2, ImageUrls.GASTRONOMIA_3),
                                 10.3910, -75.4794));
@@ -113,7 +113,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(8, 30),
                                 15,
-                                65.50,
+                                65500,
                                 "Disponible",
                                 List.of(ImageUrls.TOURS_ARQUEOLOGICOS_1, ImageUrls.TOURS_ARQUEOLOGICOS_2,
                                                 ImageUrls.TOURS_ARQUEOLOGICOS_3),
@@ -128,7 +128,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(16, 0),
                                 10,
-                                75.00,
+                                75000,
                                 "Disponible",
                                 List.of(ImageUrls.RITUALES_1, ImageUrls.RITUALES_2, ImageUrls.RITUALES_3),
                                 4.7109, -74.0721));
@@ -142,7 +142,7 @@ public class HotelServiceRepository {
                                 LocalDate.now(),
                                 LocalTime.of(15, 0),
                                 1,
-                                120.00,
+                                120000,
                                 "Disponible",
                                 List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2,
                                                 ImageUrls.HOSPEDAJE_BOUTIQUE_3),
@@ -157,7 +157,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(9, 0),
                                 12,
-                                55.75,
+                                55750,
                                 "Disponible",
                                 List.of(ImageUrls.ECOTURISMO_1, ImageUrls.ECOTURISMO_2, ImageUrls.ECOTURISMO_3),
                                 12.5847, -81.7005));
@@ -171,7 +171,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(3),
                                 LocalTime.of(14, 0),
                                 25,
-                                35.00,
+                                35000,
                                 "Disponible",
                                 List.of(ImageUrls.CULTURA_1, ImageUrls.CULTURA_2, ImageUrls.CULTURA_3),
                                 11.2408, -74.1990));
@@ -185,7 +185,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(17, 30),
                                 8,
-                                85.00,
+                                85000,
                                 "Disponible",
                                 List.of(ImageUrls.CACAO_1, ImageUrls.CACAO_2, ImageUrls.CACAO_3),
                                 5.6333, -73.5333));
@@ -199,7 +199,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(6, 0),
                                 10,
-                                40.00,
+                                40000,
                                 "Disponible",
                                 List.of(ImageUrls.AVES_1, ImageUrls.AVES_2, ImageUrls.AVES_3),
                                 4.7109, -74.0721));
@@ -213,7 +213,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(7, 0),
                                 15,
-                                50.00,
+                                50000,
                                 "Disponible",
                                 List.of(ImageUrls.SENDERISMO_1, ImageUrls.SENDERISMO_2, ImageUrls.SENDERISMO_3),
                                 11.2408, -74.1990));

@@ -754,6 +754,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const parallaxController = new ParallaxController(),
     hotelSlider = new HotelSlider(),
     bookingBar = new BookingBar();
+
+  // Mobile sidebar toggle - Configuración para el panel de administración
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener("click", function () {
+      const sidebar = document.getElementById("sidebar");
+      if (sidebar) {
+        sidebar.classList.toggle("show");
+      }
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener("click", function (event) {
+      const sidebar = document.getElementById("sidebar");
+      const toggle = document.getElementById("sidebarToggle");
+
+      if (sidebar && toggle && window.innerWidth <= 768) {
+        if (
+          !sidebar.contains(event.target) &&
+          !toggle.contains(event.target)
+        ) {
+          sidebar.classList.remove("show");
+        }
+      }
+    });
+  }
+
+  // Sidebar navigation
+  document
+    .querySelectorAll(".sidebar-nav-link[data-section]")
+    .forEach((link) => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Remove active class from all links
+        document
+          .querySelectorAll(".sidebar-nav-link")
+          .forEach((l) => l.classList.remove("active"));
+
+        // Add active class to clicked link
+        this.classList.add("active");
+
+        // Get section name
+        const section = this.getAttribute("data-section");
+
+        // Close sidebar on mobile
+        if (window.innerWidth <= 768) {
+          const sidebar = document.getElementById("sidebar");
+          if (sidebar) {
+            sidebar.classList.remove("show");
+          }
+        }
+      });
+    });
+
   window.addEventListener("error", (e) =>
     console.error("Global error:", e.error)
   );
@@ -763,7 +818,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
     });
   }
-  console.log("Application initialized successfully");
 });
 
 const nav = document.querySelector(".navbar-services");
