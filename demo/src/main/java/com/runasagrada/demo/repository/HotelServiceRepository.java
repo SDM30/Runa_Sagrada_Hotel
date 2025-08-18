@@ -24,7 +24,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(19, 0),
                                 20,
-                                45900,
+                                45.99,
                                 "Disponible",
                                 "https://example.com/images/gastronomia.jpg",
                                 10.3910, // Latitud Cartagena
@@ -39,7 +39,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(8, 30),
                                 15,
-                                65500,
+                                65.50,
                                 "Disponible",
                                 "https://example.com/images/tours.jpg",
                                 5.6333, // Latitud Villa de Leyva
@@ -54,7 +54,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(16, 0),
                                 10,
-                                75000,
+                                75.00,
                                 "Disponible",
                                 "https://example.com/images/rituales.jpg",
                                 4.7109, // Latitud Bogotá
@@ -69,7 +69,7 @@ public class HotelServiceRepository {
                                 LocalDate.now(),
                                 LocalTime.of(15, 0),
                                 1,
-                                120000,
+                                120.00,
                                 "Disponible",
                                 "https://example.com/images/hospedaje.jpg",
                                 4.6370, // Latitud Eje Cafetero
@@ -84,7 +84,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(9, 0),
                                 12,
-                                55000,
+                                55.75,
                                 "Disponible",
                                 "https://example.com/images/ecoturismo.jpg",
                                 12.5847, // Latitud San Andrés
@@ -99,7 +99,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(3),
                                 LocalTime.of(14, 0),
                                 25,
-                                35000,
+                                35.00,
                                 "Disponible",
                                 "https://example.com/images/cultura.jpg",
                                 11.2408, // Latitud Santa Marta
@@ -114,7 +114,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(17, 30),
                                 8,
-                                85000,
+                                85.00,
                                 "Disponible",
                                 "https://example.com/images/cacao.jpg",
                                 5.6333, // Latitud Villa de Leyva
@@ -129,7 +129,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(1),
                                 LocalTime.of(6, 0),
                                 10,
-                                40000,
+                                40.00,
                                 "Disponible",
                                 "https://example.com/images/aves.jpg",
                                 4.7109, // Latitud Bogotá
@@ -144,7 +144,7 @@ public class HotelServiceRepository {
                                 LocalDate.now().plusDays(2),
                                 LocalTime.of(7, 0),
                                 15,
-                                50000,
+                                50.00,
                                 "Disponible",
                                 "https://example.com/images/senderismo.jpg",
                                 11.2408, // Latitud Santa Marta
