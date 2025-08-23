@@ -1,7 +1,5 @@
 package com.runasagrada.demo.controller;
 
-import java.security.Provider.Service;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +8,6 @@ import org.springframework.ui.Model;
 
 import com.runasagrada.demo.entities.HotelService;
 import com.runasagrada.demo.service.HotelServiceService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/service")
 @Controller
@@ -41,7 +38,7 @@ public class HotelServiceController {
     }
 
     @GetMapping("/available/{id}")
-    public String showServiceDetail(Model model, @PathVariable("id") Integer idenfier) {
+    public String showServiceDetail(Model model, @PathVariable("id") Long idenfier) {
         HotelService serviceDetail = service.searchById(idenfier);
         model.addAttribute("serviceDetail", serviceDetail);
         return "service_detail";
