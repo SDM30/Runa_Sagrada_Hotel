@@ -15,13 +15,13 @@ public class HotelServiceServiceImpl implements HotelServiceService {
     private HotelServiceRepository serviceRepository;
 
     @Override
-    public HotelService searchById(Integer id) {
-        return serviceRepository.getServiceById(id);
+    public HotelService searchById(Long id) {
+        return serviceRepository.findById(id).get();
     }
 
     @Override
     public Collection<HotelService> getAllServices() {
-        return serviceRepository.getAllServices();
+        return serviceRepository.findAll();
     }
 
     @Override
@@ -30,8 +30,8 @@ public class HotelServiceServiceImpl implements HotelServiceService {
     }
 
     @Override
-    public void delete(Integer id) {
-        serviceRepository.delete(id);
+    public void delete(Long id) {
+        serviceRepository.deleteById(id);
     }
 
 }
