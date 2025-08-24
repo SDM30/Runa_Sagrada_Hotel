@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.runasagrada.demo.entities.Client;
 import com.runasagrada.demo.entities.HotelUser;
@@ -51,13 +52,21 @@ public class ClientController {
     }
 
     @PostMapping("/staff/add")
-    public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser) {
-        logger.info(newClientUser.toString());
+    public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
+            RedirectAttributes redirectAttributes) {
+        if (newClientUser.getPassword() == null || newClientUser.getPassword().isBlank()) {
+            newClientUser.setPassword("123456"); // o mejor encriptada con BCrypt
+        }
+
         userService.save(newClientUser);
 
         Client newClient = new Client();
         newClient.setUser(newClientUser);
         clientService.save(newClient);
+
+        redirectAttributes.addFlashAttribute("successMessage",
+                "El cliente fue registrado con contraseña por defecto: 123456. " +
+                        "Recuérdale que la cambie en su primer ingreso.");
 
         return "redirect:/client/staff";
     }

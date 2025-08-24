@@ -1,5 +1,6 @@
 package com.runasagrada.demo.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -11,9 +12,12 @@ public class HotelUser {
     @GeneratedValue
     private Long id;
     private String name;
+    @Column(unique = true)
     private String email;
     private String password;
+    @Column(unique = true)
     private String phone;
+    @Column(unique = true)
     private String nationalId;
 
     public HotelUser(Long id, String name, String email, String password, String phone, String nationalId) {
