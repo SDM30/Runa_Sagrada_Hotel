@@ -2,6 +2,7 @@ package com.runasagrada.demo.entities;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,7 +13,7 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private HotelUser user;
 
     // @OneToMany(mappedBy = "client")

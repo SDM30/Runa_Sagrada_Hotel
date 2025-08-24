@@ -21,6 +21,7 @@ import com.runasagrada.demo.service.ClientService;
 import com.runasagrada.demo.service.HotelUserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/client")
@@ -76,6 +77,12 @@ public class ClientController {
         user.setPhone(updatedUser.getPhone());
         user.setNationalId(updatedUser.getNationalId());
         userService.save(user);
+        return "redirect:/client/staff";
+    }
+
+    @GetMapping("/staff/delete/{id}")
+    public String deleteClient(@PathVariable Long id) {
+        clientService.delete(id);
         return "redirect:/client/staff";
     }
 

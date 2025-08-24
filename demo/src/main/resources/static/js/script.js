@@ -840,3 +840,12 @@ document
       })
       .catch((err) => console.error("Error cargando cliente:", err));
   });
+
+function passDelClient(clientId) {
+  fetch("/client/staff/delete/" + clientId)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => console.error("Error cargando cliente:", err));
+}

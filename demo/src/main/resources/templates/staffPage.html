@@ -207,13 +207,13 @@
                       >
                         <i class="fas fa-eye"></i>
                       </button>
-                      <button
-                        type="button"
+                      <a
                         class="btn-glass btn-glass-danger"
+                        th:href="@{/client/staff/delete/{id}(id=${cliente.id})}"
                         title="Eliminar"
                       >
                         <i class="fas fa-trash"></i>
-                      </button>
+                      </a>
                     </div>
                   </td>
                 </tr>
