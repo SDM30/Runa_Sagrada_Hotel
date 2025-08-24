@@ -2,268 +2,277 @@
    CONTENEDOR PRINCIPAL
    =================================== */
 .dashboard-container {
-    min-height: 100vh;
-    background: #020c13;
+  min-height: 100vh;
+  background: #020c13;
 }
 
 /* ===================================
    SIDEBAR - BARRA LATERAL
    =================================== */
 .sidebar {
-    width: 280px;
-    background: rgba(2, 12, 19, 0.623);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    min-height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+  width: 280px;
+  background: rgba(2, 12, 19, 0.623);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Header del sidebar */
 .sidebar-header {
-    padding: 2rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-    background: rgba(0, 0, 0, 0.2);
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Logo en el sidebar */
 .sidebar-logo {
-    height: 80px;
-    width: auto;
-    margin-bottom: 1rem;
+  height: 80px;
+  width: auto;
+  margin-bottom: 1rem;
 }
 
 /* Título del sidebar */
 .sidebar-title {
-    color: var(--color-text-white);
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    margin: 0;
+  color: var(--color-text-white);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 /* Navegación del sidebar */
 .sidebar-nav {
-    padding: 1.5rem 0;
+  padding: 1.5rem 0;
 }
 
 /* Elementos de navegación */
 .sidebar-nav-item {
-    margin: 0.5rem 1.5rem;
+  margin: 0.5rem 1.5rem;
 }
 
 /* Enlaces de navegación */
 .sidebar-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    color: var(--color-text-light);
-    text-decoration: none;
-    border-radius: var(--border-radius-lg);
-    transition: all var(--transition-normal);
-    font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: var(--color-text-light);
+  text-decoration: none;
+  border-radius: var(--border-radius-lg);
+  transition: all var(--transition-normal);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Estados hover y activo de navegación */
 .sidebar-nav-link:hover,
 .sidebar-nav-link.active {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    color: var(--color-text-white);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: var(--color-text-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Iconos de navegación */
 .sidebar-nav-icon {
-    font-size: 1.2rem;
-    width: 24px;
-    text-align: center;
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
 }
 
 /* ===================================
    CONTENIDO PRINCIPAL
    =================================== */
+
+header {
+  text-align: right;
+}
+
 .main-content {
-    margin-left: 280px;
-    padding: 2rem;
-    min-height: 100vh;
+  margin-left: 280px;
+  padding: 2rem;
+  min-height: 100vh;
 }
 
 /* Header del dashboard */
 .dashboard-header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: var(--border-radius-lg);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Título principal del dashboard */
 .dashboard-title {
-    color: var(--color-text-white);
-    font-family: var(--font-display);
-    margin: 0;
+  color: var(--color-text-white);
+  font-family: var(--font-display);
+  margin: 0;
 }
 
 /* Subtítulo del dashboard */
 .dashboard-subtitle {
-    color: var(--color-text-light);
-    opacity: 0.8;
-    margin: 0;
+  color: var(--color-text-light);
+  opacity: 0.8;
+  margin: 0;
 }
 
 /* ===================================
    SECCIÓN DE TABLA
    =================================== */
 .tabla-section {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: var(--border-radius-lg);
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: var(--shadow-lg);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Header de la tabla */
 .tabla-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Título de la tabla */
 .tabla-title {
-    color: var(--color-text-white);
-    font-family: var(--font-display);
-    margin: 0;
-    font-size: 2rem;
+  color: var(--color-text-white);
+  font-family: var(--font-display);
+  margin: 0;
+  font-size: 2rem;
 }
 
 /* Botones de acciones en el header */
 .tabla-actions {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 /* Contenido de la tabla */
 .tabla-content {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--border-radius-md);
-    padding: 0;
-    min-height: 400px;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    height: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 0;
+  min-height: 400px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  height: 100%;
 }
 
 /* Wrapper responsive de la tabla */
 .tabla-content .table-responsive {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* Placeholder cuando no hay datos */
 .tabla-placeholder {
-    text-align: center;
-    color: var(--color-text-light);
-    opacity: 0.7;
+  text-align: center;
+  color: var(--color-text-light);
+  opacity: 0.7;
 }
 
 /* Icono del placeholder */
 .tabla-placeholder i {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    color: var(--color-primary);
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
 }
 
 /* ===================================
    ESTILOS DE TABLA
    =================================== */
 .tabla-content .table {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 0;
 }
 
 /* Headers de la tabla */
 .tabla-content .table thead th {
-    background: var(--color-primary) !important;
-    color: var(--color-text-dark);
-    border: none;
-    padding: 1rem;
-    font-weight: var(--font-weight-bold);
+  background: var(--color-primary) !important;
+  color: var(--color-text-dark);
+  border: none;
+  padding: 1rem;
+  font-weight: var(--font-weight-bold);
 }
 
 /* Celdas del cuerpo de la tabla */
 .tabla-content .table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
-    border-color: rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  vertical-align: middle;
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Alineación de la columna de acciones */
 .tabla-content .table th:last-child,
 .tabla-content .table td:last-child {
-    text-align: center;
+  text-align: center;
 }
 
 /* Efecto hover en filas */
 .tabla-content .table tbody tr:hover {
-    background-color: rgba(252, 148, 25, 0.1);
-    transform: scale(1.01);
-    transition: all 0.2s ease;
+  background-color: rgba(252, 148, 25, 0.1);
+  transform: scale(1.01);
+  transition: all 0.2s ease;
 }
 
 /* Estilos de botones en tabla (legacy) */
 .tabla-content .btn-group .btn {
-    margin: 0 2px;
-    transition: all 0.2s ease;
+  margin: 0 2px;
+  transition: all 0.2s ease;
 }
 
 /* ===================================
    BADGES DE TABLA
    =================================== */
 .badge-glass {
-    backdrop-filter: blur(10px);
-    border: none;
-    color: #ffffff;
-    padding: 0.4rem 0.6rem;
-    border-radius: var(--border-radius-full);
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-semibold);
-    display: inline-block;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: none;
+  color: #ffffff;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
+  display: inline-block;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Badge verde para success */
 .badge-glass.badge-success {
-    background: #28a745;
-    color: #ffffff;
+  background: #28a745;
+  color: #ffffff;
 }
 
 /* Badge azul para info */
 .badge-glass.badge-info {
-    background: #17a2b8;
-    color: #ffffff;
+  background: #17a2b8;
+  color: #ffffff;
 }
 
 /* Badge amarillo para warning */
 .badge-glass.badge-warning {
-    background: #ffc107;
-    color: #212529;
-    text-shadow: none;
+  background: #ffc107;
+  color: #212529;
+  text-shadow: none;
 }
 
 /* ===================================
@@ -271,158 +280,163 @@
    =================================== */
 /* Contenedor de botones */
 .btn-group-glass {
-    display: flex;
-    gap: 0.4rem;
-    justify-content: center;
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
 }
 
 /* Estilo base de botones glass */
 .btn-glass {
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--color-text-white);
-    padding: 0.4rem;
-    border-radius: var(--border-radius-md);
-    transition: all var(--transition-normal);
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-white);
+  padding: 0.4rem;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Efecto shimmer en botones */
 .btn-glass::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s;
 }
 
 /* Activar shimmer al hover */
 .btn-glass:hover::before {
-    left: 100%;
+  left: 100%;
 }
 
 /* Efectos hover generales */
 .btn-glass:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    border-color: var(--color-primary);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border-color: var(--color-primary);
 }
 
 /* Efecto al hacer clic */
 .btn-glass:active {
-    transform: translateY(-1px) scale(0.98);
+  transform: translateY(-1px) scale(0.98);
 }
 
 /* Botón azul para editar */
 .btn-glass.btn-glass-primary {
-    background: #007bff;
-    border-color: #007bff;
-    color: #ffffff;
+  background: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
 }
 
 .btn-glass.btn-glass-primary:hover {
-    background: #0056b3;
-    border-color: #0056b3;
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  background: #0056b3;
+  border-color: #0056b3;
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
 }
 
 /* Botón cian para ver */
 .btn-glass.btn-glass-info {
-    background: #17a2b8;
-    border-color: #17a2b8;
-    color: #ffffff;
+  background: #17a2b8;
+  border-color: #17a2b8;
+  color: #ffffff;
 }
 
 .btn-glass.btn-glass-info:hover {
-    background: #117a8b;
-    border-color: #117a8b;
-    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+  background: #117a8b;
+  border-color: #117a8b;
+  box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
 }
 
 /* Botón rojo para eliminar */
 .btn-glass.btn-glass-danger {
-    background: #dc3545;
-    border-color: #dc3545;
-    color: #ffffff;
+  background: #dc3545;
+  border-color: #dc3545;
+  color: #ffffff;
 }
 
 .btn-glass.btn-glass-danger:hover {
-    background: #c82333;
-    border-color: #c82333;
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+  background: #c82333;
+  border-color: #c82333;
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
 
 /* Iconos dentro de botones */
 .btn-glass i {
-    font-size: 0.8rem;
-    z-index: 1;
-    position: relative;
+  font-size: 0.8rem;
+  z-index: 1;
+  position: relative;
 }
 
 /* Efecto pulse en focus */
 .btn-glass:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.3);
-    animation: pulse 1.5s infinite;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.3);
+  animation: pulse 1.5s infinite;
 }
 
 /* Animación pulse */
 @keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(252, 148, 25, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 8px rgba(252, 148, 25, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(252, 148, 25, 0);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(252, 148, 25, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(252, 148, 25, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(252, 148, 25, 0);
+  }
 }
 
 /* ===================================
    BOTÓN TOGGLE SIDEBAR (MÓVIL)
    =================================== */
 .sidebar-toggle {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 1001;
-    background: var(--color-primary);
-    border: none;
-    color: white;
-    padding: 0.75rem;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-lg);
-    font-size: 1.2rem;
-    width: 50px;
-    height: 50px;
-    display: none; /* Hidden by default */
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: var(--color-primary);
+  border: none;
+  color: white;
+  padding: 0.75rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 1.2rem;
+  width: 50px;
+  height: 50px;
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .sidebar-toggle:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(252, 148, 25, 0.4);
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(252, 148, 25, 0.4);
 }
 
 .sidebar-toggle:focus {
-    outline: 3px solid rgba(252, 148, 25, 0.5);
-    outline-offset: 2px;
+  outline: 3px solid rgba(252, 148, 25, 0.5);
+  outline-offset: 2px;
 }
 
 /* ===================================
@@ -430,38 +444,38 @@
    =================================== */
 /* Tablets y pantallas medianas */
 @media (max-width: 991.98px) {
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    
-    .sidebar.show {
-        transform: translateX(0);
-    }
-    
-    .main-content {
-        margin-left: 0;
-        padding: 1rem;
-        padding-top: 5rem;
-    }
-    
-    /* Mostrar botón toggle en móvil */
-    .sidebar-toggle {
-        display: flex !important;
-    }
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 5rem;
+  }
+
+  /* Mostrar botón toggle en móvil */
+  .sidebar-toggle {
+    display: flex !important;
+  }
 }
 
 /* Móviles */
 @media (max-width: 768px) {
-    .main-content {
-        padding: 0.75rem;
-        padding-top: 5rem;
-    }
-    
-    .dashboard-header {
-        padding: 1.5rem;
-    }
-    
-    .tabla-section {
-        padding: 1.5rem;
-    }
+  .main-content {
+    padding: 0.75rem;
+    padding-top: 5rem;
+  }
+
+  .dashboard-header {
+    padding: 1.5rem;
+  }
+
+  .tabla-section {
+    padding: 1.5rem;
+  }
 }

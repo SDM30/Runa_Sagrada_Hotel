@@ -23,6 +23,12 @@ public class ClientController {
     // DEBUG
     Logger logger = Logger.getLogger(ClientController.class.getName());
 
+    @GetMapping("/admin")
+    public String showClientsAdmin(Model model) {
+        model.addAttribute("clients", clientService.getAllClients());
+        return "adminClientPage";
+    }
+
     @GetMapping()
     public String showClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
