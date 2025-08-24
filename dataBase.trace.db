@@ -1,0 +1,32 @@
+2025-08-23 22:06:18.302594-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table if exists [*]user cascade "; se esperaba "identifier"
+Syntax error in SQL statement "drop table if exists [*]user cascade "; expected "identifier"; SQL statement:
+drop table if exists user cascade  [42001-232]
+2025-08-23 22:06:18.375774-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id)) [42001-232]
+2025-08-23 22:06:18.384874-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references [*]user"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references [*]user"; expected "identifier"; SQL statement:
+alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references user [42001-232]
+2025-08-23 22:08:12.978108-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table if exists [*]user cascade "; se esperaba "identifier"
+Syntax error in SQL statement "drop table if exists [*]user cascade "; expected "identifier"; SQL statement:
+drop table if exists user cascade  [42001-232]
+2025-08-23 22:08:20.002977-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table if exists [*]user cascade "; se esperaba "identifier"
+Syntax error in SQL statement "drop table if exists [*]user cascade "; expected "identifier"; SQL statement:
+drop table if exists user cascade  [42001-232]
+2025-08-23 22:08:20.104296-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table user (id bigint not null, email varchar(255), name varchar(255), national_id varchar(255), password varchar(255), phone varchar(255), primary key (id)) [42001-232]
+2025-08-23 22:08:20.121958-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references [*]user"; se esperaba "identifier"
+Syntax error in SQL statement "alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references [*]user"; expected "identifier"; SQL statement:
+alter table if exists client add constraint FKk1fi84oi1yyuswr40h38kjy1s foreign key (user_id) references user [42001-232]
+2025-08-23 22:10:17.305156-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table if exists [*]user cascade "; se esperaba "identifier"
+Syntax error in SQL statement "drop table if exists [*]user cascade "; expected "identifier"; SQL statement:
+drop table if exists user cascade  [42001-232]
