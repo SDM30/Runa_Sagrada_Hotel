@@ -193,6 +193,9 @@
                       <button
                         type="button"
                         class="btn-glass btn-glass-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalUCliente"
+                        th:attr="data-id=${cliente.user.id}"
                         title="Editar"
                       >
                         <i class="fas fa-edit"></i>
@@ -254,7 +257,7 @@
     >
       <div class="modal-dialog">
         <form
-          th:action="@{/client/staff}"
+          th:action="@{/client/staff/add}"
           th:object="${newclientuser}"
           method="post"
           class="modal-content"
@@ -304,6 +307,88 @@
                 type="text"
                 class="form-control"
                 id="dni"
+                th:field="*{nationalId}"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Actualizar Cliente -->
+    <div
+      class="modal fade"
+      id="modalUCliente"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form
+          th:action="@{/client/staff/update}"
+          th:object="${newclientuser}"
+          method="post"
+          class="modal-content"
+          id="edit-client-form"
+        >
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalClienteLabel">
+              Actualizar Datos del Cliente
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="clientIdEdit" th:field="*{id}" />
+            <div class="mb-3">
+              <label for="nameEdit" class="form-label">Nombre completo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nameEdit"
+                th:field="*{name}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="emailEdit" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="emailEdit"
+                th:field="*{email}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phoneEdit" class="form-label">Celular</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phoneEdit"
+                th:field="*{phone}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="nationalIdEdit" class="form-label">ID Nacional</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nationalIdEdit"
                 th:field="*{nationalId}"
               />
             </div>

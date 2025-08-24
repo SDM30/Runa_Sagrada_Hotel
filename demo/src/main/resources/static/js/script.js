@@ -771,10 +771,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const toggle = document.getElementById("sidebarToggle");
 
       if (sidebar && toggle && window.innerWidth <= 768) {
-        if (
-          !sidebar.contains(event.target) &&
-          !toggle.contains(event.target)
-        ) {
+        if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
           sidebar.classList.remove("show");
         }
       }
@@ -821,3 +818,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const nav = document.querySelector(".navbar-services");
+
+//staffPage.html
+
+// Load client information into update modal
+document
+  .getElementById("modalUCliente")
+  .addEventListener("show.bs.modal", function (event) {
+    var button = event.relatedTarget;
+    var clientId = button.getAttribute("data-id");
+
+    fetch("/client/staff/update/" + clientId)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        document.getElementById("clientIdEdit").value = data.id;
+        document.getElementById("nameEdit").value = data.name;
+        document.getElementById("emailEdit").value = data.email;
+        document.getElementById("phoneEdit").value = data.phone;
+        document.getElementById("nationalIdEdit").value = data.nationalId;
+      })
+      .catch((err) => console.error("Error cargando cliente:", err));
+  });

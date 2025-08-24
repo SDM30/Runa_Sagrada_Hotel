@@ -1,5 +1,7 @@
 package com.runasagrada.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.h2.engine.User;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runasagrada.demo.entities.Client;
 import com.runasagrada.demo.entities.HotelUser;
@@ -45,8 +49,8 @@ public class ClientController {
         return "staffPage";
     }
 
-    @PostMapping("/staff")
-    public String registerOrUpdateClient(@ModelAttribute("newclientuser") HotelUser newClientUser) {
+    @PostMapping("/staff/add")
+    public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser) {
         logger.info(newClientUser.toString());
         userService.save(newClientUser);
 
@@ -54,6 +58,19 @@ public class ClientController {
         newClient.setUser(newClientUser);
         clientService.save(newClient);
 
+        return "redirect:/client/staff";
+    }
+
+    @GetMapping("/staff/update/{id}")
+    @ResponseBody
+    public HotelUser getClient(@PathVariable Long id) {
+        logger.info("Client id: " + id);
+        return userService.searchById(id);
+    }
+
+    @PostMapping("/staff/update")
+    public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser) {
+        userService.save(updatedUser);
         return "redirect:/client/staff";
     }
 

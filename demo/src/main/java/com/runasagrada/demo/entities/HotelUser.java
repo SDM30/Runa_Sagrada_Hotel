@@ -16,6 +16,15 @@ public class HotelUser {
     private String phone;
     private String nationalId;
 
+    public HotelUser(Long id, String name, String email, String password, String phone, String nationalId) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.nationalId = nationalId;
+    }
+
     public HotelUser(String name, String email, String password, String phone, String nationalId) {
         this.name = name;
         this.email = email;
@@ -66,6 +75,14 @@ public class HotelUser {
 
     public void setNationalId(String nationalId) {
         this.nationalId = nationalId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }
