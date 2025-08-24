@@ -98,7 +98,7 @@
           aria-controls="clientes"
           aria-selected="false"
         >
-          <i class="sidebar-nav-icon fas fa-concierge-bell"></i
+          <i class="sidebar-nav-icon fas fa-users"></i
           ><span>Gestion Clientes</span>
         </a>
 
@@ -110,7 +110,7 @@
           aria-controls="habitaciones"
           aria-selected="false"
         >
-          <i class="sidebar-nav-icon fas fa-users"></i
+          <i class="sidebar-nav-icon fas fa-concierge-bell"></i
           ><span>Gestion Habitaciones</span>
         </a>
 
@@ -155,7 +155,11 @@
         <div class="tabla-header">
           <h2 class="tabla-title">Gestión de Clientes</h2>
           <div class="tabla-actions">
-            <button class="btn btn-gradient">
+            <button
+              class="btn btn-gradient"
+              data-bs-toggle="modal"
+              data-bs-target="#modalCCliente"
+            >
               <i class="fas fa-plus me-2"></i>Agregar Nuevo
             </button>
             <button class="btn btn-outline-light">
@@ -237,6 +241,86 @@
         <h1>TODO</h1>
       </section>
     </main>
+
+    <!-- Modal Registro Cliente -->
+    <div
+      class="modal fade"
+      id="modalCCliente"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form
+          th:action="@{/client/staff}"
+          th:object="${newclientuser}"
+          method="post"
+          class="modal-content"
+        >
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalClienteLabel">
+              Registrar Cliente
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre completo</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                th:field="*{name}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                th:field="*{email}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Celular</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                th:field="*{phone}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="dni" class="form-label">ID Nacional</label>
+              <input
+                type="text"
+                class="form-control"
+                id="dni"
+                th:field="*{nationalId}"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script
