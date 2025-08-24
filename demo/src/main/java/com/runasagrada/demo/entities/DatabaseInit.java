@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 
+import com.runasagrada.demo.repository.ClientRepository;
 import com.runasagrada.demo.repository.HotelServiceRepository;
+import com.runasagrada.demo.repository.HotelUserRepository;
+
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -17,6 +21,12 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
 	HotelServiceRepository serviceRepository;
+
+	@Autowired
+	HotelUserRepository userRepository;
+
+	@Autowired
+	ClientRepository clientRepository;
 
 	// URLs de imágenes organizadas por categoría - Enlaces actualizados y
 	// verificados
@@ -265,6 +275,27 @@ public class DatabaseInit implements ApplicationRunner {
 				"Disponible",
 				List.of(ImageUrls.DESAYUNO_1, ImageUrls.DESAYUNO_2, ImageUrls.DESAYUNO_3),
 				10.9639, -74.7964));
+
+		// Create HotelUsers
+		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
+		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");
+		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555",
+				"5555555555");
+
+		// Save HotelUsers to the database
+		userRepository.save(user1);
+		userRepository.save(user2);
+		userRepository.save(user3);
+
+		// Create Clients and relate them to HotelUsers
+		Client client1 = new Client(user1);
+		Client client2 = new Client(user2);
+		Client client3 = new Client(user3);
+
+		// Save Clients to the database
+		clientRepository.save(client1);
+		clientRepository.save(client2);
+		clientRepository.save(client3);
 	}
 
 }

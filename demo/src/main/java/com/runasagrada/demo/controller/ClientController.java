@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.runasagrada.demo.service.ClientService;
 import com.runasagrada.demo.service.HotelUserService;
 
+@Controller
 @RequestMapping("/client")
 public class ClientController {
 
@@ -29,9 +31,9 @@ public class ClientController {
         return "adminClientPage";
     }
 
-    @GetMapping()
-    public String showClients(Model model) {
+    @GetMapping("/staff")
+    public String showClientsStaff(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
-        return "clientPage";
+        return "staffPage";
     }
 }
