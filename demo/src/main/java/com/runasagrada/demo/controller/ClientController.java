@@ -70,7 +70,12 @@ public class ClientController {
 
     @PostMapping("/staff/update")
     public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser) {
-        userService.save(updatedUser);
+        HotelUser user = userService.searchById(updatedUser.getId());
+        user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
+        user.setPhone(updatedUser.getPhone());
+        user.setNationalId(updatedUser.getNationalId());
+        userService.save(user);
         return "redirect:/client/staff";
     }
 
