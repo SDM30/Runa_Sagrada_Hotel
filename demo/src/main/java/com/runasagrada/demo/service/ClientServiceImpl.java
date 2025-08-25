@@ -47,4 +47,9 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByCriteria(email, phone, nationalId, name);
     }
 
+    @Override
+    public Client login(String email, String password) {
+        return clientRepository.login(email, password);
+    }
+
 }

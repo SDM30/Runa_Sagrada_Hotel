@@ -19,4 +19,6 @@ public interface ClientService {
 
     public List<Client> search(String email, String phone, String nationalId, String name);
 
+    public Client login(String email, String password);
+
 }

@@ -1,14 +1,9 @@
 package com.runasagrada.demo.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +19,6 @@ import com.runasagrada.demo.entities.HotelUser;
 import com.runasagrada.demo.service.ClientService;
 import com.runasagrada.demo.service.HotelUserService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -46,6 +40,8 @@ public class ClientController {
         return "adminClientPage";
     }
 
+    // Search
+    // http://localhost:8080/client/staff
     @PostMapping("/staff/search")
     public String searchClient(
             @RequestParam(required = false) String email,
@@ -68,6 +64,8 @@ public class ClientController {
         return "staffPage";
     }
 
+    // Read all clients, TODO: Load clients per hotel
+    // http://localhost:8080/client/staff
     @GetMapping("/staff")
     public String showClientsStaff(Model model) {
         model.addAttribute("newclient", new Client());
@@ -76,6 +74,8 @@ public class ClientController {
         return "staffPage";
     }
 
+    // Create client
+    // http://localhost:8080/client/staff
     @PostMapping("/staff/add")
     public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
             RedirectAttributes redirectAttributes) {
@@ -102,6 +102,53 @@ public class ClientController {
         return "redirect:/client/staff";
     }
 
+    // Client sign up
+    // http://localhost:8080/client/login
+    @GetMapping("/signup")
+    public String signUpForm(Model model) {
+        HotelUser user = new HotelUser(null, null, null, null, null, null);
+        model.addAttribute("newuser", user);
+        return "signup_client";
+    }
+
+    @PostMapping("/signup")
+    public String login(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
+        logger.info(user.toString());
+        try {
+            userService.save(user);
+            clientService.save(new Client(user));
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "El cliente fue registrado correctamente.");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "El correo, teléfono o ID nacional ya está registrado. Por favor verifica los datos.");
+            return "redirect:/client/signup";
+        }
+
+        return "redirect:/client/main";
+    }
+
+    // Client login
+    // http://localhost:8080/client/login
+    @GetMapping("/login")
+    public String loginForm(Model model) {
+        HotelUser user = new HotelUser(null, null, null, null, null, null);
+        model.addAttribute("newuser", user);
+        return "login_client";
+    }
+
+    @PostMapping("/login")
+    public String loginClient(@ModelAttribute("newuser") HotelUser user) {
+        Client clientFound = clientService.login(user.getEmail(), user.getPassword());
+        if (clientFound != null) {
+            return "redirect:/client/main";
+        } else {
+            return "redirect:/client/login";
+        }
+    }
+
+    // Update client
+    // http://localhost:8080/client/staff
     @GetMapping("/staff/update/{id}")
     @ResponseBody
     public HotelUser getClient(@PathVariable Long id) {
@@ -109,6 +156,8 @@ public class ClientController {
         return userService.searchById(id);
     }
 
+    // Update client
+    // http://localhost:8080/client/staff
     @PostMapping("/staff/update")
     public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser,
             RedirectAttributes redirectAttributes) {
@@ -132,12 +181,15 @@ public class ClientController {
         return "redirect:/client/staff";
     }
 
+    // Delete client
+    // http://localhost:8080/client/staff
     @GetMapping("/staff/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
         clientService.delete(id);
         return "redirect:/client/staff";
     }
 
+    // Creates a model atribute aviable to all views
     @ModelAttribute("newclientuser")
     public HotelUser getNewClientUser() {
         return new HotelUser();
