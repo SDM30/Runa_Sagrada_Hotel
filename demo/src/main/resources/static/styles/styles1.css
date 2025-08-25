@@ -552,3 +552,8 @@ header {
 .btn-close:hover {
   opacity: 1;
 }
+
+#search-form {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

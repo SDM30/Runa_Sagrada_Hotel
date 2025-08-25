@@ -1,8 +1,10 @@
 package com.runasagrada.demo.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.runasagrada.demo.entities.Client;
+import com.runasagrada.demo.entities.HotelUser;
 
 public interface ClientService {
 
@@ -14,5 +16,7 @@ public interface ClientService {
     public void save(Client client);
 
     public void delete(Long id);
+
+    public List<Client> search(String email, String phone, String nationalId, String name);
 
 }

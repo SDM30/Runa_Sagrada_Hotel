@@ -168,6 +168,50 @@
           </div>
         </div>
 
+        <!-- Buscador -->
+        <form
+          id="search-form"
+          th:action="@{/client/staff/search}"
+          method="post"
+          class="row g-2"
+        >
+          <div class="col">
+            <input
+              type="text"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+            />
+          </div>
+          <div class="col">
+            <input
+              type="text"
+              name="phone"
+              class="form-control"
+              placeholder="Teléfono"
+            />
+          </div>
+          <div class="col">
+            <input
+              type="text"
+              name="nationalId"
+              class="form-control"
+              placeholder="ID Nacional / Pasaporte"
+            />
+          </div>
+          <div class="col">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Nombre"
+            />
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+        </form>
+
         <div
           th:if="${successMessage}"
           class="alert alert-info alert-dismissible fade show"
@@ -175,6 +219,21 @@
         >
           <i class="fas fa-info-circle me-2"></i>
           <span th:text="${successMessage}"></span>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+
+        <div
+          th:if="${errorMessage}"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <i class="fas fa-exclamation-circle me-2"></i>
+          <span th:text="${errorMessage}"></span>
           <button
             type="button"
             class="btn-close"
@@ -296,8 +355,12 @@
                 class="form-control"
                 id="name"
                 th:field="*{name}"
+                required
+                minlength="3"
+                maxlength="100"
               />
             </div>
+
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input
@@ -305,24 +368,39 @@
                 class="form-control"
                 id="email"
                 th:field="*{email}"
+                required
+                minlength="6"
+                maxlength="320"
               />
             </div>
+
             <div class="mb-3">
-              <label for="phone" class="form-label">Celular</label>
+              <label for="phone" class="form-label">Teléfono</label>
               <input
-                type="text"
+                type="tel"
                 class="form-control"
                 id="phone"
                 th:field="*{phone}"
+                required
+                pattern="[0-9]{7,15}"
+                title="Debe contener entre 7 y 15 dígitos numéricos"
               />
             </div>
+
             <div class="mb-3">
-              <label for="nationalId" class="form-label">ID Nacional</label>
+              <label for="nationalId" class="form-label"
+                >ID Nacional / Pasaporte</label
+              >
               <input
                 type="text"
                 class="form-control"
                 id="nationalId"
                 th:field="*{nationalId}"
+                required
+                minlength="6"
+                maxlength="20"
+                pattern="[A-Za-z0-9]{6,20}"
+                title="Debe contener entre 6 y 20 caracteres alfanuméricos"
               />
             </div>
           </div>
@@ -378,8 +456,12 @@
                 class="form-control"
                 id="nameEdit"
                 th:field="*{name}"
+                required
+                minlength="3"
+                maxlength="100"
               />
             </div>
+
             <div class="mb-3">
               <label for="emailEdit" class="form-label">Email</label>
               <input
@@ -387,24 +469,39 @@
                 class="form-control"
                 id="emailEdit"
                 th:field="*{email}"
+                required
+                minlength="6"
+                maxlength="320"
               />
             </div>
+
             <div class="mb-3">
-              <label for="phoneEdit" class="form-label">Celular</label>
+              <label for="phoneEdit" class="form-label">Teléfono</label>
               <input
-                type="text"
+                type="tel"
                 class="form-control"
                 id="phoneEdit"
                 th:field="*{phone}"
+                required
+                pattern="[0-9]{7,15}"
+                title="Debe contener entre 7 y 15 dígitos numéricos"
               />
             </div>
+
             <div class="mb-3">
-              <label for="nationalIdEdit" class="form-label">ID Nacional</label>
+              <label for="nationalIdEdit" class="form-label"
+                >ID Nacional / Pasaporte</label
+              >
               <input
                 type="text"
                 class="form-control"
                 id="nationalIdEdit"
                 th:field="*{nationalId}"
+                required
+                minlength="6"
+                maxlength="20"
+                pattern="[A-Za-z0-9]{6,20}"
+                title="Debe contener entre 6 y 20 caracteres alfanuméricos"
               />
             </div>
           </div>
@@ -416,7 +513,7 @@
             >
               Cerrar
             </button>
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
           </div>
         </form>
       </div>

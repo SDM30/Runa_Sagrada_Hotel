@@ -1,12 +1,15 @@
 package com.runasagrada.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +46,28 @@ public class ClientController {
         return "adminClientPage";
     }
 
+    @PostMapping("/staff/search")
+    public String searchClient(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) String nationalId,
+            @RequestParam(required = false) String name,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+
+        List<Client> clients = clientService.search(email, phone, nationalId, name);
+
+        if (clients.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "No se encontraron clientes con los criterios ingresados.");
+            clients = (List<Client>) clientService.getAllClients(); // fallbackç
+            return "redirect:/client/staff";
+        }
+
+        model.addAttribute("clients", clients);
+        return "staffPage";
+    }
+
     @GetMapping("/staff")
     public String showClientsStaff(Model model) {
         model.addAttribute("newclient", new Client());
@@ -55,18 +80,24 @@ public class ClientController {
     public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
             RedirectAttributes redirectAttributes) {
         if (newClientUser.getPassword() == null || newClientUser.getPassword().isBlank()) {
-            newClientUser.setPassword("123456"); // o mejor encriptada con BCrypt
+            newClientUser.setPassword("123456");
         }
 
-        userService.save(newClientUser);
+        try {
+            userService.save(newClientUser);
 
-        Client newClient = new Client();
-        newClient.setUser(newClientUser);
-        clientService.save(newClient);
+            Client newClient = new Client();
+            newClient.setUser(newClientUser);
+            clientService.save(newClient);
 
-        redirectAttributes.addFlashAttribute("successMessage",
-                "El cliente fue registrado con contraseña por defecto: 123456. " +
-                        "Recuérdale que la cambie en su primer ingreso.");
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "El cliente fue registrado con contraseña por defecto: 123456. " +
+                            "Recuérdale que la cambie en su primer ingreso.");
+
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "El correo, teléfono o ID nacional ya están registrados. Por favor verifica los datos.");
+        }
 
         return "redirect:/client/staff";
     }
@@ -79,13 +110,25 @@ public class ClientController {
     }
 
     @PostMapping("/staff/update")
-    public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser) {
-        HotelUser user = userService.searchById(updatedUser.getId());
-        user.setName(updatedUser.getName());
-        user.setEmail(updatedUser.getEmail());
-        user.setPhone(updatedUser.getPhone());
-        user.setNationalId(updatedUser.getNationalId());
-        userService.save(user);
+    public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser,
+            RedirectAttributes redirectAttributes) {
+        try {
+            HotelUser user = userService.searchById(updatedUser.getId());
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setPhone(updatedUser.getPhone());
+            user.setNationalId(updatedUser.getNationalId());
+
+            userService.save(user);
+
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "El cliente fue actualizado correctamente.");
+
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "No se pudo actualizar: el correo, teléfono o ID nacional ya están registrados.");
+        }
+
         return "redirect:/client/staff";
     }
 
@@ -93,6 +136,11 @@ public class ClientController {
     public String deleteClient(@PathVariable Long id) {
         clientService.delete(id);
         return "redirect:/client/staff";
+    }
+
+    @ModelAttribute("newclientuser")
+    public HotelUser getNewClientUser() {
+        return new HotelUser();
     }
 
 }
