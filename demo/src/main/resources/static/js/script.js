@@ -849,3 +849,32 @@ function passDelClient(clientId) {
     })
     .catch((err) => console.error("Error cargando cliente:", err));
 }
+
+
+
+
+
+
+    function loadRoomData(element) {
+        const id = element.getAttribute('data-id');
+        const name = element.getAttribute('data-name');
+        const capacity = element.getAttribute('data-capacity');
+        const basePrice = element.getAttribute('data-baseprice');
+        const description = element.getAttribute('data-description');
+        
+        document.getElementById('updateId').value = id;
+        document.getElementById('updateName').value = name;
+        document.getElementById('updateCapacity').value = capacity;
+        document.getElementById('updateBasePrice').value = basePrice;
+        document.getElementById('updateDescription').value = description || '';
+      }
+      
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      });
+
+
