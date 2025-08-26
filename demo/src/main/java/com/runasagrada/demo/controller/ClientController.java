@@ -64,7 +64,6 @@ public class ClientController {
         return "staffPage";
     }
 
-    // Read all clients, TODO: Load clients per hotel
     // http://localhost:8080/client/staff
     @GetMapping("/staff")
     public String showClientsStaff(Model model) {

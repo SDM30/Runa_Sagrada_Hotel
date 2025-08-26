@@ -822,9 +822,9 @@ const nav = document.querySelector(".navbar-services");
 //staffPage.html
 
 // Load client information into update modal
-document
-  .getElementById("modalUCliente")
-  .addEventListener("show.bs.modal", function (event) {
+const modalUCliente = document.getElementById("modalUCliente");
+if (modalUCliente) {
+  modalUCliente.addEventListener("show.bs.modal", function (event) {
     var button = event.relatedTarget;
     var clientId = button.getAttribute("data-id");
 
@@ -832,14 +832,21 @@ document
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        document.getElementById("clientIdEdit").value = data.id;
-        document.getElementById("nameEdit").value = data.name;
-        document.getElementById("emailEdit").value = data.email;
-        document.getElementById("phoneEdit").value = data.phone;
-        document.getElementById("nationalIdEdit").value = data.nationalId;
+        const clientIdEdit = document.getElementById("clientIdEdit");
+        const nameEdit = document.getElementById("nameEdit");
+        const emailEdit = document.getElementById("emailEdit");
+        const phoneEdit = document.getElementById("phoneEdit");
+        const nationalIdEdit = document.getElementById("nationalIdEdit");
+        
+        if (clientIdEdit) clientIdEdit.value = data.id;
+        if (nameEdit) nameEdit.value = data.name;
+        if (emailEdit) emailEdit.value = data.email;
+        if (phoneEdit) phoneEdit.value = data.phone;
+        if (nationalIdEdit) nationalIdEdit.value = data.nationalId;
       })
       .catch((err) => console.error("Error cargando cliente:", err));
   });
+}
 
 function passDelClient(clientId) {
   fetch("/client/staff/delete/" + clientId)
@@ -850,31 +857,25 @@ function passDelClient(clientId) {
     .catch((err) => console.error("Error cargando cliente:", err));
 }
 
+function loadRoomData(element) {
+  const id = element.getAttribute("data-id");
+  const name = element.getAttribute("data-name");
+  const capacity = element.getAttribute("data-capacity");
+  const basePrice = element.getAttribute("data-baseprice");
+  const description = element.getAttribute("data-description");
 
+  document.getElementById("updateId").value = id;
+  document.getElementById("updateName").value = name;
+  document.getElementById("updateCapacity").value = capacity;
+  document.getElementById("updateBasePrice").value = basePrice;
+  document.getElementById("updateDescription").value = description || "";
+}
 
-
-
-
-    function loadRoomData(element) {
-        const id = element.getAttribute('data-id');
-        const name = element.getAttribute('data-name');
-        const capacity = element.getAttribute('data-capacity');
-        const basePrice = element.getAttribute('data-baseprice');
-        const description = element.getAttribute('data-description');
-        
-        document.getElementById('updateId').value = id;
-        document.getElementById('updateName').value = name;
-        document.getElementById('updateCapacity').value = capacity;
-        document.getElementById('updateBasePrice').value = basePrice;
-        document.getElementById('updateDescription').value = description || '';
-      }
-      
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-      });
-
-
+document.addEventListener("DOMContentLoaded", function () {
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+});

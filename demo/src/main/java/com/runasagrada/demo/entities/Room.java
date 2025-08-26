@@ -7,14 +7,46 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(name = "Room.withRoomType", attributeNodes = @NamedAttributeNode("roomType"))
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;        // Nombre de la habitación 
-    private Integer capacity;   // Capacidad (número de personas)
-    private Double basePrice;   // Precio base
-    private String description; // Descripción (ya se la saben)
+    @Column(name = "hotel_id")
+    private Long hotelId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_type_id")
+    private RoomType roomType;
+
+    @Column(name = "room_number")
+    private String roomNumber;
+
+    @Column(name = "floor_number")
+    private Integer floorNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "res_status")
+    private ReservationStatus resStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cle_status")
+    private CleaningStatus cleStatus;
+
+    @Column(name = "theme_name")
+    private String themeName;
+
+    @Column(name = "theme_description", length = 500)
+    private String themeDescription;
+
+    // Enums for status
+    public enum ReservationStatus {
+        AVAILABLE, BOOKED, OCCUPIED, MAINTENANCE
+    }
+
+    public enum CleaningStatus {
+        CLEAN, DIRTY, CLEANING, OUT_OF_ORDER
+    }
 }

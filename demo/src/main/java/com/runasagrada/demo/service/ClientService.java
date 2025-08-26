@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import com.runasagrada.demo.entities.Client;
-import com.runasagrada.demo.entities.HotelUser;
 
 public interface ClientService {
 

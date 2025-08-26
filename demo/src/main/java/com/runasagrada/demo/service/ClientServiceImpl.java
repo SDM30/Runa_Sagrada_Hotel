@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.runasagrada.demo.entities.Client;
-import com.runasagrada.demo.entities.HotelUser;
 import com.runasagrada.demo.repository.ClientRepository;
 
 @Service

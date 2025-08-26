@@ -1,0 +1,205 @@
+// ---------- SECURITY ----------
+Table Role { //Pa prepararnos pa seguridad JWT
+  role_id int [pk, increment]
+  name    varchar(20) [unique]
+}
+
+Table User {
+  user_id      int          [pk, increment]
+  email        varchar(120) [unique]
+  password     varchar(255)
+  full_name    varchar(120)
+  phone        varchar(20)
+  national_id  varchar(30)      // cédula / DNI
+  selected_pet varchar(20) [default:'DOG']
+  created_at   timestamp   [default:`CURRENT_TIMESTAMP`]
+  enabled      boolean     [default:true]
+}
+
+Table user_roles {
+  user_id int
+  role_id int
+  Indexes { (user_id, role_id) [pk] }
+}
+Ref: user_roles.user_id > User.user_id
+Ref: user_roles.role_id > Role.role_id
+
+// ---------- HOTEL ----------
+Table Hotel {
+  hotel_id    int [pk, increment]
+  name        varchar(120)
+  latitude    varchar(255)
+  longitude   varchar(255)
+  description varchar(500)
+}
+
+Table Amenity { //Pa poder usarlos como filtros en el buscador
+  amenity_id int [pk, increment]
+  name       varchar(60)
+}
+Table hotel_amenities {
+  hotel_id   int
+  amenity_id int
+  Indexes { (hotel_id, amenity_id) [pk] }
+}
+Ref: hotel_amenities.hotel_id   > Hotel.hotel_id
+Ref: hotel_amenities.amenity_id > Amenity.amenity_id
+
+// ---------- ROOMS ----------
+Table RoomType {                   // global (4 filas fijas)
+  room_type_id int [pk, increment]
+  name         varchar(40) [unique] // Standard, Deluxe, Suite, Family
+  capacity     int
+  base_price   decimal(10,2)
+  description  varchar(300)
+}
+
+Table Room {
+  room_id      int [pk, increment]
+  hotel_id     int
+  room_type_id int
+  number       varchar(10) // 4 max ej. 401-404
+  floor        int //4 PISOS uno por tipo de habitacion
+  status       varchar(20) [default:'AVAILABLE']
+  Indexes { (hotel_id, number) [unique] }
+}
+Ref: Room.hotel_id     > Hotel.hotel_id
+Ref: Room.room_type_id > RoomType.room_type_id
+
+// ---------- BLOQUEO POR DÍA ----------
+Table RoomLock {
+  room_id        int
+  lock_date      date
+  reservation_id int
+  Indexes { (room_id, lock_date) [pk] }
+}
+Ref: RoomLock.room_id        > Room.room_id
+Ref: RoomLock.reservation_id > Reservation.reservation_id
+
+// ---------- RESERVA (contiene la habitación) ----------
+Table Reservation {
+  reservation_id int [pk, increment]
+  user_id  int
+  hotel_id int
+  room_id  int
+  check_in  date
+  check_out date
+  status    varchar(15) [default:'PENDING']
+  created_at timestamp [default:`CURRENT_TIMESTAMP`]
+}
+Ref: Reservation.user_id  > User.user_id
+Ref: Reservation.hotel_id > Hotel.hotel_id
+Ref: Reservation.room_id  > Room.room_id
+
+// ---------- SERVICIOS ----------
+Table ServiceOffering {
+  service_id   int [pk, increment]
+  hotel_id     int
+  name         varchar(100)
+  category     varchar(20)        // FOOD | ACTIVITY TOUR | HOTEL SERVICE
+  base_price   decimal(10,2)
+  description  varchar(500)
+  latitude    varchar(255) //Para ubicar de mostrar un mapa
+  longitude   varchar(255)
+}
+Ref: ServiceOffering.hotel_id > Hotel.hotel_id
+
+Table ServiceSchedule {
+  schedule_id int [pk, increment]
+  service_id  int
+  sched_date  date
+  sched_time  time
+  capacity    int
+}
+Ref: ServiceSchedule.service_id > ServiceOffering.service_id
+
+// ---------- COMPRA / CUENTA simplificada ----------
+Table ReservationService {
+  res_service_id int [pk, increment]
+  reservation_id int
+  service_id     int
+  schedule_id    int
+  qty            int
+  unit_price     decimal(10,2)
+  status         varchar(15) // ORDERED | DELIVERED | CANCELED
+}
+Ref: ReservationService.reservation_id > Reservation.reservation_id
+Ref: ReservationService.service_id     > ServiceOffering.service_id
+Ref: ReservationService.schedule_id    > ServiceSchedule.schedule_id
+
+// ---------- PAGOS (con método) ----------
+Table PaymentMethod {
+  method_id       int [pk, increment]
+  user_id         int
+  type            varchar(20)  // CARD | PAYPAL | CASH
+  last4           varchar(4)
+  holder_name     varchar(120)
+  billing_address varchar(255)
+}
+Ref: PaymentMethod.user_id > User.user_id
+
+Table Payment {
+  payment_id        int [pk, increment]
+  reservation_id    int [unique]
+  payment_method_id int
+  amount            decimal(10,2)
+  status            varchar(15)   // PENDING | PAID | REFUNDED
+  tx_reference      varchar(60)
+}
+Ref: Payment.reservation_id    > Reservation.reservation_id
+Ref: Payment.payment_method_id > PaymentMethod.method_id
+
+// ---------- STAFF & TAREAS ----------
+Table Department {
+  department_id int [pk, increment]
+  hotel_id      int
+  name          varchar(60)
+}
+Ref: Department.hotel_id > Hotel.hotel_id
+
+Table StaffMember {
+  staff_id      int [pk, increment]
+  user_id       int
+  hotel_id      int
+  department_id int
+  name          varchar(120)
+}
+Ref: StaffMember.user_id       > User.user_id
+Ref: StaffMember.hotel_id      > Hotel.hotel_id
+Ref: StaffMember.department_id > Department.department_id
+
+Table Task {
+  task_id         int [pk, increment]
+  staff_id        int
+  room_id         int
+  res_service_id  int   // vínculo con el servicio comprado
+  type            varchar(20)   // DELIVERY | GUIDING | TO-DO
+  status          varchar(15) [default:'PENDING']
+  created_at      timestamp [default:`CURRENT_TIMESTAMP`]
+}
+Ref: Task.staff_id       > StaffMember.staff_id
+Ref: Task.room_id        > Room.room_id
+Ref: Task.res_service_id > ReservationService.res_service_id
+
+// ---------- RESEÑAS HOTEL Y SERVICIO ----------
+Table Review {
+  review_id int [pk, increment]
+  user_id   int
+  hotel_id  int
+  rating    int
+  comment   varchar(300)
+  created_at timestamp [default:`CURRENT_TIMESTAMP`]
+}
+Ref: Review.user_id  > User.user_id
+Ref: Review.hotel_id > Hotel.hotel_id
+
+Table ServiceRating {
+  rating_id       int [pk, increment]
+  res_service_id  int [unique]
+  user_id         int
+  score           int
+  comment         varchar(300)
+  created_at      timestamp [default:`CURRENT_TIMESTAMP`]
+}
+Ref: ServiceRating.res_service_id > ReservationService.res_service_id
+Ref: ServiceRating.user_id        > User.user_id
