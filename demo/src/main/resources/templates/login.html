@@ -1,50 +1,72 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Runa Sagrada</title>
-    <link rel="stylesheet" href="/styles/styles.css">
-    <link rel="stylesheet" href="/styles/login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/login.css" />
+  </head>
+  <body>
     <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <img src="/images/logito.png" alt="Runa Sagrada Logo" class="login-logo">
-                <h1 class="login-title">Bienvenido de Vuelta</h1>
-            </div>
-            <form th:action="@{/login}" method="post" id="login-form">
-                <div class="mb-4">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" name="email" required minlength="4" placeholder="Ingrese su correo">
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" required minlength="8" placeholder="Ingrese su contraseña">
-                </div>
-                <button type="submit" class="btn btn-login">Iniciar Sesión</button>
-                <div th:if="${error}" class="error-message">
-                    <p th:text="${error}"></p>
-                </div>
-            </form>
+      <div class="login-card">
+        <div class="login-header">
+          <img
+            src="/images/logito.png"
+            alt="Runa Sagrada Logo"
+            class="login-logo"
+          />
+          <h1 class="login-title">Bienvenido de Vuelta</h1>
         </div>
+        <form th:action="@{/client/login}" method="post" id="login-form">
+          <div class="mb-4">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+              minlength="4"
+              placeholder="Ingrese su correo"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+              minlength="8"
+              placeholder="Ingrese su contraseña"
+            />
+          </div>
+          <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+          <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            var email = document.getElementById('email');
-            var password = document.getElementById('password');
-            
-            if (email.value.length < 4) {
-                alert('El nombre de usuario debe tener al menos 4 caracteres');
-                event.preventDefault();
-            }
-            if (password.value.length < 8) {
-                alert('La contraseña debe tener al menos 8 caracteres');
-                event.preventDefault();
-            }
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          var email = document.getElementById("email");
+          var password = document.getElementById("password");
+
+          if (email.value.length < 4) {
+            alert("El nombre de usuario debe tener al menos 4 caracteres");
+            event.preventDefault();
+          }
+          if (password.value.length < 8) {
+            alert("La contraseña debe tener al menos 8 caracteres");
+            event.preventDefault();
+          }
         });
     </script>
-</body>
+  </body>
 </html>

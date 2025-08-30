@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/client")
 public class ClientController {
 
     @Autowired
@@ -41,8 +40,8 @@ public class ClientController {
     }
 
     // Search
-    // http://localhost:8080/client/staff
-    @PostMapping("/staff/search")
+    // http://localhost:8080/staff/client
+    @PostMapping("/staff/client/search")
     public String searchClient(
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String phone,
@@ -57,15 +56,15 @@ public class ClientController {
             redirectAttributes.addFlashAttribute("errorMessage",
                     "No se encontraron clientes con los criterios ingresados.");
             clients = (List<Client>) clientService.getAllClients(); // fallbackç
-            return "redirect:/client/staff";
+            return "redirect:/staff/client";
         }
 
         model.addAttribute("clients", clients);
         return "staffPage";
     }
 
-    // http://localhost:8080/client/staff
-    @GetMapping("/staff")
+    // http://localhost:8080/staff/client
+    @GetMapping("/staff/client")
     public String showClientsStaff(Model model) {
         model.addAttribute("newclient", new Client());
         model.addAttribute("newclientuser", new HotelUser());
@@ -74,8 +73,8 @@ public class ClientController {
     }
 
     // Create client
-    // http://localhost:8080/client/staff
-    @PostMapping("/staff/add")
+    // http://localhost:8080/staff/client
+    @PostMapping("/staff/client/add")
     public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
             RedirectAttributes redirectAttributes) {
         if (newClientUser.getPassword() == null || newClientUser.getPassword().isBlank()) {
@@ -98,20 +97,20 @@ public class ClientController {
                     "El correo, teléfono o ID nacional ya están registrados. Por favor verifica los datos.");
         }
 
-        return "redirect:/client/staff";
+        return "redirect:/staff/client";
     }
 
     // Client sign up
-    // http://localhost:8080/client/login
-    @GetMapping("/signup")
+    // http://localhost:8080/client/signup
+    @GetMapping("/client/signup")
     public String signUpForm(Model model) {
         HotelUser user = new HotelUser(null, null, null, null, null, null);
         model.addAttribute("newuser", user);
         return "signup_client";
     }
 
-    @PostMapping("/signup")
-    public String login(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
+    @PostMapping("/client/signup")
+    public String signupClient(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
         logger.info(user.toString());
         try {
             userService.save(user);
@@ -129,14 +128,14 @@ public class ClientController {
 
     // Client login
     // http://localhost:8080/client/login
-    @GetMapping("/login")
+    @GetMapping("/client/login")
     public String loginForm(Model model) {
         HotelUser user = new HotelUser(null, null, null, null, null, null);
         model.addAttribute("newuser", user);
-        return "login_client";
+        return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/client/login")
     public String loginClient(@ModelAttribute("newuser") HotelUser user) {
         Client clientFound = clientService.login(user.getEmail(), user.getPassword());
         if (clientFound != null) {
@@ -147,8 +146,8 @@ public class ClientController {
     }
 
     // Update client
-    // http://localhost:8080/client/staff
-    @GetMapping("/staff/update/{id}")
+    // http://localhost:8080/staff/client
+    @GetMapping("/staff/client/update/{id}")
     @ResponseBody
     public HotelUser getClient(@PathVariable Long id) {
         logger.info("Client id: " + id);
@@ -156,8 +155,8 @@ public class ClientController {
     }
 
     // Update client
-    // http://localhost:8080/client/staff
-    @PostMapping("/staff/update")
+    // http://localhost:8080/staff/client
+    @PostMapping("/staff/client/update")
     public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser,
             RedirectAttributes redirectAttributes) {
         try {
@@ -177,15 +176,15 @@ public class ClientController {
                     "No se pudo actualizar: el correo, teléfono o ID nacional ya están registrados.");
         }
 
-        return "redirect:/client/staff";
+        return "redirect:/staff/client";
     }
 
     // Delete client
-    // http://localhost:8080/client/staff
-    @GetMapping("/staff/delete/{id}")
+    // http://localhost:8080/staff/client
+    @GetMapping("/staff/client/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
         clientService.delete(id);
-        return "redirect:/client/staff";
+        return "redirect:/staff/client";
     }
 
     // Creates a model atribute aviable to all views

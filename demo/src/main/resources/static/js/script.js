@@ -828,7 +828,7 @@ if (modalUCliente) {
     var button = event.relatedTarget;
     var clientId = button.getAttribute("data-id");
 
-    fetch("/client/staff/update/" + clientId)
+    fetch("/staff/client/update/" + clientId)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -837,7 +837,7 @@ if (modalUCliente) {
         const emailEdit = document.getElementById("emailEdit");
         const phoneEdit = document.getElementById("phoneEdit");
         const nationalIdEdit = document.getElementById("nationalIdEdit");
-        
+
         if (clientIdEdit) clientIdEdit.value = data.id;
         if (nameEdit) nameEdit.value = data.name;
         if (emailEdit) emailEdit.value = data.email;
@@ -849,7 +849,7 @@ if (modalUCliente) {
 }
 
 function passDelClient(clientId) {
-  fetch("/client/staff/delete/" + clientId)
+  fetch("/staff/client/delete/" + clientId)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
