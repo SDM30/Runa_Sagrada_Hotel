@@ -7,6 +7,8 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -22,9 +24,11 @@ public class HotelService {
     private String name;
     private String category;
     private String description;
-    private LocalDate sheduledDate;
-    private LocalTime scheduledTime;
-    private int capacity;
+
+    @OneToMany(mappedBy = "service")
+    @OrderBy("sched_date ASC, sched_time ASC")
+    private List<ServiceSchedule> serviceSchedules;
+
     private double basePrice;
     private String status;
     private List<String> imageUrls;
@@ -34,19 +38,17 @@ public class HotelService {
     public HotelService() {
     }
 
-    public HotelService(String name, String category, String description, LocalDate sheduledDate,
-            LocalTime scheduledTime, int capacity, double basePrice, String status, List<String> imageUrls,
-            double latitude, double longitude) {
+    public HotelService(String name, String category, String description, List<ServiceSchedule> serviceSchedules,
+            double basePrice, String status, List<String> imageUrls, double latitude, double longitude) {
         this.name = name;
         this.category = category;
         this.description = description;
-        this.sheduledDate = sheduledDate;
-        this.scheduledTime = scheduledTime;
-        this.capacity = capacity;
+        this.serviceSchedules = serviceSchedules;
         this.basePrice = basePrice;
         this.status = status;
         this.imageUrls = imageUrls;
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 }

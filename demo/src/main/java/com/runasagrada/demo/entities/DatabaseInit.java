@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import com.runasagrada.demo.repository.ClientRepository;
 import com.runasagrada.demo.repository.HotelServiceRepository;
 import com.runasagrada.demo.repository.HotelUserRepository;
+import com.runasagrada.demo.service.ServiceScheduleService;
 
 import jakarta.transaction.Transactional;
 
@@ -26,6 +27,9 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
 	ClientRepository clientRepository;
+
+	@Autowired
+	ServiceScheduleService scheduleService;
 
 	// URLs de imágenes organizadas por categoría - Enlaces actualizados y
 	// verificados
@@ -53,7 +57,7 @@ public class DatabaseInit implements ApplicationRunner {
 		// Ecoturismo
 		static final String ECOTURISMO_1 = "https://elsolazsuites.com/wp-content/uploads/2022/06/ecoturismo-en-villa-de-leyva.jpg";
 		static final String ECOTURISMO_2 = "https://tutourencartagena.com/wp-content/uploads/2017/01/buceo-en-cartagena-cartagena-colombia-tutourencartagena.jpg";
-		static final String ECOTURISMO_3 = "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/node/article/field_image/San%20Andr%C3%A9s%20Colprensa.jpg?h=96a96008&itok=31WwVuLy      ";
+		static final String ECOTURISMO_3 = "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/node/article/field_image/San%20Andr%C3%A9s%20Colprensa.jpg?h=96a96008&itok=31WwVuLy";
 
 		// Cultura viva
 		static final String CULTURA_1 = "https://www.infobae.com/resizer/v2/H4BSBL5F7JEH7ELIPDGLKO5OBQ.jpg?auth=da6890b5ced46d170fe76fcc186b721e5495c108b33bec0fff4cfd53e527e538&smart=true&width=1200&height=900&quality=85";
@@ -103,198 +107,150 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Override
 	public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
-		serviceRepository.save(new HotelService(
-				"Gastronomía Ancestral",
-				"Comida",
+		// === Crear servicios (sin fecha/hora/capacidad) ===
+		HotelService gastronomia = serviceRepository.save(new HotelService(
+				"Gastronomía Ancestral", "Comida",
 				"Sabores auténticos de la cocina tradicional colombiana, preparados con ingredientes locales y técnicas ancestrales.",
-				LocalDate.now().plusDays(1),
-				LocalTime.of(19, 0),
-				20,
-				45900,
-				"Disponible",
+				List.of(), 45900, "Disponible",
 				List.of(ImageUrls.GASTRONOMIA_1, ImageUrls.GASTRONOMIA_2, ImageUrls.GASTRONOMIA_3),
-				10.3910,
-				-75.4794));
+				10.3910, -75.4794));
 
-		serviceRepository.save(new HotelService(
-				"Tours Sagrados",
-				"Tours",
+		HotelService tours = serviceRepository.save(new HotelService(
+				"Tours Sagrados", "Tours",
 				"Expediciones guiadas por lugares místicos y sitios arqueológicos, conectando con la sabiduría ancestral.",
-				LocalDate.now().plusDays(1),
-				LocalTime.of(8, 30),
-				15,
-				65500,
-				"Disponible",
+				List.of(), 65500, "Disponible",
 				List.of(ImageUrls.TOURS_ARQUEOLOGICOS_1, ImageUrls.TOURS_ARQUEOLOGICOS_2,
 						ImageUrls.TOURS_ARQUEOLOGICOS_3),
 				5.6333, -73.5333));
 
-		serviceRepository.save(new HotelService(
-				"Rituales de Bienestar",
-				"Hotel",
+		HotelService rituales = serviceRepository.save(new HotelService(
+				"Rituales de Bienestar", "Hotel",
 				"Terapias tradicionales y ceremonias de sanación inspiradas en las prácticas indígenas colombianas.",
-				LocalDate.now().plusDays(1),
-				LocalTime.of(16, 0),
-				10,
-				75000,
-				"Disponible",
+				List.of(), 75000, "Disponible",
 				List.of(ImageUrls.RITUALES_1, ImageUrls.RITUALES_2, ImageUrls.RITUALES_3),
 				4.7109, -74.0721));
 
-		serviceRepository.save(new HotelService(
-				"Hospedaje Boutique",
-				"Hotel",
+		HotelService boutique = serviceRepository.save(new HotelService(
+				"Hospedaje Boutique", "Hotel",
 				"Habitaciones únicas diseñadas con elementos artesanales y decoración inspirada en culturas precolombinas.",
-				LocalDate.now(),
-				LocalTime.of(15, 0),
-				1,
-				120000,
-				"Disponible",
-				List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2,
-						ImageUrls.HOSPEDAJE_BOUTIQUE_3),
+				List.of(), 120000, "Disponible",
+				List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2, ImageUrls.HOSPEDAJE_BOUTIQUE_3),
 				4.6370, -75.5710));
 
-		serviceRepository.save(new HotelService(
-				"Ecoturismo",
-				"Tours",
+		HotelService ecoturismo = serviceRepository.save(new HotelService(
+				"Ecoturismo", "Tours",
 				"Experiencias sostenibles que preservan y celebran la biodiversidad única de los ecosistemas colombianos.",
-				LocalDate.now().plusDays(2),
-				LocalTime.of(9, 0),
-				12,
-				55750,
-				"Disponible",
+				List.of(), 55750, "Disponible",
 				List.of(ImageUrls.ECOTURISMO_1, ImageUrls.ECOTURISMO_2, ImageUrls.ECOTURISMO_3),
 				12.5847, -81.7005));
 
-		serviceRepository.save(new HotelService(
-				"Cultura Viva",
-				"Tours",
+		HotelService cultura = serviceRepository.save(new HotelService(
+				"Cultura Viva", "Tours",
 				"Talleres de artesanías, música tradicional y danzas folclóricas con maestros de comunidades locales.",
-				LocalDate.now().plusDays(3),
-				LocalTime.of(14, 0),
-				25,
-				35000,
-				"Disponible",
+				List.of(), 35000, "Disponible",
 				List.of(ImageUrls.CULTURA_1, ImageUrls.CULTURA_2, ImageUrls.CULTURA_3),
 				11.2408, -74.1990));
 
-		serviceRepository.save(new HotelService(
-				"Ceremonia del Cacao Sagrado",
-				"Tours",
+		HotelService cacao = serviceRepository.save(new HotelService(
+				"Ceremonia del Cacao Sagrado", "Tours",
 				"Participa en un ritual ancestral de conexión espiritual con el cacao como elemento sagrado.",
-				LocalDate.now().plusDays(2),
-				LocalTime.of(17, 30),
-				8,
-				85000,
-				"Disponible",
+				List.of(), 85000, "Disponible",
 				List.of(ImageUrls.CACAO_1, ImageUrls.CACAO_2, ImageUrls.CACAO_3),
 				5.6333, -73.5333));
 
-		serviceRepository.save(new HotelService(
-				"Avistamiento de Aves",
-				"Tours",
+		HotelService aves = serviceRepository.save(new HotelService(
+				"Avistamiento de Aves", "Tours",
 				"Descubre la biodiversidad de Colombia a través de sus especies de aves más representativas.",
-				LocalDate.now().plusDays(1),
-				LocalTime.of(6, 0),
-				10,
-				40000,
-				"Disponible",
+				List.of(), 40000, "Disponible",
 				List.of(ImageUrls.AVES_1, ImageUrls.AVES_2, ImageUrls.AVES_3),
 				4.7109, -74.0721));
 
-		serviceRepository.save(new HotelService(
-				"Senderismo Místico",
-				"Tours",
+		HotelService senderismo = serviceRepository.save(new HotelService(
+				"Senderismo Místico", "Tours",
 				"Explora caminos ancestrales y conecta con la naturaleza en rutas llenas de energía y tradición.",
-				LocalDate.now().plusDays(2),
-				LocalTime.of(7, 0),
-				15,
-				50000,
-				"Disponible",
+				List.of(), 50000, "Disponible",
 				List.of(ImageUrls.SENDERISMO_1, ImageUrls.SENDERISMO_2, ImageUrls.SENDERISMO_3),
 				11.2408, -74.1990));
 
-		serviceRepository.save(new HotelService(
-				"Suite Presidencial",
-				"Hotel",
+		HotelService suite = serviceRepository.save(new HotelService(
+				"Suite Presidencial", "Hotel",
 				"La experiencia más exclusiva con vista panorámica, jacuzzi privado y servicio de mayordomo 24/7.",
-				LocalDate.now(),
-				LocalTime.of(15, 0),
-				1,
-				350.00,
-				"Disponible",
-				List.of(ImageUrls.SUITE_PRESIDENCIAL_1, ImageUrls.SUITE_PRESIDENCIAL_2,
-						ImageUrls.SUITE_PRESIDENCIAL_3),
+				List.of(), 350.00, "Disponible",
+				List.of(ImageUrls.SUITE_PRESIDENCIAL_1, ImageUrls.SUITE_PRESIDENCIAL_2, ImageUrls.SUITE_PRESIDENCIAL_3),
 				4.6014, -74.0661));
 
-		serviceRepository.save(new HotelService(
-				"Cabañas Ecológicas",
-				"Hotel",
+		HotelService cabanas = serviceRepository.save(new HotelService(
+				"Cabañas Ecológicas", "Hotel",
 				"Alojamiento sostenible en medio de la naturaleza, construido con materiales autóctonos y energía solar.",
-				LocalDate.now(),
-				LocalTime.of(14, 0),
-				5,
-				95.00,
-				"Disponible",
+				List.of(), 95.00, "Disponible",
 				List.of(ImageUrls.CABANAS_1, ImageUrls.CABANAS_2, ImageUrls.CABANAS_3),
 				6.2442, -75.5736));
 
-		serviceRepository.save(new HotelService(
-				"Taller de Café Premium",
-				"Comida",
+		HotelService cafe = serviceRepository.save(new HotelService(
+				"Taller de Café Premium", "Comida",
 				"Aprende sobre el proceso del café colombiano desde el grano hasta la taza, con cata guiada.",
-				LocalDate.now().plusDays(2),
-				LocalTime.of(10, 0),
-				8,
-				30.00,
-				"Disponible",
+				List.of(), 30.00, "Disponible",
 				List.of(ImageUrls.CAFE_1, ImageUrls.CAFE_2, ImageUrls.CAFE_3),
 				5.0689, -75.5174));
 
-		serviceRepository.save(new HotelService(
-				"Cena con Chef Estrella",
-				"Comida",
+		HotelService chef = serviceRepository.save(new HotelService(
+				"Cena con Chef Estrella", "Comida",
 				"Menú degustación de 7 platos con maridaje de vinos, preparado por nuestro chef galardonado.",
-				LocalDate.now().plusDays(3),
-				LocalTime.of(20, 0),
-				12,
-				120.00,
-				"Disponible",
+				List.of(), 120.00, "Disponible",
 				List.of(ImageUrls.CHEF_1, ImageUrls.CHEF_2, ImageUrls.CHEF_3),
 				6.2518, -75.5636));
 
-		serviceRepository.save(new HotelService(
-				"Desayuno Tradicional",
-				"Comida",
+		HotelService desayuno = serviceRepository.save(new HotelService(
+				"Desayuno Tradicional", "Comida",
 				"Desayuno completo con arepas, huevos pericos, chocolate caliente y frutas tropicales.",
-				LocalDate.now().plusDays(1),
-				LocalTime.of(7, 30),
-				30,
-				15.50,
-				"Disponible",
+				List.of(), 15.50, "Disponible",
 				List.of(ImageUrls.DESAYUNO_1, ImageUrls.DESAYUNO_2, ImageUrls.DESAYUNO_3),
 				10.9639, -74.7964));
 
-		// Create HotelUsers
+		// === Schedules por servicio: usar scheduleService con un ServiceSchedule base
+		// ===
+		scheduleService.seedSchedules(
+				new ServiceSchedule(gastronomia, LocalDate.now().plusDays(1), LocalTime.of(19, 0), 20), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(tours, LocalDate.now().plusDays(1), LocalTime.of(8, 30), 15),
+				7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(rituales, LocalDate.now().plusDays(1), LocalTime.of(16, 0), 10), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(boutique, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(ecoturismo, LocalDate.now().plusDays(2), LocalTime.of(9, 0), 12), 7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(cultura, LocalDate.now().plusDays(3), LocalTime.of(14, 0), 25), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(cacao, LocalDate.now().plusDays(2), LocalTime.of(17, 30), 8),
+				7);
+		scheduleService.seedSchedules(new ServiceSchedule(aves, LocalDate.now().plusDays(1), LocalTime.of(6, 0), 10),
+				7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(senderismo, LocalDate.now().plusDays(2), LocalTime.of(7, 0), 15), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(suite, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(cabanas, LocalDate.now(), LocalTime.of(14, 0), 5), 7);
+		scheduleService.seedSchedules(new ServiceSchedule(cafe, LocalDate.now().plusDays(2), LocalTime.of(10, 0), 8),
+				7);
+		scheduleService.seedSchedules(new ServiceSchedule(chef, LocalDate.now().plusDays(3), LocalTime.of(20, 0), 12),
+				7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30), 30), 7);
+
+		// === Usuarios y Clientes ===
 		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
 		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");
 		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555",
 				"5555555555");
 
-		// Save HotelUsers to the database
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
 
-		// Create Clients and relate them to HotelUsers
 		Client client1 = new Client(user1);
 		Client client2 = new Client(user2);
 		Client client3 = new Client(user3);
 
-		// Save Clients to the database
 		clientRepository.save(client1);
 		clientRepository.save(client2);
 		clientRepository.save(client3);
 	}
-
 }
