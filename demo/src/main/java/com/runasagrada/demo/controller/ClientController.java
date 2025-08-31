@@ -106,7 +106,7 @@ public class ClientController {
     public String signUpForm(Model model) {
         HotelUser user = new HotelUser(null, null, null, null, null, null);
         model.addAttribute("newuser", user);
-        return "signup_client";
+        return "signup";
     }
 
     @PostMapping("/client/signup")
@@ -136,11 +136,13 @@ public class ClientController {
     }
 
     @PostMapping("/client/login")
-    public String loginClient(@ModelAttribute("newuser") HotelUser user) {
+    public String loginClient(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
         Client clientFound = clientService.login(user.getEmail(), user.getPassword());
         if (clientFound != null) {
             return "redirect:/client/main";
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Credenciales inválidas. Por favor, intenta de nuevo.");
             return "redirect:/client/login";
         }
     }
