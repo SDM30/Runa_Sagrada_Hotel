@@ -4,136 +4,117 @@ import com.runasagrada.demo.entities.Room;
 import com.runasagrada.demo.entities.RoomType;
 import com.runasagrada.demo.repository.RoomRepository;
 import com.runasagrada.demo.repository.RoomTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
-    
-    @Autowired
-    private RoomTypeRepository roomTypeRepository;
+    private final RoomRepository roomRepository;
+    private final RoomTypeRepository roomTypeRepository;
 
-    // Create new room
+    public RoomService(RoomRepository roomRepository, RoomTypeRepository roomTypeRepository) {
+        this.roomRepository = roomRepository;
+        this.roomTypeRepository = roomTypeRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Room> search(String roomNumber,
+            Integer floorNumber,
+            Room.ReservationStatus resStatus,
+            Room.CleaningStatus cleStatus,
+            String themeName) {
+        return roomRepository.search(roomNumber, floorNumber, resStatus, cleStatus, themeName);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Room> search(String roomNumber,
+            Integer floorNumber,
+            Room.ReservationStatus resStatus,
+            Room.CleaningStatus cleStatus,
+            String themeName,
+            Pageable pageable) {
+        return roomRepository.search(roomNumber, floorNumber, resStatus, cleStatus, themeName, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Room getById(Long id) {
+        return roomRepository.findByIdFetchType(id)
+                .orElseThrow(() -> new IllegalArgumentException("Room not found: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsRoomNumber(String roomNumber) {
+        return roomRepository.existsByRoomNumberIgnoreCase(roomNumber);
+    }
+
+    @Transactional
     public Room create(Room room) {
-        // Validate that room number doesn't exist on the same floor and hotel
-        if (roomRepository.existsByRoomNumberAndFloorNumberAndHotelId(
-                room.getRoomNumber(), room.getFloorNumber(), room.getHotelId())) {
-            throw new RuntimeException("Room number already exists on this floor");
+        validateRoomBasics(room);
+        attachRoomTypeReference(room);
+        if (existsRoomNumber(room.getRoomNumber())) {
+            throw new IllegalArgumentException("Room number already exists: " + room.getRoomNumber());
         }
         return roomRepository.save(room);
     }
 
-    // Get all rooms
-    public List<Room> findAll() {
-        return roomRepository.findAll();
-    }
+    @Transactional
+    public Room update(Long id, Room updated) {
+        validateRoomBasics(updated);
+        Room current = roomRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Room not found: " + id));
 
-    // Find room by ID
-    public Optional<Room> findById(Long id) {
-        return roomRepository.findById(id);
-    }
-
-    // Update room
-    public Room update(Long id, Room updatedRoom) {
-        return roomRepository.findById(id)
-                .map(existingRoom -> {
-                    // Check if room number change would create a conflict
-                    if (!existingRoom.getRoomNumber().equals(updatedRoom.getRoomNumber()) ||
-                        !existingRoom.getFloorNumber().equals(updatedRoom.getFloorNumber()) ||
-                        !existingRoom.getHotelId().equals(updatedRoom.getHotelId())) {
-                        
-                        if (roomRepository.existsByRoomNumberAndFloorNumberAndHotelId(
-                                updatedRoom.getRoomNumber(), updatedRoom.getFloorNumber(), updatedRoom.getHotelId())) {
-                            throw new RuntimeException("Room number already exists on this floor");
-                        }
-                    }
-                    
-                    existingRoom.setHotelId(updatedRoom.getHotelId());
-                    existingRoom.setRoomType(updatedRoom.getRoomType());
-                    existingRoom.setRoomNumber(updatedRoom.getRoomNumber());
-                    existingRoom.setFloorNumber(updatedRoom.getFloorNumber());
-                    existingRoom.setResStatus(updatedRoom.getResStatus());
-                    existingRoom.setCleStatus(updatedRoom.getCleStatus());
-                    existingRoom.setThemeName(updatedRoom.getThemeName());
-                    existingRoom.setThemeDescription(updatedRoom.getThemeDescription());
-                    return roomRepository.save(existingRoom);
-                })
-                .orElseThrow(() -> new RuntimeException("Room not found with id " + id));
-    }
-
-    // Delete room
-    public void delete(Long id) {
-        if (!roomRepository.existsById(id)) {
-            throw new RuntimeException("Room not found with id " + id);
+        if (!current.getRoomNumber().equalsIgnoreCase(updated.getRoomNumber())
+                && existsRoomNumber(updated.getRoomNumber())) {
+            throw new IllegalArgumentException("Room number already exists: " + updated.getRoomNumber());
         }
-        roomRepository.deleteById(id);
+
+        attachRoomTypeReference(updated);
+
+        current.setHotelId(updated.getHotelId());
+        current.setRoomType(updated.getRoomType());
+        current.setRoomNumber(updated.getRoomNumber());
+        current.setFloorNumber(updated.getFloorNumber());
+        current.setResStatus(updated.getResStatus());
+        current.setCleStatus(updated.getCleStatus());
+        current.setThemeName(updated.getThemeName());
+        current.setThemeDescription(updated.getThemeDescription());
+
+        return roomRepository.save(current);
     }
 
-    // Search rooms with multiple criteria
-    public List<Room> search(String roomNumber, Integer floorNumber, 
-                           Room.ReservationStatus resStatus, Room.CleaningStatus cleStatus,
-                           Long hotelId, String themeName) {
-        return roomRepository.findAll().stream()
-                .filter(room -> roomNumber == null || room.getRoomNumber().toLowerCase().contains(roomNumber.toLowerCase()))
-                .filter(room -> floorNumber == null || room.getFloorNumber().equals(floorNumber))
-                .filter(room -> resStatus == null || room.getResStatus().equals(resStatus))
-                .filter(room -> cleStatus == null || room.getCleStatus().equals(cleStatus))
-                .filter(room -> hotelId == null || room.getHotelId().equals(hotelId))
-                .filter(room -> themeName == null || (room.getThemeName() != null && room.getThemeName().toLowerCase().contains(themeName.toLowerCase())))
-                .collect(Collectors.toList());
+    @Transactional
+    public void delete(Long id) {
+        try {
+            roomRepository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new IllegalStateException("Cannot delete room " + id + " due to references.", ex);
+        }
     }
 
-    // Find rooms by room number
-    public List<Room> findByRoomNumber(String roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber);
+    private void validateRoomBasics(Room room) {
+        if (room.getHotelId() == null)
+            throw new IllegalArgumentException("HotelId is required.");
+        if (room.getRoomNumber() == null || room.getRoomNumber().isBlank())
+            throw new IllegalArgumentException("Room number is required.");
+        if (room.getFloorNumber() == null)
+            throw new IllegalArgumentException("Floor number is required.");
+        if (room.getResStatus() == null)
+            throw new IllegalArgumentException("Reservation status is required.");
+        if (room.getCleStatus() == null)
+            throw new IllegalArgumentException("Cleaning status is required.");
     }
 
-    // Find rooms by floor number
-    public List<Room> findByFloorNumber(Integer floorNumber) {
-        return roomRepository.findByFloorNumber(floorNumber);
-    }
-
-    // Find rooms by reservation status
-    public List<Room> findByReservationStatus(Room.ReservationStatus resStatus) {
-        return roomRepository.findByResStatus(resStatus);
-    }
-
-    // Find rooms by cleaning status
-    public List<Room> findByCleaningStatus(Room.CleaningStatus cleStatus) {
-        return roomRepository.findByCleStatus(cleStatus);
-    }
-
-    // Find rooms by hotel ID
-    public List<Room> findByHotelId(Long hotelId) {
-        return roomRepository.findByHotelId(hotelId);
-    }
-
-    // Find rooms by theme name
-    public List<Room> findByThemeName(String themeName) {
-        return roomRepository.findByThemeNameContainingIgnoreCase(themeName);
-    }
-
-    // Search rooms by room number, room type name, reservation status, and cleaning status
-    public List<Room> searchRooms(String roomNumber, String roomTypeName, 
-                                 Room.ReservationStatus reservationStatus, Room.CleaningStatus cleaningStatus) {
-        return roomRepository.findAll().stream()
-                .filter(room -> roomNumber == null || room.getRoomNumber().toLowerCase().contains(roomNumber.toLowerCase()))
-                .filter(room -> roomTypeName == null || (room.getRoomType() != null && 
-                        room.getRoomType().getName().toLowerCase().contains(roomTypeName.toLowerCase())))
-                .filter(room -> reservationStatus == null || room.getResStatus().equals(reservationStatus))
-                .filter(room -> cleaningStatus == null || room.getCleStatus().equals(cleaningStatus))
-                .collect(Collectors.toList());
-    }
-
-    // Get all room types (for dropdown in forms)
-    public List<RoomType> getAllRoomTypes() {
-        return roomTypeRepository.findAll();
+    private void attachRoomTypeReference(Room room) {
+        if (room.getRoomType() == null || room.getRoomType().getId() == null) {
+            throw new IllegalArgumentException("RoomType is required.");
+        }
+        RoomType rtRef = roomTypeRepository.getReferenceById(room.getRoomType().getId());
+        room.setRoomType(rtRef);
     }
 }

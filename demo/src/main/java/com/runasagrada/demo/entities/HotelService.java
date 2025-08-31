@@ -1,7 +1,5 @@
 package com.runasagrada.demo.entities;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;

@@ -2,11 +2,14 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Runa Sagrada - Panel de Administración" />
-    <meta name="keywords" content="staff, dashboard, gestión, habitaciones" />
-    <meta name="author" content="Runa Sagrada" />
+    <meta
+      name="description"
+      content="Runa Sagrada - Gestión de Habitaciones y Tipos"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestión de Habitaciones - Runa Sagrada</title>
-    <link rel="preload" th:href="@{/images/logito.png}" as="image" />
+
+    <!-- Bootstrap / Icons (same stack as your admin page) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -21,936 +24,1050 @@
     />
     <link rel="stylesheet" th:href="@{/styles/styles.css}" />
     <link rel="stylesheet" th:href="@{/styles/styles1.css}" />
+
+    <style>
+      :root {
+        --sidebar-w: 260px;
+      }
+
+      /* Sidebar fijo */
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: var(--sidebar-w);
+        z-index: 1040;
+        transform: translateX(0);
+        transition: transform 0.25s ease;
+        overflow: hidden; /* evita que brillos/blur tapen el contenido */
+      }
+
+      /* Compensa el sidebar y AJUSTA ANCHO (para que no se corte a la derecha) */
+      .dashboard-header,
+      main#content {
+        margin-left: var(--sidebar-w);
+        width: calc(100% - var(--sidebar-w)); /* <-- clave */
+        box-sizing: border-box;
+        padding: 24px; /* respiración lateral */
+      }
+
+      /* Backdrop, fuera del <aside> */
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(1px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        z-index: 1030;
+      }
+      .sidebar.show + .sidebar-backdrop {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Móvil: off-canvas y ancho completo */
+      @media (max-width: 991.98px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.show {
+          transform: translateX(0);
+        }
+        .dashboard-header,
+        main#content {
+          margin-left: 0;
+          width: 100%;
+          padding: 16px;
+        }
+        body.no-scroll {
+          overflow: hidden;
+        }
+      }
+
+      /* Badges completos y consistentes con el tema */
+      .badge-glass {
+        border-radius: 999px;
+        padding: 0.25rem 0.6rem;
+        font-weight: 600;
+        display: inline-block;
+      }
+      .badge-glass.badge-success {
+        background: #16a34a;
+        color: #fff;
+      } /* verde */
+      .badge-glass.badge-warning {
+        background: #f59e0b;
+        color: #1f2937;
+      } /* ámbar */
+      .badge-glass.badge-danger {
+        background: #ef4444;
+        color: #fff;
+      } /* rojo */
+      .badge-glass.badge-info {
+        background: #3b82f6;
+        color: #fff;
+      } /* azul */
+      .badge-glass.badge-secondary {
+        background: #6b7280;
+        color: #fff;
+      } /* gris */
+    </style>
   </head>
   <body class="dashboard-container">
-    <button
-      class="sidebar-toggle d-lg-none"
-      type="button"
-      id="sidebarToggle"
-      aria-controls="sidebar"
-      aria-expanded="false"
-      aria-label="Alternar navegación"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
+    <!-- Sidebar (kept simple, same vibe as adminPage) -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
+      <div class="sidebar-header p-3">
         <img
           th:src="@{/images/logito.png}"
           alt="Runa Sagrada"
           class="sidebar-logo"
+          style="height: 42px"
         />
-        <h2 class="sidebar-title">Staff Panel</h2>
+        <h2 class="sidebar-title h5 mt-2 mb-0">Admin Panel</h2>
       </div>
-      <nav
-        class="sidebar-nav nav flex-column"
-        id="sidebarTab"
-        role="tablist"
-        aria-orientation="vertical"
-      >
-        <a class="sidebar-nav-link" th:href="@{/dashboard}" role="tab">
-          <span>Dashboard</span>
-        </a>
-        <a class="sidebar-nav-link" th:href="@{/hotel/staff}" role="tab">
-          <span>Gestión Hoteles</span>
-        </a>
-        <a class="sidebar-nav-link active" th:href="@{/rooms/staff}" role="tab">
-          <span>Gestión Habitaciones</span>
-        </a>
-        <a class="sidebar-nav-link" th:href="@{/service/staff}" role="tab">
-          <span>Gestión Servicios</span>
-        </a>
-        <a class="sidebar-nav-link" th:href="@{/finance/staff}" role="tab">
-          <span>Finanzas</span>
-        </a>
-        <a class="sidebar-nav-link" th:href="@{/report/staff}" role="tab">
-          <span>Reportes</span>
+      <nav class="sidebar-nav nav flex-column px-2">
+        <a
+          class="sidebar-nav-link nav-link"
+          th:href="@{/}"
+          aria-selected="false"
+        >
+          <i class="fas fa-chart-pie me-2"></i> Dashboard
         </a>
         <a
-          class="sidebar-nav-link text-white bg-danger rounded-pill mt-3 text-center"
-          th:href="@{/}"
-          role="tab"
+          class="sidebar-nav-link nav-link active"
+          href="#content"
+          aria-selected="true"
         >
-          <span>Volver al sitio</span>
+          <i class="fas fa-bed me-2"></i> Habitaciones & Tipos
         </a>
       </nav>
     </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <header class="dashboard-header">
-      <h1 class="dashboard-title">Gestión de Habitaciones</h1>
-      <p class="dashboard-subtitle">
-        Administra los tipos de habitaciones y las habitaciones individuales
+    <!-- Header -->
+    <header class="dashboard-header p-4 border-bottom">
+      <h1 class="dashboard-title display-5 mb-1">Panel de Administración</h1>
+      <p class="dashboard-subtitle text-muted mb-0">
+        Administra habitaciones, tipos y filtros de búsqueda
       </p>
     </header>
 
-    <div class="container-fluid px-4">
-      <ul class="nav nav-tabs nav-fill mb-4" id="roomTabs" role="tablist">
+    <!-- Main Content -->
+    <main id="content" class="container-fluid p-4">
+      <!-- Alerts (flash) -->
+      <div
+        th:if="${msgSuccess}"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <span th:text="${msgSuccess}">Operación exitosa.</span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+
+      <!-- Tabs -->
+      <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
-            id="room-types-tab"
+            id="rooms-tab"
             data-bs-toggle="tab"
-            data-bs-target="#room-types"
+            data-bs-target="#rooms-pane"
             type="button"
             role="tab"
-            aria-controls="room-types"
+            aria-controls="rooms-pane"
             aria-selected="true"
           >
-            <i class="fas fa-bed me-2"></i>Tipos de Habitación
+            Habitaciones
           </button>
         </li>
         <li class="nav-item" role="presentation">
           <button
             class="nav-link"
-            id="rooms-tab"
+            id="types-tab"
             data-bs-toggle="tab"
-            data-bs-target="#rooms"
+            data-bs-target="#types-pane"
             type="button"
             role="tab"
-            aria-controls="rooms"
+            aria-controls="types-pane"
             aria-selected="false"
           >
-            <i class="fas fa-door-open me-2"></i>Gestión Habitaciones
+            Tipos de Habitación
           </button>
         </li>
       </ul>
-    </div>
 
-    <main class="main-content">
-      <div class="tab-content" id="roomTabContent">
-        <div
+      <div class="tab-content pt-3">
+        <!-- ===================== ROOMS ===================== -->
+        <section
           class="tab-pane fade show active"
-          id="room-types"
-          role="tabpanel"
-          aria-labelledby="room-types-tab"
-        >
-          <section class="tabla-section">
-            <div class="tabla-header">
-              <h2 class="tabla-title">Tipos de Habitación Registrados</h2>
-              <div class="tabla-actions">
-                <button
-                  class="btn btn-gradient"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalCRoomType"
-                >
-                  <i class="fas fa-plus me-2"></i>Agregar Nuevo Tipo
-                </button>
-                <a th:href="@{/rooms/staff}" class="btn btn-outline-light">
-                  <i class="fas fa-sync-alt me-2"></i>Actualizar
-                </a>
-              </div>
-            </div>
-
-            <form
-              id="search-form-types"
-              th:action="@{/roomtype/staff/search}"
-              method="post"
-              class="row g-2 mb-3"
-            >
-              <div class="col">
-                <input
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  placeholder="Nombre de tipo de habitación"
-                />
-              </div>
-              <div class="col">
-                <input
-                  type="number"
-                  name="minCapacity"
-                  class="form-control"
-                  placeholder="Capacidad mínima"
-                />
-              </div>
-              <div class="col">
-                <input
-                  type="number"
-                  name="maxCapacity"
-                  class="form-control"
-                  placeholder="Capacidad máxima"
-                />
-              </div>
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-              </div>
-            </form>
-
-            <div
-              th:if="${successMessage}"
-              class="alert alert-success alert-dismissible fade show"
-              role="alert"
-            >
-              <span th:text="${successMessage}"></span>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-              ></button>
-            </div>
-            <div
-              th:if="${errorMessage}"
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              <span th:text="${errorMessage}"></span>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-              ></button>
-            </div>
-
-            <div class="table-responsive">
-              <table
-                class="table table-dark table-striped table-hover"
-                th:if="${roomTypes != null and not #lists.isEmpty(roomTypes)}"
-              >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Capacidad</th>
-                    <th>Precio Base</th>
-                    <th>Descripción</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="roomType : ${roomTypes}">
-                    <td th:text="${roomType.id}"></td>
-                    <td th:text="${roomType.name}"></td>
-                    <td th:text="${roomType.capacity}"></td>
-                    <td
-                      th:text="${'$' + #numbers.formatDecimal(roomType.basePrice, 1, 'COMMA', 2, 'POINT')}"
-                    ></td>
-                    <td>
-                      <span
-                        th:if="${roomType.description != null and roomType.description.length() > 50}"
-                        th:attr="data-bs-title=${roomType.description}"
-                        data-bs-toggle="tooltip"
-                        th:text="${#strings.substring(roomType.description, 0, 50) + '...'}"
-                      ></span>
-                      <span
-                        th:unless="${roomType.description != null and roomType.description.length() > 50}"
-                        th:text="${roomType.description != null ? roomType.description : 'Sin descripción'}"
-                      ></span>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-primary me-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalURoomType"
-                        th:data-roomtype-id="${roomType.id}"
-                        th:data-roomtype-name="${roomType.name}"
-                        th:data-roomtype-capacity="${roomType.capacity}"
-                        th:data-roomtype-baseprice="${roomType.basePrice}"
-                        th:data-roomtype-description="${roomType.description}"
-                        onclick="loadRoomTypeData(this)"
-                      >
-                        <i class="fas fa-edit"></i> Editar
-                      </button>
-                      <a
-                        class="btn btn-sm btn-danger"
-                        th:href="@{/roomtype/staff/delete/{id}(id=${roomType.id})}"
-                        onclick="return confirm('¿Estás seguro de que quieres eliminar este tipo de habitación?')"
-                      >
-                        <i class="fas fa-trash"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div
-              th:if="${roomTypes == null or #lists.isEmpty(roomTypes)}"
-              class="text-center py-4"
-            >
-              <i class="fas fa-bed fa-3x text-muted mb-3"></i>
-              <h4 class="text-muted">No se encontraron tipos de habitación</h4>
-              <p class="text-muted">
-                Agrega un nuevo tipo de habitación para comenzar
-              </p>
-            </div>
-          </section>
-        </div>
-
-        <div
-          class="tab-pane fade"
-          id="rooms"
+          id="rooms-pane"
           role="tabpanel"
           aria-labelledby="rooms-tab"
         >
-          <section class="tabla-section">
-            <div class="tabla-header">
-              <h2 class="tabla-title">Habitaciones Registradas</h2>
-              <div class="tabla-actions">
-                <button
-                  class="btn btn-gradient"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalCRoom"
-                >
-                  <i class="fas fa-plus me-2"></i>Agregar Nueva
-                </button>
-                <a th:href="@{/rooms/staff}" class="btn btn-outline-light">
-                  <i class="fas fa-sync-alt me-2"></i>Actualizar
-                </a>
-              </div>
+          <div class="tabla-header">
+            <h2 class="h5 mb-0">Habitaciones</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary" id="btnRoomsReset">
+                <i class="fas fa-rotate me-2"></i>Limpiar
+              </button>
+              <button
+                class="btn btn-gradient"
+                data-bs-toggle="modal"
+                data-bs-target="#roomCreateModal"
+              >
+                <i class="fas fa-plus me-2"></i>Nueva Habitación
+              </button>
             </div>
+          </div>
 
-            <form
-              id="search-form"
-              th:action="@{/rooms/staff/search}"
-              method="post"
-              class="row g-2 mb-3"
-            >
-              <div class="col-md-2">
+          <!-- Search -->
+          <form id="roomsSearchForm" class="row g-2 align-items-end search-row">
+            <div class="col-md-auto">
+              <label class="form-label mb-0">N° Habitación</label>
+              <input
+                type="text"
+                class="form-control"
+                id="roomNumber"
+                placeholder="101 / 202A"
+              />
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Piso</label>
+              <input
+                type="number"
+                class="form-control"
+                id="floorNumber"
+                placeholder="1"
+              />
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Reserva</label>
+              <select class="form-select" id="resStatus">
+                <option value="">(Todos)</option>
+                <option
+                  th:each="s : ${reservationStatuses}"
+                  th:value="${s}"
+                  th:text="${s}"
+                ></option>
+              </select>
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Limpieza</label>
+              <select class="form-select" id="cleStatus">
+                <option value="">(Todos)</option>
+                <option
+                  th:each="s : ${cleaningStatuses}"
+                  th:value="${s}"
+                  th:text="${s}"
+                ></option>
+              </select>
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Tema</label>
+              <input
+                type="text"
+                class="form-control"
+                id="themeName"
+                placeholder="Colonial / Cafetero"
+              />
+            </div>
+            <div class="col-md-auto">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search me-2"></i>Buscar
+              </button>
+            </div>
+          </form>
+
+          <!-- Results -->
+          <div class="table-responsive mt-3">
+            <table class="table table-striped align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Hotel</th>
+                  <th>Tipo</th>
+                  <th>Número</th>
+                  <th>Piso</th>
+                  <th>Reserva</th>
+                  <th>Limpieza</th>
+                  <th>Tema</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="roomsTbody">
+                <tr class="text-muted">
+                  <td colspan="9">
+                    Usa los filtros y presiona <em>Buscar</em>…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ===================== ROOM TYPES ===================== -->
+        <section
+          class="tab-pane fade"
+          id="types-pane"
+          role="tabpanel"
+          aria-labelledby="types-tab"
+        >
+          <div class="tabla-header">
+            <h2 class="h5 mb-0">Tipos de Habitación</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary" id="btnTypesReset">
+                <i class="fas fa-rotate me-2"></i>Limpiar
+              </button>
+              <button
+                class="btn btn-gradient"
+                data-bs-toggle="modal"
+                data-bs-target="#typeCreateModal"
+              >
+                <i class="fas fa-plus me-2"></i>Nuevo Tipo
+              </button>
+            </div>
+          </div>
+
+          <!-- Search -->
+          <form id="typesSearchForm" class="row g-2 align-items-end search-row">
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="typeName"
+                placeholder="Estándar / Suite"
+              />
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Capacidad Mín</label>
+              <input
+                type="number"
+                class="form-control"
+                id="minCapacity"
+                min="1"
+                placeholder="1"
+              />
+            </div>
+            <div class="col-md-auto">
+              <label class="form-label mb-0">Capacidad Máx</label>
+              <input
+                type="number"
+                class="form-control"
+                id="maxCapacity"
+                min="1"
+                placeholder="6"
+              />
+            </div>
+            <div class="col-md-auto">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search me-2"></i>Buscar
+              </button>
+            </div>
+          </form>
+
+          <!-- Results -->
+          <div class="table-responsive mt-3">
+            <table class="table table-striped align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Precio Base</th>
+                  <th>Capacidad</th>
+                  <th>Amenities</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="typesTbody">
+                <tr class="text-muted">
+                  <td colspan="6">
+                    Usa los filtros y presiona <em>Buscar</em>…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <!-- /tab-content -->
+
+      <!-- --------------- MODALS --------------- -->
+
+      <!-- Create Room -->
+      <div
+        class="modal fade"
+        id="roomCreateModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+          <form
+            th:action="@{/rooms/staff/create}"
+            method="post"
+            th:object="${roomForm}"
+            class="modal-content"
+          >
+            <div class="modal-header">
+              <h5 class="modal-title">Nueva Habitación</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Hotel ID</label>
                 <input
-                  type="text"
-                  class="form-control"
-                  name="roomNumber"
-                  placeholder="Número"
-                />
-              </div>
-              <div class="col-md-2">
-                <input
+                  th:field="*{hotelId}"
                   type="number"
                   class="form-control"
-                  name="floorNumber"
-                  placeholder="Piso"
+                  required
                 />
               </div>
-              <div class="col-md-2">
-                <select class="form-select" name="resStatus">
-                  <option value="">Estado Reserva</option>
+              <div class="col-md-8">
+                <label class="form-label">Tipo de Habitación</label>
+                <select th:field="*{roomType.id}" class="form-select" required>
+                  <option value="">Seleccionar…</option>
                   <option
-                    th:each="status : ${reservationStatuses}"
-                    th:value="${status}"
-                    th:text="${status}"
+                    th:each="rt : ${roomTypes}"
+                    th:value="${rt.id}"
+                    th:text="${rt.name}"
                   ></option>
                 </select>
               </div>
-              <div class="col-md-2">
-                <select class="form-select" name="cleStatus">
-                  <option value="">Estado Limpieza</option>
-                  <option
-                    th:each="status : ${cleaningStatuses}"
-                    th:value="${status}"
-                    th:text="${status}"
-                  ></option>
-                </select>
-              </div>
-              <div class="col-md-2">
+
+              <div class="col-md-4">
+                <label class="form-label">Número</label>
                 <input
+                  th:field="*{roomNumber}"
                   type="text"
                   class="form-control"
-                  name="themeName"
-                  placeholder="Tema"
+                  required
                 />
               </div>
-              <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">
-                  <i class="fas fa-search me-1"></i>Buscar
-                </button>
+              <div class="col-md-4">
+                <label class="form-label">Piso</label>
+                <input
+                  th:field="*{floorNumber}"
+                  type="number"
+                  class="form-control"
+                  required
+                />
               </div>
-            </form>
+              <div class="col-md-4">
+                <label class="form-label">Estado de Reserva</label>
+                <select th:field="*{resStatus}" class="form-select" required>
+                  <option
+                    th:each="s : ${reservationStatuses}"
+                    th:value="${s}"
+                    th:text="${s}"
+                  ></option>
+                </select>
+              </div>
 
-            <div class="table-responsive">
-              <table
-                class="table table-dark table-striped table-hover"
-                th:if="${rooms != null and not #lists.isEmpty(rooms)}"
-              >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Hotel</th>
-                    <th>Tipo</th>
-                    <th>Número</th>
-                    <th>Piso</th>
-                    <th>Estado Reserva</th>
-                    <th>Estado Limpieza</th>
-                    <th>Tema</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="room : ${rooms}">
-                    <td th:text="${room.id}"></td>
-                    <td th:text="${room.hotelId}"></td>
-                    <td
-                      th:text="${room.roomType != null ? room.roomType.name : 'N/A'}"
-                    ></td>
-                    <td th:text="${room.roomNumber}"></td>
-                    <td th:text="${room.floorNumber}"></td>
-                    <td>
-                      <span
-                        class="badge"
-                        th:classappend="${room.resStatus.name() == 'AVAILABLE' ? 'bg-success' : (room.resStatus.name() == 'BOOKED' or room.resStatus.name() == 'OCCUPIED' ? 'bg-warning' : 'bg-secondary')}"
-                        th:text="${room.resStatus}"
-                      ></span>
-                    </td>
-                    <td>
-                      <span
-                        class="badge"
-                        th:classappend="${room.cleStatus.name() == 'CLEAN' ? 'bg-success' : room.cleStatus.name() == 'DIRTY' ? 'bg-danger' : 'bg-warning'}"
-                        th:text="${room.cleStatus}"
-                      ></span>
-                    </td>
-                    <td th:text="${room.themeName}"></td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-warning me-1"
-                        th:onclick="|editRoom(${room.id})|"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalERoom"
-                      >
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <a
-                        class="btn btn-sm btn-danger"
-                        th:href="@{/rooms/staff/delete/{id}(id=${room.id})}"
-                        onclick="return confirm('¿Estás seguro de que quieres eliminar esta habitación?')"
-                      >
-                        <i class="fas fa-trash"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="col-md-4">
+                <label class="form-label">Estado de Limpieza</label>
+                <select th:field="*{cleStatus}" class="form-select" required>
+                  <option
+                    th:each="s : ${cleaningStatuses}"
+                    th:value="${s}"
+                    th:text="${s}"
+                  ></option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Tema</label>
+                <input
+                  th:field="*{themeName}"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción del Tema</label>
+                <textarea
+                  th:field="*{themeDescription}"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
             </div>
-
-            <div th:if="${#lists.isEmpty(rooms)}" class="text-center py-4">
-              <i class="fas fa-door-open fa-3x text-muted mb-3"></i>
-              <h4 class="text-muted">No se encontraron habitaciones</h4>
-              <p class="text-muted" th:if="${searchPerformed == null}">
-                Agrega una nueva habitación para comenzar.
-              </p>
-              <p class="text-muted" th:if="${searchPerformed}">
-                Ninguna habitación coincide con los criterios de búsqueda.
-              </p>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-primary" type="submit">Crear</button>
             </div>
-          </section>
+          </form>
         </div>
       </div>
+
+      <!-- Edit Room -->
+      <div
+        class="modal fade"
+        id="roomEditModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+          <form id="roomEditForm" class="modal-content" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Habitación</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body row g-3">
+              <!-- Same names as entity for binding -->
+              <input type="hidden" id="roomEditId" />
+              <div class="col-md-4">
+                <label class="form-label">Hotel ID</label>
+                <input
+                  name="hotelId"
+                  id="hotelIdEdit"
+                  type="number"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-8">
+                <label class="form-label">Tipo de Habitación</label>
+                <select
+                  name="roomType.id"
+                  id="roomTypeIdEdit"
+                  class="form-select"
+                  required
+                >
+                  <option value="">Seleccionar…</option>
+                  <option
+                    th:each="rt : ${roomTypes}"
+                    th:value="${rt.id}"
+                    th:text="${rt.name}"
+                  ></option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Número</label>
+                <input
+                  name="roomNumber"
+                  id="roomNumberEdit"
+                  type="text"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Piso</label>
+                <input
+                  name="floorNumber"
+                  id="floorNumberEdit"
+                  type="number"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado de Reserva</label>
+                <select
+                  name="resStatus"
+                  id="resStatusEdit"
+                  class="form-select"
+                  required
+                >
+                  <option
+                    th:each="s : ${reservationStatuses}"
+                    th:value="${s}"
+                    th:text="${s}"
+                  ></option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Estado de Limpieza</label>
+                <select
+                  name="cleStatus"
+                  id="cleStatusEdit"
+                  class="form-select"
+                  required
+                >
+                  <option
+                    th:each="s : ${cleaningStatuses}"
+                    th:value="${s}"
+                    th:text="${s}"
+                  ></option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Tema</label>
+                <input
+                  name="themeName"
+                  id="themeNameEdit"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción del Tema</label>
+                <textarea
+                  name="themeDescription"
+                  id="themeDescriptionEdit"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-primary" type="submit">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Room (simple) -->
+      <form id="roomDeleteForm" method="post" class="d-none"></form>
+
+      <!-- Create RoomType -->
+      <div
+        class="modal fade"
+        id="typeCreateModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <form
+            th:action="@{/roomtype/staff/create}"
+            method="post"
+            class="modal-content"
+          >
+            <div class="modal-header">
+              <h5 class="modal-title">Nuevo Tipo de Habitación</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre</label>
+                <input name="name" type="text" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Capacidad Máxima</label>
+                <input
+                  name="maxOccupancy"
+                  type="number"
+                  min="1"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Precio Base</label>
+                <input
+                  name="basePrice"
+                  type="number"
+                  min="0"
+                  step="100"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Amenities</label>
+                <input
+                  name="amenities"
+                  type="text"
+                  class="form-control"
+                  placeholder="WiFi, AC, ..."
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción</label>
+                <textarea
+                  name="description"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-primary" type="submit">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit RoomType -->
+      <div
+        class="modal fade"
+        id="typeEditModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <form id="typeEditForm" method="post" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Tipo</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body row g-3">
+              <input type="hidden" id="typeEditId" />
+              <div class="col-md-6">
+                <label class="form-label">Nombre</label>
+                <input
+                  name="name"
+                  id="typeNameEdit"
+                  type="text"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Capacidad Máxima</label>
+                <input
+                  name="maxOccupancy"
+                  id="typeMaxOccEdit"
+                  type="number"
+                  min="1"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Precio Base</label>
+                <input
+                  name="basePrice"
+                  id="typePriceEdit"
+                  type="number"
+                  min="0"
+                  step="100"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Amenities</label>
+                <input
+                  name="amenities"
+                  id="typeAmenitiesEdit"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción</label>
+                <textarea
+                  name="description"
+                  id="typeDescEdit"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button class="btn btn-primary" type="submit">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete RoomType (simple) -->
+      <form id="typeDeleteForm" method="post" class="d-none"></form>
     </main>
 
-    <!-- Modal Crear Tipo de Habitación -->
-    <div class="modal fade" id="modalCRoomType" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content bg-dark">
-          <div class="modal-header">
-            <h5 class="modal-title text-white">
-              Agregar Nuevo Tipo de Habitación
-            </h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <form
-            th:action="@{/roomtype/staff/add}"
-            method="post"
-            th:object="${newroomtype}"
-          >
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label text-white">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  th:field="*{name}"
-                  required
-                />
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label text-white">Capacidad</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      th:field="*{capacity}"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label text-white">Precio Base</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      th:field="*{basePrice}"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Descripción</label>
-                <textarea
-                  class="form-control"
-                  rows="3"
-                  th:field="*{description}"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Guardar Tipo de Habitación
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Actualizar Tipo de Habitación -->
-    <div class="modal fade" id="modalURoomType" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content bg-dark">
-          <div class="modal-header">
-            <h5 class="modal-title text-white">
-              Actualizar Tipo de Habitación
-            </h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <form
-            id="formURoomType"
-            th:action="@{/roomtype/staff/update}"
-            method="post"
-            th:object="${newroomtype}"
-          >
-            <input type="hidden" id="idUpdate" th:field="*{id}" />
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label text-white">Nombre</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nameUpdate"
-                  th:field="*{name}"
-                  required
-                />
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label text-white">Capacidad</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="capacityUpdate"
-                      th:field="*{capacity}"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label class="form-label text-white">Precio Base</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      class="form-control"
-                      id="basePriceUpdate"
-                      th:field="*{basePrice}"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Descripción</label>
-                <textarea
-                  class="form-control"
-                  rows="3"
-                  id="descriptionUpdate"
-                  th:field="*{description}"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Actualizar Tipo de Habitación
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Crear Habitación -->
-    <div class="modal fade" id="modalCRoom" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content bg-dark">
-          <div class="modal-header">
-            <h5 class="modal-title text-white">Agregar Nueva Habitación</h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <form
-            th:action="@{/rooms/staff/add}"
-            method="post"
-            th:object="${newroom}"
-          >
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Hotel ID</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    th:field="*{hotelId}"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white"
-                    >Tipo de Habitación</label
-                  >
-                  <select class="form-select" name="roomType" required>
-                    <option value="">Seleccionar tipo</option>
-                    <option
-                      th:each="type : ${roomTypes}"
-                      th:value="${type.id}"
-                      th:text="${type.name}"
-                    ></option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white"
-                    >Número de Habitación</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    th:field="*{roomNumber}"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Piso</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    th:field="*{floorNumber}"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Estado Reserva</label>
-                  <select class="form-select" th:field="*{resStatus}" required>
-                    <option
-                      th:each="status : ${reservationStatuses}"
-                      th:value="${status}"
-                      th:text="${status}"
-                    ></option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Estado Limpieza</label>
-                  <select class="form-select" th:field="*{cleStatus}" required>
-                    <option
-                      th:each="status : ${cleaningStatuses}"
-                      th:value="${status}"
-                      th:text="${status}"
-                    ></option>
-                  </select>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Tema</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  th:field="*{themeName}"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white"
-                  >Descripción del Tema</label
-                >
-                <textarea
-                  class="form-control"
-                  rows="2"
-                  th:field="*{themeDescription}"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Guardar Habitación
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Editar Habitación -->
-    <div class="modal fade" id="modalERoom" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content bg-dark">
-          <div class="modal-header">
-            <h5 class="modal-title text-white">Editar Habitación</h5>
-            <button
-              type="button"
-              class="btn-close btn-close-white"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <form
-            id="formERoom"
-            th:action="@{/rooms/staff/update}"
-            method="post"
-            th:object="${newroom}"
-          >
-            <input type="hidden" id="roomId" th:field="*{id}" />
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Hotel ID</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="hotelIdEdit"
-                    th:field="*{hotelId}"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white"
-                    >Tipo de Habitación</label
-                  >
-                  <select
-                    class="form-select"
-                    id="roomTypeIdEdit"
-                    name="roomType"
-                    required
-                  >
-                    <option value="">Seleccionar tipo</option>
-                    <option
-                      th:each="type : ${roomTypes}"
-                      th:value="${type.id}"
-                      th:text="${type.name}"
-                    ></option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white"
-                    >Número de Habitación</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="roomNumberEdit"
-                    th:field="*{roomNumber}"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Piso</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="floorNumberEdit"
-                    th:field="*{floorNumber}"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Estado Reserva</label>
-                  <select
-                    class="form-select"
-                    id="resStatusEdit"
-                    th:field="*{resStatus}"
-                    required
-                  >
-                    <option
-                      th:each="status : ${reservationStatuses}"
-                      th:value="${status}"
-                      th:text="${status}"
-                    ></option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label text-white">Estado Limpieza</label>
-                  <select
-                    class="form-select"
-                    id="cleStatusEdit"
-                    th:field="*{cleStatus}"
-                    required
-                  >
-                    <option
-                      th:each="status : ${cleaningStatuses}"
-                      th:value="${status}"
-                      th:text="${status}"
-                    ></option>
-                  </select>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white">Tema</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="themeNameEdit"
-                  th:field="*{themeName}"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="form-label text-white"
-                  >Descripción del Tema</label
-                >
-                <textarea
-                  class="form-control"
-                  rows="2"
-                  id="themeDescriptionEdit"
-                  th:field="*{themeDescription}"
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Actualizar Habitación
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
+    <!-- Scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Sidebar toggle
-        const sidebarToggle = document.getElementById("sidebarToggle");
-        const sidebar = document.getElementById("sidebar");
-        if (sidebarToggle) {
-          sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("active");
-          });
+      /* ---------- Config ---------- */
+      const ROOMS_SEARCH_URL = "/rooms/staff/search-ajax";
+      const ROOMS_GET_URL = (id) => `/rooms/staff/update/${id}`;
+      const ROOMS_UPDATE_URL = (id) => `/rooms/staff/update/${id}`;
+      const ROOMS_DELETE_URL = (id) => `/rooms/staff/delete/${id}`;
+
+      const TYPES_SEARCH_URL = "/roomtype/staff/search-ajax";
+      const TYPES_UPDATE_URL = (id) => `/roomtype/staff/update/${id}`;
+      const TYPES_DELETE_URL = (id) => `/roomtype/staff/delete/${id}`;
+
+      /* ---------- Helpers ---------- */
+      function qs(id) {
+        return document.getElementById(id);
+      }
+      function toParams(obj) {
+        const p = new URLSearchParams();
+        Object.entries(obj).forEach(([k, v]) => {
+          if (v !== undefined && v !== null && String(v).trim() !== "")
+            p.append(k, v);
+        });
+        return p.toString();
+      }
+
+      /* ---------- ROOMS ---------- */
+      const roomsTbody = qs("roomsTbody");
+      const roomsCache = new Map();
+
+      function badgeByResStatus(s) {
+        switch (String(s || "").toUpperCase()) {
+          case "AVAILABLE":
+            return "badge-success"; // verde
+          case "BOOKED":
+            return "badge-danger"; // rojo
+          case "OCCUPIED":
+            return "badge-info"; // azul
+          case "MAINTENANCE":
+            return "badge-secondary"; // gris
+          default:
+            return "badge-info";
         }
-
-        // Tooltip initialization
-        const tooltipTriggerList = [].slice.call(
-          document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        );
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl);
+      }
+      function badgeByCleanStatus(s) {
+        switch (String(s || "").toUpperCase()) {
+          case "CLEAN":
+            return "badge-success"; // verde
+          case "DIRTY":
+            return "badge-warning"; // ámbar
+          case "IN_PROGRESS":
+            return "badge-secondary"; // gris
+          default:
+            return "badge-info";
+        }
+      }
+      function renderRooms(rows) {
+        const tbody = document.getElementById("roomsTbody");
+        tbody.innerHTML = "";
+        if (!rows || rows.length === 0) {
+          tbody.innerHTML =
+            '<tr class="text-muted"><td colspan="9">Sin resultados</td></tr>';
+          return;
+        }
+        rows.forEach((r) => {
+          const rtName = r.roomType?.name ?? r.roomTypeName ?? "";
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td><strong>#${r.id}</strong></td>
+        <td>${r.hotelId ?? ""}</td>
+        <td>${rtName}</td>
+        <td>${r.roomNumber ?? ""}</td>
+        <td>${r.floorNumber ?? ""}</td>
+        <td><span class="badge-glass ${badgeByResStatus(r.resStatus)}">${
+            r.resStatus ?? ""
+          }</span></td>
+        <td><span class="badge-glass ${badgeByCleanStatus(r.cleStatus)}">${
+            r.cleStatus ?? ""
+          }</span></td>
+        <td>${r.themeName ?? ""}</td>
+        <td class="table-actions">
+          <div class="btn-group-glass">
+            <button class="btn-glass btn-glass-primary" data-action="edit" data-id="${
+              r.id
+            }" title="Editar"><i class="fas fa-pen"></i></button>
+            <button class="btn-glass btn-glass-danger"  data-action="del"  data-id="${
+              r.id
+            }" title="Eliminar"><i class="fas fa-trash"></i></button>
+          </div>
+        </td>`;
+          tbody.appendChild(tr);
         });
+      }
 
-        // Tab persistence
-        const roomTabs = document.querySelectorAll(
-          '#roomTabs button[data-bs-toggle="tab"]'
-        );
-        roomTabs.forEach((tab) => {
-          tab.addEventListener("shown.bs.tab", (event) => {
-            localStorage.setItem("activeRoomTab", event.target.id);
-          });
+      async function searchRooms(e) {
+        if (e) e.preventDefault();
+        const params = toParams({
+          roomNumber: qs("roomNumber").value,
+          floorNumber: qs("floorNumber").value,
+          resStatus: qs("resStatus").value,
+          cleStatus: qs("cleStatus").value,
+          themeName: qs("themeName").value,
         });
+        const res = await fetch(`${ROOMS_SEARCH_URL}?${params}`);
+        const data = await res.json();
+        renderRooms(data);
+      }
+      qs("roomsSearchForm").addEventListener("submit", searchRooms);
+      qs("btnRoomsReset").addEventListener("click", () => {
+        [
+          "roomNumber",
+          "floorNumber",
+          "resStatus",
+          "cleStatus",
+          "themeName",
+        ].forEach((id) => (qs(id).value = ""));
+        // Ahora, al limpiar, vuelve a mostrar TODO automáticamente
+        searchRooms();
+      });
 
-        const activeTabId = localStorage.getItem("activeRoomTab");
-        if (activeTabId) {
-          const activeTab = document.getElementById(activeTabId);
-          if (activeTab) {
-            new bootstrap.Tab(activeTab).show();
+      /* Edit Room (prefill) */
+      const roomEditModal = document.getElementById("roomEditModal");
+      roomsTbody.addEventListener("click", async (ev) => {
+        const btn = ev.target.closest("button");
+        if (!btn) return;
+        const id = btn.dataset.id;
+        if (btn.dataset.action === "edit") {
+          const res = await fetch(ROOMS_GET_URL(id));
+          const r = await res.json();
+          qs("roomEditId").value = r.id;
+          qs("hotelIdEdit").value = r.hotelId ?? "";
+          qs("roomTypeIdEdit").value = r.roomType?.id ?? r.roomTypeId ?? "";
+          qs("roomNumberEdit").value = r.roomNumber ?? "";
+          qs("floorNumberEdit").value = r.floorNumber ?? "";
+          qs("resStatusEdit").value = r.resStatus ?? "";
+          qs("cleStatusEdit").value = r.cleStatus ?? "";
+          qs("themeNameEdit").value = r.themeName ?? "";
+          qs("themeDescriptionEdit").value = r.themeDescription ?? "";
+          qs("roomEditForm").setAttribute("action", ROOMS_UPDATE_URL(id));
+          bootstrap.Modal.getOrCreateInstance(roomEditModal).show();
+        } else if (btn.dataset.action === "del") {
+          if (confirm("¿Eliminar esta habitación?")) {
+            const form = document.getElementById("roomDeleteForm");
+            form.setAttribute("action", ROOMS_DELETE_URL(id));
+            form.submit();
           }
         }
       });
 
-      function loadRoomTypeData(button) {
-        const id = button.getAttribute("data-roomtype-id");
-        const name = button.getAttribute("data-roomtype-name");
-        const capacity = button.getAttribute("data-roomtype-capacity");
-        const basePrice = button.getAttribute("data-roomtype-baseprice");
-        const description = button.getAttribute("data-roomtype-description");
+      /* ---------- ROOM TYPES ---------- */
+      const typesTbody = qs("typesTbody");
+      const typesCache = new Map();
 
-        const form = document.getElementById("formURoomType");
-        form.querySelector("#idUpdate").value = id;
-        form.querySelector("#nameUpdate").value = name;
-        form.querySelector("#capacityUpdate").value = capacity;
-        form.querySelector("#basePriceUpdate").value = basePrice;
-        form.querySelector("#descriptionUpdate").value = description;
-      }
-
-      async function editRoom(id) {
-        try {
-          const response = await fetch(`/rooms/staff/update/${id}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const room = await response.json();
-
-          const form = document.getElementById("formERoom");
-          form.querySelector("#roomId").value = room.id;
-          form.querySelector("#hotelIdEdit").value = room.hotelId;
-          form.querySelector("#roomTypeIdEdit").value = room.roomType
-            ? room.roomType.id
-            : "";
-          form.querySelector("#roomNumberEdit").value = room.roomNumber;
-          form.querySelector("#floorNumberEdit").value = room.floorNumber;
-          form.querySelector("#resStatusEdit").value = room.resStatus;
-          form.querySelector("#cleStatusEdit").value = room.cleStatus;
-          form.querySelector("#themeNameEdit").value = room.themeName;
-          form.querySelector("#themeDescriptionEdit").value =
-            room.themeDescription;
-        } catch (error) {
-          console.error("Error loading room for editing:", error);
-          alert("No se pudo cargar la información de la habitación.");
+      function renderTypes(rows) {
+        typesTbody.innerHTML = "";
+        if (!rows || rows.length === 0) {
+          typesTbody.innerHTML =
+            '<tr class="text-muted"><td colspan="6">Sin resultados</td></tr>';
+          return;
         }
+        rows.forEach((t) => {
+          typesCache.set(t.id, t);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+      <td>${t.id}</td>
+      <td>${t.name ?? ""}</td>
+      <td>$${Number(t.basePrice ?? 0).toLocaleString("es-CO")}</td>
+      <td>${t.maxOccupancy ?? ""}</td>
+      <td>${t.amenities ?? ""}</td>
+      <td class="text-end table-actions">
+        <button class="btn btn-sm btn-outline-primary me-1" data-action="edit" data-id="${
+          t.id
+        }">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger" data-action="del" data-id="${
+          t.id
+        }">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>`;
+          typesTbody.appendChild(tr);
+        });
       }
+
+      async function searchTypes(e) {
+        if (e) e.preventDefault();
+        const params = toParams({
+          name: qs("typeName").value,
+          minCapacity: qs("minCapacity").value,
+          maxCapacity: qs("maxCapacity").value,
+        });
+        const res = await fetch(`${TYPES_SEARCH_URL}?${params}`);
+        const data = await res.json();
+        renderTypes(data);
+      }
+      qs("typesSearchForm").addEventListener("submit", searchTypes);
+      qs("btnTypesReset").addEventListener("click", () => {
+        ["typeName", "minCapacity", "maxCapacity"].forEach(
+          (id) => (qs(id).value = "")
+        );
+        // Al limpiar, vuelve a mostrar TODOS los tipos
+        searchTypes();
+      });
+
+      /* Edit Type (prefill from cache) */
+      const typeEditModal = document.getElementById("typeEditModal");
+      typesTbody.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("button");
+        if (!btn) return;
+        const id = btn.dataset.id;
+        if (btn.dataset.action === "edit") {
+          const t = typesCache.get(Number(id));
+          if (!t) return;
+          qs("typeEditId").value = t.id;
+          qs("typeNameEdit").value = t.name ?? "";
+          qs("typeMaxOccEdit").value = t.maxOccupancy ?? "";
+          qs("typePriceEdit").value = t.basePrice ?? "";
+          qs("typeAmenitiesEdit").value = t.amenities ?? "";
+          qs("typeDescEdit").value = t.description ?? "";
+          qs("typeEditForm").setAttribute("action", TYPES_UPDATE_URL(id));
+          bootstrap.Modal.getOrCreateInstance(typeEditModal).show();
+        } else if (btn.dataset.action === "del") {
+          if (confirm("¿Eliminar este tipo?")) {
+            const form = document.getElementById("typeDeleteForm");
+            form.setAttribute("action", TYPES_DELETE_URL(id));
+            form.submit();
+          }
+        }
+      });
+
+      /* ---------- AUTO-CARGA INICIAL ---------- */
+      /* Al cargar la página, trae TODOS los elementos de ambos listados,
+   aprovechando que el backend retorna “todo” cuando los filtros van vacíos. */
+      window.addEventListener("DOMContentLoaded", () => {
+        searchRooms(); // lista de Habitaciones
+        searchTypes(); // lista de Tipos
+      });
+      // --- Sidebar mobile toggle ---
+      const sb = document.getElementById("sidebar");
+      const sbb = document.getElementById("sidebarBackdrop");
+      const btn = document.getElementById("sidebarToggle"); // tu botón hamburguesa
+
+      function openSidebar(open) {
+        sb.classList.toggle("show", !!open);
+        sbb.classList.toggle("show", !!open);
+        document.body.classList.toggle("no-scroll", !!open);
+      }
+
+      btn?.addEventListener("click", () =>
+        openSidebar(!sb.classList.contains("show"))
+      );
+      sbb?.addEventListener("click", () => openSidebar(false));
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 992) openSidebar(false);
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") openSidebar(false);
+      });
     </script>
   </body>
 </html>

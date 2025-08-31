@@ -14,6 +14,12 @@ import com.runasagrada.demo.repository.HotelUserRepository;
 import com.runasagrada.demo.service.ServiceScheduleService;
 
 import jakarta.transaction.Transactional;
+import com.runasagrada.demo.repository.RoomRepository;
+import com.runasagrada.demo.repository.RoomTypeRepository;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @Transactional
@@ -30,6 +36,12 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
 	ServiceScheduleService scheduleService;
+
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
+
+	@Autowired
+	private RoomRepository roomRepository;
 
 	// URLs de imágenes organizadas por categoría - Enlaces actualizados y
 	// verificados
@@ -236,21 +248,169 @@ public class DatabaseInit implements ApplicationRunner {
 				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30), 30), 7);
 
 		// === Usuarios y Clientes ===
+		// === Usuarios y Clientes ===
 		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
 		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");
 		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555",
 				"5555555555");
 
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
+		// +7 adicionales (todos con email único)
+		HotelUser user4 = new HotelUser("Carlos Mendoza", "carlos.mendoza@gmail.com", "password123", "3001234567",
+				"CC1001");
+		HotelUser user5 = new HotelUser("María Rodríguez", "maria.rodriguez@hotmail.com", "password123", "3109876543",
+				"CC1002");
+		HotelUser user6 = new HotelUser("Andrés Gómez", "andres.gomez@yahoo.com", "password123", "3205555555",
+				"CC1003");
+		HotelUser user7 = new HotelUser("Lucía Herrera", "lucia.herrera@gmail.com", "password123", "3157777777",
+				"CC1004");
+		HotelUser user8 = new HotelUser("Diego Vargas", "diego.vargas@outlook.com", "password123", "3018888888",
+				"CC1005");
+		HotelUser user9 = new HotelUser("Sofía Castro", "sofia.castro@gmail.com", "password123", "3112222222",
+				"CC1006");
+		HotelUser user10 = new HotelUser("Miguel Torres", "miguel.torres@yahoo.com", "password123", "3213333333",
+				"CC1007");
 
-		Client client1 = new Client(user1);
-		Client client2 = new Client(user2);
-		Client client3 = new Client(user3);
+		// Guarda usuarios
+		userRepository.saveAll(java.util.Arrays.asList(
+				user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
 
-		clientRepository.save(client1);
-		clientRepository.save(client2);
-		clientRepository.save(client3);
+		// Crea y guarda clientes 1:1 con los usuarios
+		clientRepository.saveAll(java.util.Arrays.asList(
+				new Client(user1), new Client(user2), new Client(user3),
+				new Client(user4), new Client(user5), new Client(user6),
+				new Client(user7), new Client(user8), new Client(user9),
+				new Client(user10)));
+
+		// =========================
+		// 1) ROOM TYPES (asegurar 5)
+		// =========================
+		Map<String, RoomType> typesByName = roomTypeRepository.findAll().stream()
+				.collect(Collectors.toMap(rt -> rt.getName().toLowerCase(Locale.ROOT), rt -> rt, (a, b) -> a,
+						LinkedHashMap::new));
+
+		RoomType rtStd = ensureType(typesByName, "Estándar Regional",
+				"Habitaciones cómodas con decoración típica de cada región colombiana",
+				new BigDecimal("120000"), 2, "WiFi, AC, Baño privado, Arte local, Textiles regionales");
+
+		RoomType rtDel = ensureType(typesByName, "Deluxe Cultural",
+				"Habitaciones amplias con elementos culturales auténticos de la región",
+				new BigDecimal("180000"), 3, "WiFi, AC, Minibar, Balcón, Mobiliario artesanal, Biblioteca regional");
+
+		RoomType rtSuite = ensureType(typesByName, "Suite Ancestral",
+				"Suites de lujo con sala separada y diseño premium colombiano",
+				new BigDecimal("280000"), 4,
+				"WiFi, AC, Minibar, Sala de estar, Ropa de cama premium, Colección cultural");
+
+		RoomType rtFam = ensureType(typesByName, "Familiar Colombiana",
+				"Habitaciones familiares amplias con espacios conectados y temática local",
+				new BigDecimal("220000"), 6, "WiFi, AC, Cocineta, Literas, Juegos tradicionales, Juguetes artesanales");
+
+		RoomType rtEco = ensureType(typesByName, "Eco Boutique",
+				"Habitación eco-friendly con materiales locales y energía renovable",
+				new BigDecimal("200000"), 3, "WiFi, Ventilación natural, Kit ecológico, Terraza verde");
+
+		Map<Integer, RoomType> typeByFloor = Map.of(
+				1, rtStd, 2, rtDel, 3, rtSuite, 4, rtFam, 5, rtEco);
+
+		// ==========================================
+		// 2) ROOMS (100) — solo si no existen rooms
+		// ==========================================
+		if (roomRepository.count() == 0L) {
+			for (int hotelId = 1; hotelId <= 5; hotelId++) {
+				for (int floor = 1; floor <= 5; floor++) {
+					RoomType floorType = typeByFloor.get(floor);
+					for (int i = 1; i <= 4; i++) {
+						Room r = new Room();
+						r.setHotelId((long) hotelId);
+						r.setRoomType(floorType);
+
+						// N° habitación único por hotel (ej: "1-101", "2-101", etc.)
+						String roomNumber = String.format("%d-%d0%d", hotelId, floor, i);
+						r.setRoomNumber(roomNumber);
+
+						r.setFloorNumber(floor);
+
+						// Estados demo: variedad para que los filtros muestren algo
+						Room.ReservationStatus res = switch (i) {
+							case 2 -> Room.ReservationStatus.BOOKED;
+							case 3 -> Room.ReservationStatus.OCCUPIED;
+							case 4 -> Room.ReservationStatus.MAINTENANCE;
+							default -> Room.ReservationStatus.AVAILABLE;
+						};
+						r.setResStatus(res);
+
+						r.setCleStatus((i % 2 == 0) ? Room.CleaningStatus.DIRTY : Room.CleaningStatus.CLEAN);
+
+						// Temas por hotel/piso (nombres culturales)
+						r.setThemeName(themeNameFor(hotelId, floor));
+						r.setThemeDescription("Habitación temática personalizada por destino y piso.");
+
+						roomRepository.save(r);
+					}
+				}
+			}
+		}
+
+	}
+
+	/** Crea el RoomType si no existe por nombre; si existe, lo reutiliza. */
+	private RoomType ensureType(Map<String, RoomType> existing,
+			String name, String desc, BigDecimal price, Integer maxOcc, String amenities) {
+		RoomType found = existing.get(name.toLowerCase(Locale.ROOT));
+		if (found != null)
+			return found;
+
+		RoomType rt = new RoomType();
+		rt.setName(name);
+		rt.setDescription(desc);
+		rt.setBasePrice(price);
+		rt.setMaxOccupancy(maxOcc);
+		rt.setAmenities(amenities);
+
+		rt = roomTypeRepository.save(rt);
+		existing.put(name.toLowerCase(Locale.ROOT), rt);
+		return rt;
+	}
+
+	/** Nombres de tema por hotel (1..5) y piso (1..5). */
+	private String themeNameFor(int hotelId, int floor) {
+		return switch (hotelId) {
+			case 1 -> switch (floor) {
+				case 1 -> "Balcones Coloniales";
+				case 2 -> "Brisa Marina";
+				case 3 -> "Palacio Virreinal";
+				case 4 -> "Casa de Familias";
+				default -> "Terraza Tropical";
+			};
+			case 2 -> switch (floor) {
+				case 1 -> "Finca Cafetera";
+				case 2 -> "Valle del Cocora";
+				case 3 -> "Balcón Montañero";
+				case 4 -> "Casa Paisa";
+				default -> "Guadual Eco";
+			};
+			case 3 -> switch (floor) {
+				case 1 -> "Mar de Siete Colores";
+				case 2 -> "Johnny Cay";
+				case 3 -> "Cayo Acuario";
+				case 4 -> "Casa Raizal";
+				default -> "Brisa Caribe";
+			};
+			case 4 -> switch (floor) {
+				case 1 -> "Tayrona Ancestral";
+				case 2 -> "Sierra Nevada";
+				case 3 -> "Ciudad Perdida";
+				case 4 -> "Kogui Sagrado";
+				default -> "Eco Tayrona";
+			};
+			case 5 -> switch (floor) {
+				case 1 -> "Plaza Mayor";
+				case 2 -> "Casa Colonial";
+				case 3 -> "Observatorio Muisca";
+				case 4 -> "Hogar Boyacense";
+				default -> "Viñedos Andinos";
+			};
+			default -> "Tema Regional";
+		};
 	}
 }
