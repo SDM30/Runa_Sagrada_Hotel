@@ -121,133 +121,169 @@ public class DatabaseInit implements ApplicationRunner {
 	public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
 		// === Crear servicios (sin fecha/hora/capacidad) ===
 		ServiceOffering gastronomia = serviceRepository.save(new ServiceOffering(
-				"Gastronomía Ancestral", "Comida",
+				"Gastronomía Ancestral", "Comida", "",
 				"Sabores auténticos de la cocina tradicional colombiana, preparados con ingredientes locales y técnicas ancestrales.",
-				List.of(), 45900, "Disponible",
+				List.of(), 45900, 60,
 				List.of(ImageUrls.GASTRONOMIA_1, ImageUrls.GASTRONOMIA_2, ImageUrls.GASTRONOMIA_3),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		ServiceOffering tours = serviceRepository.save(new ServiceOffering(
-				"Tours Sagrados", "Tours",
+				"Tours Sagrados", "Tours", "",
 				"Expediciones guiadas por lugares místicos y sitios arqueológicos, conectando con la sabiduría ancestral.",
-				List.of(), 65500, "Disponible",
+				List.of(), 65500, 60,
 				List.of(ImageUrls.TOURS_ARQUEOLOGICOS_1, ImageUrls.TOURS_ARQUEOLOGICOS_2,
 						ImageUrls.TOURS_ARQUEOLOGICOS_3),
-				5.6333, -73.5333));
+				10, 5.6333, -73.5333));
 
 		ServiceOffering rituales = serviceRepository.save(new ServiceOffering(
-				"Rituales de Bienestar", "Hotel",
+				"Rituales de Bienestar", "Hotel", "",
 				"Terapias tradicionales y ceremonias de sanación inspiradas en las prácticas indígenas colombianas.",
-				List.of(), 75000, "Disponible",
+				List.of(), 75000, 60,
 				List.of(ImageUrls.RITUALES_1, ImageUrls.RITUALES_2, ImageUrls.RITUALES_3),
-				4.7109, -74.0721));
+				10, 4.7109, -74.0721));
 
 		ServiceOffering boutique = serviceRepository.save(new ServiceOffering(
-				"Hospedaje Boutique", "Hotel",
+				"Hospedaje Boutique", "Hotel", "",
 				"Habitaciones únicas diseñadas con elementos artesanales y decoración inspirada en culturas precolombinas.",
-				List.of(), 120000, "Disponible",
+				List.of(), 120000, 60,
 				List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2, ImageUrls.HOSPEDAJE_BOUTIQUE_3),
-				4.6370, -75.5710));
+				10, 4.6370, -75.5710));
 
 		ServiceOffering ecoturismo = serviceRepository.save(new ServiceOffering(
-				"Ecoturismo", "Tours",
+				"Ecoturismo", "Tours", "",
 				"Experiencias sostenibles que preservan y celebran la biodiversidad única de los ecosistemas colombianos.",
-				List.of(), 55750, "Disponible",
+				List.of(), 55750, 60,
 				List.of(ImageUrls.ECOTURISMO_1, ImageUrls.ECOTURISMO_2, ImageUrls.ECOTURISMO_3),
-				12.5847, -81.7005));
+				10, 12.5847, -81.7005));
 
 		ServiceOffering cultura = serviceRepository.save(new ServiceOffering(
-				"Cultura Viva", "Tours",
+				"Cultura Viva", "Tours", "",
 				"Talleres de artesanías, música tradicional y danzas folclóricas con maestros de comunidades locales.",
-				List.of(), 35000, "Disponible",
+				List.of(), 35000, 60,
 				List.of(ImageUrls.CULTURA_1, ImageUrls.CULTURA_2, ImageUrls.CULTURA_3),
-				11.2408, -74.1990));
+				10, 11.2408, -74.1990));
 
 		ServiceOffering cacao = serviceRepository.save(new ServiceOffering(
-				"Ceremonia del Cacao Sagrado", "Tours",
+				"Ceremonia del Cacao Sagrado", "Tours", "",
 				"Participa en un ritual ancestral de conexión espiritual con el cacao como elemento sagrado.",
-				List.of(), 85000, "Disponible",
+				List.of(), 85000, 60,
 				List.of(ImageUrls.CACAO_1, ImageUrls.CACAO_2, ImageUrls.CACAO_3),
-				5.6333, -73.5333));
+				10, 5.6333, -73.5333));
 
 		ServiceOffering aves = serviceRepository.save(new ServiceOffering(
-				"Avistamiento de Aves", "Tours",
+				"Avistamiento de Aves", "Tours", "",
 				"Descubre la biodiversidad de Colombia a través de sus especies de aves más representativas.",
-				List.of(), 40000, "Disponible",
+				List.of(), 40000, 60,
 				List.of(ImageUrls.AVES_1, ImageUrls.AVES_2, ImageUrls.AVES_3),
-				4.7109, -74.0721));
+				10, 4.7109, -74.0721));
 
 		ServiceOffering senderismo = serviceRepository.save(new ServiceOffering(
-				"Senderismo Místico", "Tours",
+				"Senderismo Místico", "Tours", "",
 				"Explora caminos ancestrales y conecta con la naturaleza en rutas llenas de energía y tradición.",
-				List.of(), 50000, "Disponible",
+				List.of(), 50000, 60,
 				List.of(ImageUrls.SENDERISMO_1, ImageUrls.SENDERISMO_2, ImageUrls.SENDERISMO_3),
-				11.2408, -74.1990));
+				10, 11.2408, -74.1990));
 
 		ServiceOffering suite = serviceRepository.save(new ServiceOffering(
-				"Suite Presidencial", "Hotel",
+				"Suite Presidencial", "Hotel", "",
 				"La experiencia más exclusiva con vista panorámica, jacuzzi privado y servicio de mayordomo 24/7.",
-				List.of(), 350.00, "Disponible",
+				List.of(), 350.00, 60,
 				List.of(ImageUrls.SUITE_PRESIDENCIAL_1, ImageUrls.SUITE_PRESIDENCIAL_2, ImageUrls.SUITE_PRESIDENCIAL_3),
-				4.6014, -74.0661));
+				2, 4.6014, -74.0661));
 
 		ServiceOffering cabanas = serviceRepository.save(new ServiceOffering(
-				"Cabañas Ecológicas", "Hotel",
+				"Cabañas Ecológicas", "Hotel", "",
 				"Alojamiento sostenible en medio de la naturaleza, construido con materiales autóctonos y energía solar.",
-				List.of(), 95.00, "Disponible",
+				List.of(), 95.00, 60,
 				List.of(ImageUrls.CABANAS_1, ImageUrls.CABANAS_2, ImageUrls.CABANAS_3),
-				6.2442, -75.5736));
+				4, 6.2442, -75.5736));
 
 		ServiceOffering cafe = serviceRepository.save(new ServiceOffering(
-				"Taller de Café Premium", "Comida",
+				"Taller de Café Premium", "Comida", "",
 				"Aprende sobre el proceso del café colombiano desde el grano hasta la taza, con cata guiada.",
-				List.of(), 30.00, "Disponible",
+				List.of(), 30.00, 60,
 				List.of(ImageUrls.CAFE_1, ImageUrls.CAFE_2, ImageUrls.CAFE_3),
-				5.0689, -75.5174));
+				10, 5.0689, -75.5174));
 
 		ServiceOffering chef = serviceRepository.save(new ServiceOffering(
-				"Cena con Chef Estrella", "Comida",
+				"Cena con Chef Estrella", "Comida", "",
 				"Menú degustación de 7 platos con maridaje de vinos, preparado por nuestro chef galardonado.",
-				List.of(), 120.00, "Disponible",
+				List.of(), 120.00, 60,
 				List.of(ImageUrls.CHEF_1, ImageUrls.CHEF_2, ImageUrls.CHEF_3),
-				6.2518, -75.5636));
+				10, 6.2518, -75.5636));
 
 		ServiceOffering desayuno = serviceRepository.save(new ServiceOffering(
-				"Desayuno Tradicional", "Comida",
+				"Desayuno Tradicional", "Comida", "",
 				"Desayuno completo con arepas, huevos pericos, chocolate caliente y frutas tropicales.",
-				List.of(), 15.50, "Disponible",
+				List.of(), 15.50, 60,
 				List.of(ImageUrls.DESAYUNO_1, ImageUrls.DESAYUNO_2, ImageUrls.DESAYUNO_3),
-				10.9639, -74.7964));
+				10, 10.9639, -74.7964));
 
 		// === Schedules por servicio: usar scheduleService con un ServiceSchedule base
 		// ===
 		scheduleService.seedSchedules(
-				new ServiceSchedule(gastronomia, LocalDate.now().plusDays(1), LocalTime.of(19, 0), 20), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(tours, LocalDate.now().plusDays(1), LocalTime.of(8, 30), 15),
+				new ServiceSchedule(gastronomia, LocalDate.now().plusDays(1), LocalTime.of(19, 0), LocalTime.of(20, 0),
+						true),
+				7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(tours, LocalDate.now().plusDays(1), LocalTime.of(8, 30), LocalTime.of(9, 30), true),
 				7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(rituales, LocalDate.now().plusDays(1), LocalTime.of(16, 0), 10), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(boutique, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
+				.seedSchedules(new ServiceSchedule(rituales, LocalDate.now().plusDays(1), LocalTime.of(16, 0),
+						LocalTime.of(17, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(boutique, LocalDate.now(), LocalTime.of(15, 0), LocalTime.of(16, 0), true), 7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(ecoturismo, LocalDate.now().plusDays(2), LocalTime.of(9, 0), 12), 7);
+				.seedSchedules(new ServiceSchedule(ecoturismo, LocalDate.now().plusDays(2), LocalTime.of(9, 0),
+						LocalTime.of(10, 0), true), 7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(cultura, LocalDate.now().plusDays(3), LocalTime.of(14, 0), 25), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cacao, LocalDate.now().plusDays(2), LocalTime.of(17, 30), 8),
+				.seedSchedules(new ServiceSchedule(cultura, LocalDate.now().plusDays(3), LocalTime.of(14, 0),
+						LocalTime.of(15, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cacao, LocalDate.now().plusDays(2), LocalTime.of(17, 30), LocalTime.of(18, 30),
+						true),
 				7);
-		scheduleService.seedSchedules(new ServiceSchedule(aves, LocalDate.now().plusDays(1), LocalTime.of(6, 0), 10),
-				7);
-		scheduleService
-				.seedSchedules(new ServiceSchedule(senderismo, LocalDate.now().plusDays(2), LocalTime.of(7, 0), 15), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(suite, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cabanas, LocalDate.now(), LocalTime.of(14, 0), 5), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cafe, LocalDate.now().plusDays(2), LocalTime.of(10, 0), 8),
-				7);
-		scheduleService.seedSchedules(new ServiceSchedule(chef, LocalDate.now().plusDays(3), LocalTime.of(20, 0), 12),
+		scheduleService.seedSchedules(
+				new ServiceSchedule(aves, LocalDate.now().plusDays(1), LocalTime.of(6, 0), LocalTime.of(7, 0), true),
 				7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30), 30), 7);
+				.seedSchedules(new ServiceSchedule(senderismo, LocalDate.now().plusDays(2), LocalTime.of(7, 0),
+						LocalTime.of(8, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(suite, LocalDate.now(), LocalTime.of(15, 0), LocalTime.of(16, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cabanas, LocalDate.now(), LocalTime.of(14, 0), LocalTime.of(15, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cafe, LocalDate.now().plusDays(2), LocalTime.of(10, 0), LocalTime.of(11, 0), true),
+				7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(chef, LocalDate.now().plusDays(3), LocalTime.of(20, 0), LocalTime.of(21, 0), true),
+				7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30),
+						LocalTime.of(8, 30), true), 7);
 
-		// === Usuarios y Clientes ===
+		// Juntar horarios a los Servicios
+		gastronomia.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(gastronomia)));
+		tours.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(tours)));
+		rituales.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(rituales)));
+		boutique.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(boutique)));
+		ecoturismo.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(ecoturismo)));
+		cultura.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cultura)));
+		cacao.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cacao)));
+		aves.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(aves)));
+		senderismo.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(senderismo)));
+		suite.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(suite)));
+		cabanas.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cabanas)));
+		cafe.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cafe)));
+		chef.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(chef)));
+		desayuno.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(desayuno)));
+
+		// Persistir las relaciones
+		serviceRepository.saveAll(java.util.Arrays.asList(
+				gastronomia, tours, rituales, boutique, ecoturismo, cultura, cacao, aves,
+				senderismo, suite, cabanas, cafe, chef, desayuno));
+
 		// === Usuarios y Clientes ===
 		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
 		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");

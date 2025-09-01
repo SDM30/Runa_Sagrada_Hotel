@@ -21,32 +21,36 @@ public class ServiceOffering {
 
     private String name;
     private String category;
+    private String subcategory;
     private String description;
 
     @OneToMany(mappedBy = "service")
-    @OrderBy("sched_date ASC, sched_time ASC")
+    @OrderBy("schedDate ASC, startTime ASC")
     private List<ServiceSchedule> serviceSchedules;
 
     private double basePrice;
-    private String status;
+    private int durationMinutes;
     private List<String> imageUrls;
+    private int maxParticipants;
     private double latitude;
     private double longitude;
 
     public ServiceOffering() {
     }
 
-    public ServiceOffering(String name, String category, String description, List<ServiceSchedule> serviceSchedules,
-            double basePrice, String status, List<String> imageUrls, double latitude, double longitude) {
+    public ServiceOffering(String name, String category, String subcategory, String description,
+            List<ServiceSchedule> serviceSchedules, double basePrice, int durationMinutes, List<String> imageUrls,
+            int maxParticipants, double latitude, double longitude) {
         this.name = name;
         this.category = category;
+        this.subcategory = subcategory;
         this.description = description;
         this.serviceSchedules = serviceSchedules;
         this.basePrice = basePrice;
-        this.status = status;
+        this.durationMinutes = durationMinutes;
         this.imageUrls = imageUrls;
+        this.maxParticipants = maxParticipants;
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
 }
