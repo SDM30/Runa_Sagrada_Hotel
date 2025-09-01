@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 @AllArgsConstructor
-public class HotelService {
+public class ServiceOffering {
 
     @Id
     @GeneratedValue
@@ -33,10 +33,10 @@ public class HotelService {
     private double latitude;
     private double longitude;
 
-    public HotelService() {
+    public ServiceOffering() {
     }
 
-    public HotelService(String name, String category, String description, List<ServiceSchedule> serviceSchedules,
+    public ServiceOffering(String name, String category, String description, List<ServiceSchedule> serviceSchedules,
             double basePrice, String status, List<String> imageUrls, double latitude, double longitude) {
         this.name = name;
         this.category = category;

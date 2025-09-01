@@ -828,7 +828,7 @@ if (modalUCliente) {
     var button = event.relatedTarget;
     var clientId = button.getAttribute("data-id");
 
-    fetch("/staff/client/update/" + clientId)
+    fetch("/ops/client/update/" + clientId)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -849,7 +849,7 @@ if (modalUCliente) {
 }
 
 function passDelClient(clientId) {
-  fetch("/staff/client/delete/" + clientId)
+  fetch("/ops/client/delete/" + clientId)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);

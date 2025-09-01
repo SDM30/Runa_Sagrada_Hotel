@@ -9,7 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 
 import com.runasagrada.demo.repository.ClientRepository;
-import com.runasagrada.demo.repository.HotelServiceRepository;
+import com.runasagrada.demo.repository.ServiceOfferingRepository;
 import com.runasagrada.demo.repository.HotelUserRepository;
 import com.runasagrada.demo.service.ServiceScheduleService;
 
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
-	HotelServiceRepository serviceRepository;
+	ServiceOfferingRepository serviceRepository;
 
 	@Autowired
 	HotelUserRepository userRepository;
@@ -120,14 +120,14 @@ public class DatabaseInit implements ApplicationRunner {
 	@Override
 	public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
 		// === Crear servicios (sin fecha/hora/capacidad) ===
-		HotelService gastronomia = serviceRepository.save(new HotelService(
+		ServiceOffering gastronomia = serviceRepository.save(new ServiceOffering(
 				"Gastronomía Ancestral", "Comida",
 				"Sabores auténticos de la cocina tradicional colombiana, preparados con ingredientes locales y técnicas ancestrales.",
 				List.of(), 45900, "Disponible",
 				List.of(ImageUrls.GASTRONOMIA_1, ImageUrls.GASTRONOMIA_2, ImageUrls.GASTRONOMIA_3),
 				10.3910, -75.4794));
 
-		HotelService tours = serviceRepository.save(new HotelService(
+		ServiceOffering tours = serviceRepository.save(new ServiceOffering(
 				"Tours Sagrados", "Tours",
 				"Expediciones guiadas por lugares místicos y sitios arqueológicos, conectando con la sabiduría ancestral.",
 				List.of(), 65500, "Disponible",
@@ -135,84 +135,84 @@ public class DatabaseInit implements ApplicationRunner {
 						ImageUrls.TOURS_ARQUEOLOGICOS_3),
 				5.6333, -73.5333));
 
-		HotelService rituales = serviceRepository.save(new HotelService(
+		ServiceOffering rituales = serviceRepository.save(new ServiceOffering(
 				"Rituales de Bienestar", "Hotel",
 				"Terapias tradicionales y ceremonias de sanación inspiradas en las prácticas indígenas colombianas.",
 				List.of(), 75000, "Disponible",
 				List.of(ImageUrls.RITUALES_1, ImageUrls.RITUALES_2, ImageUrls.RITUALES_3),
 				4.7109, -74.0721));
 
-		HotelService boutique = serviceRepository.save(new HotelService(
+		ServiceOffering boutique = serviceRepository.save(new ServiceOffering(
 				"Hospedaje Boutique", "Hotel",
 				"Habitaciones únicas diseñadas con elementos artesanales y decoración inspirada en culturas precolombinas.",
 				List.of(), 120000, "Disponible",
 				List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2, ImageUrls.HOSPEDAJE_BOUTIQUE_3),
 				4.6370, -75.5710));
 
-		HotelService ecoturismo = serviceRepository.save(new HotelService(
+		ServiceOffering ecoturismo = serviceRepository.save(new ServiceOffering(
 				"Ecoturismo", "Tours",
 				"Experiencias sostenibles que preservan y celebran la biodiversidad única de los ecosistemas colombianos.",
 				List.of(), 55750, "Disponible",
 				List.of(ImageUrls.ECOTURISMO_1, ImageUrls.ECOTURISMO_2, ImageUrls.ECOTURISMO_3),
 				12.5847, -81.7005));
 
-		HotelService cultura = serviceRepository.save(new HotelService(
+		ServiceOffering cultura = serviceRepository.save(new ServiceOffering(
 				"Cultura Viva", "Tours",
 				"Talleres de artesanías, música tradicional y danzas folclóricas con maestros de comunidades locales.",
 				List.of(), 35000, "Disponible",
 				List.of(ImageUrls.CULTURA_1, ImageUrls.CULTURA_2, ImageUrls.CULTURA_3),
 				11.2408, -74.1990));
 
-		HotelService cacao = serviceRepository.save(new HotelService(
+		ServiceOffering cacao = serviceRepository.save(new ServiceOffering(
 				"Ceremonia del Cacao Sagrado", "Tours",
 				"Participa en un ritual ancestral de conexión espiritual con el cacao como elemento sagrado.",
 				List.of(), 85000, "Disponible",
 				List.of(ImageUrls.CACAO_1, ImageUrls.CACAO_2, ImageUrls.CACAO_3),
 				5.6333, -73.5333));
 
-		HotelService aves = serviceRepository.save(new HotelService(
+		ServiceOffering aves = serviceRepository.save(new ServiceOffering(
 				"Avistamiento de Aves", "Tours",
 				"Descubre la biodiversidad de Colombia a través de sus especies de aves más representativas.",
 				List.of(), 40000, "Disponible",
 				List.of(ImageUrls.AVES_1, ImageUrls.AVES_2, ImageUrls.AVES_3),
 				4.7109, -74.0721));
 
-		HotelService senderismo = serviceRepository.save(new HotelService(
+		ServiceOffering senderismo = serviceRepository.save(new ServiceOffering(
 				"Senderismo Místico", "Tours",
 				"Explora caminos ancestrales y conecta con la naturaleza en rutas llenas de energía y tradición.",
 				List.of(), 50000, "Disponible",
 				List.of(ImageUrls.SENDERISMO_1, ImageUrls.SENDERISMO_2, ImageUrls.SENDERISMO_3),
 				11.2408, -74.1990));
 
-		HotelService suite = serviceRepository.save(new HotelService(
+		ServiceOffering suite = serviceRepository.save(new ServiceOffering(
 				"Suite Presidencial", "Hotel",
 				"La experiencia más exclusiva con vista panorámica, jacuzzi privado y servicio de mayordomo 24/7.",
 				List.of(), 350.00, "Disponible",
 				List.of(ImageUrls.SUITE_PRESIDENCIAL_1, ImageUrls.SUITE_PRESIDENCIAL_2, ImageUrls.SUITE_PRESIDENCIAL_3),
 				4.6014, -74.0661));
 
-		HotelService cabanas = serviceRepository.save(new HotelService(
+		ServiceOffering cabanas = serviceRepository.save(new ServiceOffering(
 				"Cabañas Ecológicas", "Hotel",
 				"Alojamiento sostenible en medio de la naturaleza, construido con materiales autóctonos y energía solar.",
 				List.of(), 95.00, "Disponible",
 				List.of(ImageUrls.CABANAS_1, ImageUrls.CABANAS_2, ImageUrls.CABANAS_3),
 				6.2442, -75.5736));
 
-		HotelService cafe = serviceRepository.save(new HotelService(
+		ServiceOffering cafe = serviceRepository.save(new ServiceOffering(
 				"Taller de Café Premium", "Comida",
 				"Aprende sobre el proceso del café colombiano desde el grano hasta la taza, con cata guiada.",
 				List.of(), 30.00, "Disponible",
 				List.of(ImageUrls.CAFE_1, ImageUrls.CAFE_2, ImageUrls.CAFE_3),
 				5.0689, -75.5174));
 
-		HotelService chef = serviceRepository.save(new HotelService(
+		ServiceOffering chef = serviceRepository.save(new ServiceOffering(
 				"Cena con Chef Estrella", "Comida",
 				"Menú degustación de 7 platos con maridaje de vinos, preparado por nuestro chef galardonado.",
 				List.of(), 120.00, "Disponible",
 				List.of(ImageUrls.CHEF_1, ImageUrls.CHEF_2, ImageUrls.CHEF_3),
 				6.2518, -75.5636));
 
-		HotelService desayuno = serviceRepository.save(new HotelService(
+		ServiceOffering desayuno = serviceRepository.save(new ServiceOffering(
 				"Desayuno Tradicional", "Comida",
 				"Desayuno completo con arepas, huevos pericos, chocolate caliente y frutas tropicales.",
 				List.of(), 15.50, "Disponible",

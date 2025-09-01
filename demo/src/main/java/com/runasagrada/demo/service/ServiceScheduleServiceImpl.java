@@ -7,7 +7,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.runasagrada.demo.entities.HotelService;
+import com.runasagrada.demo.entities.ServiceOffering;
 import com.runasagrada.demo.entities.ServiceSchedule;
 import com.runasagrada.demo.repository.ServiceScheduleRepository;
 
@@ -46,7 +46,7 @@ public class ServiceScheduleServiceImpl implements ServiceScheduleService {
 
     @Override
     public void seedSchedules(ServiceSchedule baseSchedule, int days) {
-        HotelService service = baseSchedule.getService();
+        ServiceOffering service = baseSchedule.getService();
         LocalDate baseDate = baseSchedule.getSched_date();
         LocalTime time = baseSchedule.getSched_time();
         int capacity = baseSchedule.getCapacity();

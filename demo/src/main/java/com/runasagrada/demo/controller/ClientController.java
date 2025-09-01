@@ -39,8 +39,8 @@ public class ClientController {
     }
 
     // Search
-    // http://localhost:8080/staff/client
-    @PostMapping("/staff/client/search")
+    // http://localhost:8080/ops/client
+    @PostMapping("/ops/client/search")
     public String searchClient(
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String phone,
@@ -55,25 +55,25 @@ public class ClientController {
             redirectAttributes.addFlashAttribute("errorMessage",
                     "No se encontraron clientes con los criterios ingresados.");
             clients = (List<Client>) clientService.getAllClients(); // fallbackç
-            return "redirect:/staff/client";
+            return "redirect:/ops/client";
         }
 
         model.addAttribute("clients", clients);
-        return "staffPage";
+        return "opsPage";
     }
 
-    // http://localhost:8080/staff/client
-    @GetMapping("/staff/client")
-    public String showClientsStaff(Model model) {
+    // http://localhost:8080/ops/client
+    @GetMapping("/ops/client")
+    public String showClientsOperator(Model model) {
         model.addAttribute("newclient", new Client());
         model.addAttribute("newclientuser", new HotelUser());
         model.addAttribute("clients", clientService.getAllClients());
-        return "staffPage";
+        return "opsPage";
     }
 
     // Create client
-    // http://localhost:8080/staff/client
-    @PostMapping("/staff/client/add")
+    // http://localhost:8080/ops/client
+    @PostMapping("/ops/client/add")
     public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
             RedirectAttributes redirectAttributes) {
         if (newClientUser.getPassword() == null || newClientUser.getPassword().isBlank()) {
@@ -96,7 +96,7 @@ public class ClientController {
                     "El correo, teléfono o ID nacional ya están registrados. Por favor verifica los datos.");
         }
 
-        return "redirect:/staff/client";
+        return "redirect:/ops/client";
     }
 
     // Client sign up
@@ -147,8 +147,8 @@ public class ClientController {
     }
 
     // Update client
-    // http://localhost:8080/staff/client
-    @GetMapping("/staff/client/update/{id}")
+    // http://localhost:8080/ops/client
+    @GetMapping("/ops/client/update/{id}")
     @ResponseBody
     public HotelUser getClient(@PathVariable Long id) {
         logger.info("Client id: " + id);
@@ -156,8 +156,8 @@ public class ClientController {
     }
 
     // Update client
-    // http://localhost:8080/staff/client
-    @PostMapping("/staff/client/update")
+    // http://localhost:8080/ops/client
+    @PostMapping("/ops/client/update")
     public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser,
             RedirectAttributes redirectAttributes) {
         try {
@@ -177,15 +177,15 @@ public class ClientController {
                     "No se pudo actualizar: el correo, teléfono o ID nacional ya están registrados.");
         }
 
-        return "redirect:/staff/client";
+        return "redirect:/ops/client";
     }
 
     // Delete client
-    // http://localhost:8080/staff/client
-    @GetMapping("/staff/client/delete/{id}")
+    // http://localhost:8080/ops/client
+    @GetMapping("/ops/client/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
         clientService.delete(id);
-        return "redirect:/staff/client";
+        return "redirect:/ops/client";
     }
 
     // Creates a model atribute aviable to all views

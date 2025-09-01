@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 
-import com.runasagrada.demo.entities.HotelService;
-import com.runasagrada.demo.service.HotelServiceService;
+import com.runasagrada.demo.entities.ServiceOffering;
+import com.runasagrada.demo.service.ServiceOfferingService;
 
 @RequestMapping("/service")
 @Controller
-public class HotelServiceController {
+public class ServiceOfferingController {
 
-    private final HotelServiceService service;
+    private final ServiceOfferingService service;
 
-    public HotelServiceController(HotelServiceService service) {
+    public ServiceOfferingController(ServiceOfferingService service) {
         this.service = service;
     }
 
@@ -39,7 +39,7 @@ public class HotelServiceController {
 
     @GetMapping("/available/{id}")
     public String showServiceDetail(Model model, @PathVariable("id") Long idenfier) {
-        HotelService serviceDetail = service.searchById(idenfier);
+        ServiceOffering serviceDetail = service.searchById(idenfier);
         model.addAttribute("serviceDetail", serviceDetail);
         return "service_detail";
     }

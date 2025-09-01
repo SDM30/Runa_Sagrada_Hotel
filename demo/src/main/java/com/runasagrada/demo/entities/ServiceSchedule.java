@@ -18,7 +18,7 @@ public class ServiceSchedule {
     private Long id;
 
     @ManyToOne
-    private HotelService service;
+    private ServiceOffering service;
 
     private LocalDate sched_date;
     private LocalTime sched_time;
@@ -27,7 +27,7 @@ public class ServiceSchedule {
     public ServiceSchedule() {
     }
 
-    public ServiceSchedule(HotelService service, LocalDate date, LocalTime time, int capacity) {
+    public ServiceSchedule(ServiceOffering service, LocalDate date, LocalTime time, int capacity) {
         this.service = service;
         this.sched_date = date;
         this.sched_time = time;

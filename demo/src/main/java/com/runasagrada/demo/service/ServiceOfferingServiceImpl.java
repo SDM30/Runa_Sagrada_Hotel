@@ -5,27 +5,27 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.runasagrada.demo.entities.HotelService;
-import com.runasagrada.demo.repository.HotelServiceRepository;
+import com.runasagrada.demo.entities.ServiceOffering;
+import com.runasagrada.demo.repository.ServiceOfferingRepository;
 
 @Service
-public class HotelServiceServiceImpl implements HotelServiceService {
+public class ServiceOfferingServiceImpl implements ServiceOfferingService {
 
     @Autowired
-    private HotelServiceRepository serviceRepository;
+    private ServiceOfferingRepository serviceRepository;
 
     @Override
-    public HotelService searchById(Long id) {
+    public ServiceOffering searchById(Long id) {
         return serviceRepository.findById(id).get();
     }
 
     @Override
-    public Collection<HotelService> getAllServices() {
+    public Collection<ServiceOffering> getAllServices() {
         return serviceRepository.findAll();
     }
 
     @Override
-    public void save(HotelService service) {
+    public void save(ServiceOffering service) {
         serviceRepository.save(service);
     }
 
