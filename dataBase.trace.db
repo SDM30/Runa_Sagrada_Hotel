@@ -428,3 +428,7 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: /home/simondm/De
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 66 more
+2025-08-31 12:28:39.900018-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "ERVICE_SCHEDULE" no encontrada
+Table "ERVICE_SCHEDULE" not found; SQL statement:
+SELECT * FROM ERVICE_SCHEDULE [42102-232]
