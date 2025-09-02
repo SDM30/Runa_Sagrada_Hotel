@@ -143,6 +143,7 @@ public class ClientController {
     public String loginClient(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
         Client clientFound = clientService.login(user.getEmail(), user.getPassword());
         if (clientFound != null) {
+            // Logica en el servicio, el controlador recibe excepciones
             return "redirect:/client/main";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage",
@@ -227,4 +228,5 @@ public class ClientController {
         userService.save(original);
         return "redirect:/cliente/perfil/" + original.getId();
     }
+    // Actualizar Cliente funcion privada
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/rooms/staff")
 public class RoomController {
-
+    // Autowired
     private final RoomService roomService;
     private final RoomTypeService roomTypeService;
 
