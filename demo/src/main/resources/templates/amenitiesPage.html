@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Runa Sagrada - Comodidades y amenidades de nuestros hoteles ancestrales en Colombia" />
+    <meta
+      name="keywords"
+      content="comodidades, amenidades, spa, gimnasio, piscina, Colombia, hoteles" />
+    <meta name="author" content="Runa Sagrada" />
+
+    <title>Amenidades - Runa Sagrada</title>
+
+    <!-- Stylesheets -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/styles/styles.css}" />
+  </head>
+  <body>
+    <div
+      class="hero-with-bg"
+      style="
+        background-image: url('https://www.clubelnogal.com/wp-content/uploads/2025/07/Estandar.jpg');
+      ">
+      <!--===== NAVBAR =====-->
+      <header
+        class="navbar navbar-expand-lg navbar-dark fixed-top nav-glass navbar-services"
+        role="navigation"
+        aria-label="Navegación principal">
+        <div class="container">
+          <a
+            class="navbar-brand d-flex align-items-center gap-2"
+            th:href="@{/}"
+            aria-label="Runa Sagrada - Inicio">
+            <img
+              th:src="@{/images/logito.png}"
+              alt="Runa Sagrada"
+              class="brand-logo" />
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            aria-label="Alternar navegación">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <nav class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav mx-auto nav-underline gap-3" role="menubar">
+              <li class="nav-item" role="none">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="#amenities"
+                  role="menuitem"
+                  >Amenidades</a
+                >
+              </li>
+              <li class="nav-item" role="none">
+                <a
+                  class="nav-link"
+                  th:href="@{/service/gastronomy}"
+                  role="menuitem"
+                  >Gastronomía</a
+                >
+              </li>
+              <li class="nav-item" role="none">
+                <a class="nav-link" th:href="@{/service/tours}" role="menuitem"
+                  >Tours</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!--===== BANNER =====-->
+      <section
+        id="comodidades"
+        class="services-section py-5"
+        aria-labelledby="comodidades-heading">
+        <div class="container">
+          <header class="text-center mb-5 services-title-banner">
+            <h1 id="comodidades-heading" class="display-5 fw-semibold mb-3">
+              <i class="fas fa-concierge-bell me-3"></i>Amenidades
+            </h1>
+            <p class="lead">
+              Disfruta de nuestras amenidades diseñadas para tu bienestar y
+              relajación en cada uno de nuestros hoteles ancestrales.
+            </p>
+          </header>
+        </div>
+      </section>
+    </div>
+
+    <main id="main-content-comodidades">
+      <!--===== DESTACADAS DE LA SEMANA =====-->
+      <section
+        class="py-5"
+        id="destacadas"
+        aria-labelledby="destacadas-heading">
+        <div class="container">
+          <header class="text-center mb-5">
+            <h2 id="destacadas-heading" class="display-5 fw-semibold mb-3">
+              Destacadas de la Semana
+            </h2>
+            <p class="lead">
+              Las amenidades más populares elegidas por nuestros huéspedes
+            </p>
+          </header>
+
+          <div class="row justify-content-center">
+            <div
+              class="col-xl-3 col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mb-4"
+              th:each="amenity, iterStat: ${amenities}"
+              th:if="${iterStat.index < 4}">
+              <a th:href="@{/service/available/{id}(id=${amenity.id})}">
+                <div class="services-card featured-card featured-card-large">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${amenity.imageUrls[0]}');|"></div>
+                  <div class="featured-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Destacada</span>
+                  </div>
+                  <div class="services-overlay services-overlay-amenities">
+                    <div class="card-body">
+                      <h5 class="services-title" th:text="${amenity.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${amenity.description}"></p>
+                      <div class="mt-3">
+                        <span
+                          class="badge bg-warning fs-6"
+                          th:text="|$${amenity.basePrice} USD|"
+                          >Precio</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--===== BIENESTAR Y SPA =====-->
+      <section class="py-5" id="bienestar" aria-labelledby="bienestar-heading">
+        <div class="container">
+          <header class="text-center mb-5">
+            <h2 id="bienestar-heading" class="display-6 fw-semibold mb-3">
+              <i class="fas fa-spa me-3"></i>Bienestar y Spa
+            </h2>
+            <p class="lead">
+              Espacios dedicados a tu relajación y rejuvenecimiento espiritual
+            </p>
+          </header>
+
+          <div class="row gap-3 justify-content-center">
+            <div
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
+              th:each="bienestarItem: ${bienestar}">
+              <a th:href="@{/service/available/{id}(id=${bienestarItem.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${bienestarItem.imageUrls[0]}');|"></div>
+
+                  <div class="services-overlay services-overlay-amenities">
+                    <div class="card-body">
+                      <h5
+                        class="services-title"
+                        th:text="${bienestarItem.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${bienestarItem.description}"></p>
+                      <div class="mt-3">
+                        <span
+                          class="badge bg-warning fs-6"
+                          th:text="|$${bienestarItem.basePrice} USD|"
+                          >Precio</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--===== HOSPEDAJE EXCLUSIVO =====-->
+      <section class="py-5" id="hospedaje" aria-labelledby="hospedaje-heading">
+        <div class="container">
+          <header class="text-center mb-5">
+            <h2 id="hospedaje-heading" class="display-6 fw-semibold mb-3">
+              <i class="fas fa-bed me-3"></i>Hospedaje Exclusivo
+            </h2>
+            <p class="lead">
+              Alojamientos únicos diseñados para experiencias memorables
+            </p>
+          </header>
+
+          <div class="row gap-3 justify-content-center">
+            <div
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
+              th:each="hospedajeItem: ${hospedaje}">
+              <a th:href="@{/service/available/{id}(id=${hospedajeItem.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${hospedajeItem.imageUrls[0]}');|"></div>
+
+                  <div class="services-overlay services-overlay-amenities">
+                    <div class="card-body">
+                      <h5
+                        class="services-title"
+                        th:text="${hospedajeItem.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${hospedajeItem.description}"></p>
+                      <div class="mt-3">
+                        <span
+                          class="badge bg-warning fs-6"
+                          th:text="|$${hospedajeItem.basePrice} USD|"
+                          >Precio</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--===== SERVICIOS ADICIONALES =====-->
+      <section
+        class="py-5"
+        id="servicios-adicionales"
+        aria-labelledby="servicios-adicionales-heading">
+        <div class="container">
+          <header class="text-center mb-5">
+            <h2
+              id="servicios-adicionales-heading"
+              class="display-6 fw-semibold mb-3">
+              <i class="fas fa-concierge-bell me-3"></i>Servicios Adicionales
+            </h2>
+            <p class="lead">
+              Amenidades complementarias para una experiencia completa
+            </p>
+          </header>
+
+          <div class="row gap-3 justify-content-center">
+            <div
+              class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
+              th:each="servicioItem: ${servicios}">
+              <a th:href="@{/service/available/{id}(id=${servicioItem.id})}">
+                <div class="services-card" style="width: 18rem">
+                  <div
+                    class="services-image"
+                    th:style="|background-image: url('${servicioItem.imageUrls[0]}');|"></div>
+
+                  <div class="services-overlay services-overlay-amenities">
+                    <div class="card-body">
+                      <h5
+                        class="services-title"
+                        th:text="${servicioItem.name}"></h5>
+                      <p
+                        class="services-description"
+                        th:text="${servicioItem.description}"></p>
+                      <div class="mt-3">
+                        <span
+                          class="badge bg-warning fs-6"
+                          th:text="|$${servicioItem.basePrice} USD|"
+                          >Precio</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--===== BANNER SEPARADOR =====-->
+    <div id="divider-footer" class="ticker-wrap mt-5">
+      <div class="ticker">
+        <span
+          >Hotel Runa Sagrada - Comodidades Ancestrales - Bienestar Natural -
+          Experiencias Únicas</span
+        >
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row">
+          <!-- Logo y Nombre -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="footer-brand">
+              <img
+                th:src="@{/images/logito.png}"
+                alt="Runa Sagrada"
+                class="footer-logo" />
+              <h5 class="footer-title">Runa Sagrada</h5>
+              <p class="footer-description">
+                Experiencias auténticas en el corazón de Colombia
+              </p>
+            </div>
+          </div>
+
+          <!-- Hoteles - Las 5 Runas -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-heading">Las 5 Runas</h6>
+            <ul class="footer-links">
+              <li><a href="#">Cartagena</a></li>
+              <li><a href="#">San Andrés</a></li>
+              <li><a href="#">Santa Marta</a></li>
+              <li><a href="#">Villa de Leyva</a></li>
+              <li><a href="#">Eje Cafetero</a></li>
+            </ul>
+          </div>
+
+          <!-- Servicios -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-heading">Servicios</h6>
+            <ul class="footer-links">
+              <li><a th:href="@{/service/gastronomy}">Gastronomía</a></li>
+              <li><a th:href="@{/service/tours}">Tours Sagrados</a></li>
+              <li>
+                <a th:href="@{/service/available}">Todos los Servicios</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Información Legal -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-heading">Información</h6>
+            <ul class="footer-links">
+              <li><a href="#">Términos y Condiciones</a></li>
+              <li><a href="#">Política de Privacidad</a></li>
+              <li><a href="#">Política de Cancelación</a></li>
+            </ul>
+          </div>
+
+          <!-- Contacto -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h6 class="footer-heading">Contacto</h6>
+            <div class="footer-contact">
+              <p><i class="fas fa-envelope"></i> info@runasagrada.com</p>
+              <p><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <p class="footer-copyright">
+                &copy; 2025 Runa Sagrada. Todos los derechos reservados.
+              </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <p class="footer-love">
+                Hecho con <span class="heart">❤️</span> en Colombia
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}" defer></script>
+  </body>
+</html>

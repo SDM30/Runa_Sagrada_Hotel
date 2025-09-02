@@ -872,10 +872,24 @@ function loadRoomData(element) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize Bootstrap tooltips
   var tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
+
+  // Initialize components
+  if (typeof ParallaxController !== 'undefined') {
+    new ParallaxController();
+  }
+  
+  if (typeof HotelSlider !== 'undefined') {
+    new HotelSlider();
+  }
+  
+  if (typeof BookingBar !== 'undefined') {
+    new BookingBar();
+  }
 });
