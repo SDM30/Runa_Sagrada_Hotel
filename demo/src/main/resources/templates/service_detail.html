@@ -215,51 +215,24 @@
               class="p-4 mb-4 h-100 w-100 border border-3 border-light rounded"
             >
               <h5 class="mb-3">Detalles</h5>
-
-              <!-- Schedule table -->
-              <div
-                th:if="${serviceDetail.serviceSchedules != null and #lists.size(serviceDetail.serviceSchedules) > 0}"
-              >
-                <div class="table-responsive">
-                  <table class="table table-sm table-hover align-middle">
-                    <thead class="table-light">
-                      <tr>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Capacidad</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr th:each="sched : ${serviceDetail.serviceSchedules}">
-                        <td
-                          th:text="${#temporals.format(sched.sched_date, 'dd/MM/yyyy')}"
-                        >
-                          12/10/2025
-                        </td>
-                        <td
-                          th:text="${#temporals.format(sched.sched_time, 'HH:mm')}"
-                        >
-                          10:00
-                        </td>
-                        <td>
-                          <span th:text="${sched.capacity}">20</span>
-                          <span class="text-muted">personas</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Fallback when there are no services scheduled -->
-              <div
-                th:if="${serviceDetail.serviceSchedules == null or #lists.size(serviceDetail.serviceSchedules) == 0}"
-                class="alert alert-warning mb-0"
-                role="alert"
-              >
-                No hay horarios disponibles por ahora. Vuelve pronto o
-                contáctanos para más información.
-              </div>
+              <p>
+                <strong>Fecha:</strong>
+                <span
+                  th:text="${serviceDetail.sheduledDate != null} ? ${#temporals.format(serviceDetail.sheduledDate, 'dd/MM/yyyy')} : 'Pendiente'"
+                  >12/10/2025</span
+                >
+              </p>
+              <p>
+                <strong>Horario:</strong>
+                <span
+                  th:text="${serviceDetail.scheduledTime != null} ? ${#temporals.format(serviceDetail.scheduledTime, 'HH:mm')} : 'Por definir'"
+                  >10:00</span
+                >
+              </p>
+              <p>
+                <strong>Capacidad:</strong>
+                <span th:text="${serviceDetail.capacity}">20</span> personas
+              </p>
             </div>
           </div>
 
