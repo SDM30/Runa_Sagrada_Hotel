@@ -19,8 +19,14 @@ import com.runasagrada.demo.service.ClientService;
 import com.runasagrada.demo.service.HotelUserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Controller
+@RequestMapping("/cliente")
 public class ClientController {
 
     @Autowired
@@ -194,4 +200,33 @@ public class ClientController {
         return new HotelUser();
     }
 
+    // Mostrar perfil
+    @GetMapping("/perfil/{id}")
+    public String mostrarPerfil(@PathVariable Long id, Model model) {
+        HotelUser hotelUser = userService.searchById(id);
+        model.addAttribute("hotelUser", hotelUser);
+        return "hotelUserProfile";
+    }
+
+    // Editar perfil
+    @PostMapping("/editar")
+    public String editarPerfil(@ModelAttribute("hotelUser") HotelUser hotelUser, Model model) {
+    
+        HotelUser original = userService.searchById(hotelUser.getId());
+        if (original == null) {
+            model.addAttribute("error", "Usuario no encontrado");
+            return "hotelUserProfile";
+        }
+
+  
+        original.setName(hotelUser.getName());
+        original.setEmail(hotelUser.getEmail());
+        original.setPhone(hotelUser.getPhone());
+        original.setNationalId(hotelUser.getNationalId());
+        original.setPassword(hotelUser.getPassword());
+        original.setProfileIcon(hotelUser.getProfileIcon());
+
+        userService.save(original);
+        return "redirect:/cliente/perfil/" + original.getId();
+    }
 }

@@ -2,7 +2,6 @@ package com.runasagrada.demo.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -249,26 +248,25 @@ public class DatabaseInit implements ApplicationRunner {
 
 		// === Usuarios y Clientes ===
 		// === Usuarios y Clientes ===
-		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
-		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");
-		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555",
-				"5555555555");
+		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890", "/images/icons/icono3.png");
+		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321", "/images/icons/icono3.png");
+		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555", "5555555555", "/images/icons/icono3.png");
 
 		// +7 adicionales (todos con email único)
 		HotelUser user4 = new HotelUser("Carlos Mendoza", "carlos.mendoza@gmail.com", "password123", "3001234567",
-				"CC1001");
+				"CC1001", "/images/icons/icono3.png");
 		HotelUser user5 = new HotelUser("María Rodríguez", "maria.rodriguez@hotmail.com", "password123", "3109876543",
-				"CC1002");
+				"CC1002", "/images/icons/icono3.png");
 		HotelUser user6 = new HotelUser("Andrés Gómez", "andres.gomez@yahoo.com", "password123", "3205555555",
-				"CC1003");
+				"CC1003", "/images/icons/icono3.png");
 		HotelUser user7 = new HotelUser("Lucía Herrera", "lucia.herrera@gmail.com", "password123", "3157777777",
-				"CC1004");
+				"CC1004", "/images/icons/icono3.png");
 		HotelUser user8 = new HotelUser("Diego Vargas", "diego.vargas@outlook.com", "password123", "3018888888",
-				"CC1005");
+				"CC1005", "/images/icons/icono3.png");
 		HotelUser user9 = new HotelUser("Sofía Castro", "sofia.castro@gmail.com", "password123", "3112222222",
-				"CC1006");
+				"CC1006", "/images/icons/icono3.png");
 		HotelUser user10 = new HotelUser("Miguel Torres", "miguel.torres@yahoo.com", "password123", "3213333333",
-				"CC1007");
+				"CC1007", "/images/icons/icono3.png");
 
 		// Guarda usuarios
 		userRepository.saveAll(java.util.Arrays.asList(

@@ -19,22 +19,26 @@ public class HotelUser {
     private String phone;
     @Column(unique = true)
     private String nationalId;
+    private String profileIcon;
 
-    public HotelUser(Long id, String name, String email, String password, String phone, String nationalId) {
+
+    public HotelUser(Long id, String name, String email, String password, String phone, String nationalId, String profileIcon) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.nationalId = nationalId;
+        this.profileIcon = profileIcon;
     }
 
-    public HotelUser(String name, String email, String password, String phone, String nationalId) {
+    public HotelUser(String name, String email, String password, String phone, String nationalId, String profileIcon) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.nationalId = nationalId;
+        this.profileIcon = profileIcon;
     }
 
     public HotelUser() {
@@ -88,5 +92,14 @@ public class HotelUser {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getProfileIcon() {
+        return profileIcon;
+    }
+
+    public void setProfileIcon(String profileIcon) {
+        this.profileIcon = profileIcon;
+    }
+
 
 }
