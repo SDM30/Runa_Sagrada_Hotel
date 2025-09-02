@@ -10,9 +10,6 @@ Ubicaciones Vigentes
 - Santa Marta (Sierra Nevada/Tayrona): cultura viva, senderismo místico y rutas ancestrales.
 - Villa de Leyva (Boyacá): tours sagrados y ceremonia del cacao.
 - Eje Cafetero (Quindío/Caldas): hospedaje boutique y experiencias con café.
-- Bogotá: rituales de bienestar, avistamiento de aves y suite presidencial.
-- Medellín: cabañas ecológicas y cena con chef estrella.
-- Barranquilla: desayuno tradicional caribeño.
 
 Servicios
 - Hospedaje: Hospedaje Boutique, Cabañas Ecológicas, Suite Presidencial.
