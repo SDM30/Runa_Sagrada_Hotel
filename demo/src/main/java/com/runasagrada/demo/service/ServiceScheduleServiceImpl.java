@@ -7,7 +7,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.runasagrada.demo.entities.HotelService;
+import com.runasagrada.demo.entities.ServiceOffering;
 import com.runasagrada.demo.entities.ServiceSchedule;
 import com.runasagrada.demo.repository.ServiceScheduleRepository;
 
@@ -18,20 +18,18 @@ public class ServiceScheduleServiceImpl implements ServiceScheduleService {
     private ServiceScheduleRepository scheduleRepository;
 
     @Override
-    public Collection<ServiceSchedule> searchByCapacity(int capacity) {
-        return scheduleRepository.findByCapacity(capacity);
+    public Collection<ServiceSchedule> findByService(ServiceOffering service) {
+        return scheduleRepository.findByService(service);
     }
 
     @Override
     public Collection<ServiceSchedule> searchByDate(LocalDate date) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchByDate'");
+        return scheduleRepository.findBySchedDate(date);
     }
 
     @Override
     public Collection<ServiceSchedule> searchByTime(LocalTime time) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchByTime'");
+        return scheduleRepository.findByStartTime(time);
     }
 
     @Override
@@ -46,17 +44,19 @@ public class ServiceScheduleServiceImpl implements ServiceScheduleService {
 
     @Override
     public void seedSchedules(ServiceSchedule baseSchedule, int days) {
-        HotelService service = baseSchedule.getService();
-        LocalDate baseDate = baseSchedule.getSched_date();
-        LocalTime time = baseSchedule.getSched_time();
-        int capacity = baseSchedule.getCapacity();
+        ServiceOffering service = baseSchedule.getService();
+        LocalDate baseDate = baseSchedule.getSchedDate();
+        LocalTime startTime = baseSchedule.getStartTime();
+        LocalTime endTime = baseSchedule.getEndTime();
+        boolean isActive = true; // default to active when seeding
 
         for (int i = 0; i < days; i++) {
             ServiceSchedule newSchedule = new ServiceSchedule(
                     service,
                     baseDate.plusDays(i),
-                    time,
-                    capacity);
+                    startTime,
+                    endTime,
+                    isActive);
             scheduleRepository.save(newSchedule);
         }
     }

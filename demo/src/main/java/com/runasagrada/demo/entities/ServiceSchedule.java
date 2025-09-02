@@ -18,20 +18,22 @@ public class ServiceSchedule {
     private Long id;
 
     @ManyToOne
-    private HotelService service;
+    private ServiceOffering service;
 
-    private LocalDate sched_date;
-    private LocalTime sched_time;
-    private int capacity;
+    private LocalDate schedDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private boolean is_active;
 
     public ServiceSchedule() {
     }
 
-    public ServiceSchedule(HotelService service, LocalDate date, LocalTime time, int capacity) {
+    public ServiceSchedule(ServiceOffering service, LocalDate sched_date, LocalTime start_time, LocalTime end_time,
+            boolean is_active) {
         this.service = service;
-        this.sched_date = date;
-        this.sched_time = time;
-        this.capacity = capacity;
+        this.schedDate = sched_date;
+        this.startTime = start_time;
+        this.endTime = end_time;
+        this.is_active = is_active;
     }
-
 }

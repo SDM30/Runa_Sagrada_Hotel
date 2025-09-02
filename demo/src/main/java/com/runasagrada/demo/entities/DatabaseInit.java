@@ -2,25 +2,30 @@ package com.runasagrada.demo.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 
 import com.runasagrada.demo.repository.ClientRepository;
-import com.runasagrada.demo.repository.HotelServiceRepository;
+import com.runasagrada.demo.repository.ServiceOfferingRepository;
 import com.runasagrada.demo.repository.HotelUserRepository;
 import com.runasagrada.demo.service.ServiceScheduleService;
 
 import jakarta.transaction.Transactional;
+import com.runasagrada.demo.repository.RoomRepository;
+import com.runasagrada.demo.repository.RoomTypeRepository;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @Transactional
 public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
-	HotelServiceRepository serviceRepository;
+	ServiceOfferingRepository serviceRepository;
 
 	@Autowired
 	HotelUserRepository userRepository;
@@ -30,6 +35,12 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
 	ServiceScheduleService scheduleService;
+
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
+
+	@Autowired
+	private RoomRepository roomRepository;
 
 	// URLs de imágenes organizadas por categoría - Enlaces actualizados y
 	// verificados
@@ -161,619 +172,814 @@ public class DatabaseInit implements ApplicationRunner {
 	@Override
 	public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
 		// === Crear servicios (sin fecha/hora/capacidad) ===
-		HotelService gastronomia = serviceRepository.save(new HotelService(
-				"Gastronomía Ancestral", "Comida",
+		ServiceOffering gastronomia = serviceRepository.save(new ServiceOffering(
+				"Gastronomía Ancestral", "Comida", "",
 				"Sabores auténticos de la cocina tradicional colombiana, preparados con ingredientes locales y técnicas ancestrales.",
-				List.of(), 45900, "Disponible",
+				List.of(), 45900, 60,
 				List.of(ImageUrls.GASTRONOMIA_1, ImageUrls.GASTRONOMIA_2, ImageUrls.GASTRONOMIA_3),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService tours = serviceRepository.save(new HotelService(
-				"Tours Sagrados", "Tour",
+		ServiceOffering tours = serviceRepository.save(new ServiceOffering(
+				"Tours Sagrados", "Tours", "",
 				"Expediciones guiadas por lugares místicos y sitios arqueológicos, conectando con la sabiduría ancestral.",
-				List.of(), 65500, "Disponible",
+				List.of(), 65500, 60,
 				List.of(ImageUrls.TOURS_ARQUEOLOGICOS_1, ImageUrls.TOURS_ARQUEOLOGICOS_2,
 						ImageUrls.TOURS_ARQUEOLOGICOS_3),
-				5.6333, -73.5333));
+				10, 5.6333, -73.5333));
 
-		HotelService rituales = serviceRepository.save(new HotelService(
-				"Rituales de Bienestar", "Hotel",
+		ServiceOffering rituales = serviceRepository.save(new ServiceOffering(
+				"Rituales de Bienestar", "Hotel", "",
 				"Terapias tradicionales y ceremonias de sanación inspiradas en las prácticas indígenas colombianas.",
-				List.of(), 75000, "Disponible",
+				List.of(), 75000, 60,
 				List.of(ImageUrls.RITUALES_1, ImageUrls.RITUALES_2, ImageUrls.RITUALES_3),
-				4.7109, -74.0721));
+				10, 4.7109, -74.0721));
 
-		HotelService boutique = serviceRepository.save(new HotelService(
-				"Hospedaje Boutique", "Hotel",
+		ServiceOffering boutique = serviceRepository.save(new ServiceOffering(
+				"Hospedaje Boutique", "Hotel", "",
 				"Habitaciones únicas diseñadas con elementos artesanales y decoración inspirada en culturas precolombinas.",
-				List.of(), 120000, "Disponible",
+				List.of(), 120000, 60,
 				List.of(ImageUrls.HOSPEDAJE_BOUTIQUE_1, ImageUrls.HOSPEDAJE_BOUTIQUE_2, ImageUrls.HOSPEDAJE_BOUTIQUE_3),
-				4.6370, -75.5710));
+				10, 4.6370, -75.5710));
 
-		HotelService ecoturismo = serviceRepository.save(new HotelService(
-				"Ecoturismo", "Tour",
+		ServiceOffering ecoturismo = serviceRepository.save(new ServiceOffering(
+				"Ecoturismo", "Tours", "",
 				"Experiencias sostenibles que preservan y celebran la biodiversidad única de los ecosistemas colombianos.",
-				List.of(), 55750, "Disponible",
+				List.of(), 55750, 60,
 				List.of(ImageUrls.ECOTURISMO_1, ImageUrls.ECOTURISMO_2, ImageUrls.ECOTURISMO_3),
-				12.5847, -81.7005));
+				10, 12.5847, -81.7005));
 
-		HotelService cultura = serviceRepository.save(new HotelService(
-				"Cultura Viva", "Tour",
+		ServiceOffering cultura = serviceRepository.save(new ServiceOffering(
+				"Cultura Viva", "Tours", "",
 				"Talleres de artesanías, música tradicional y danzas folclóricas con maestros de comunidades locales.",
-				List.of(), 35000, "Disponible",
+				List.of(), 35000, 60,
 				List.of(ImageUrls.CULTURA_1, ImageUrls.CULTURA_2, ImageUrls.CULTURA_3),
-				11.2408, -74.1990));
+				10, 11.2408, -74.1990));
 
-		HotelService cacao = serviceRepository.save(new HotelService(
-				"Ceremonia del Cacao Sagrado", "Tour",
+		ServiceOffering cacao = serviceRepository.save(new ServiceOffering(
+				"Ceremonia del Cacao Sagrado", "Tours", "",
 				"Participa en un ritual ancestral de conexión espiritual con el cacao como elemento sagrado.",
-				List.of(), 85000, "Disponible",
+				List.of(), 85000, 60,
 				List.of(ImageUrls.CACAO_1, ImageUrls.CACAO_2, ImageUrls.CACAO_3),
-				5.6333, -73.5333));
+				10, 5.6333, -73.5333));
 
-		HotelService aves = serviceRepository.save(new HotelService(
-				"Avistamiento de Aves", "Tour",
+		ServiceOffering aves = serviceRepository.save(new ServiceOffering(
+				"Avistamiento de Aves", "Tours", "",
 				"Descubre la biodiversidad de Colombia a través de sus especies de aves más representativas.",
-				List.of(), 40000, "Disponible",
+				List.of(), 40000, 60,
 				List.of(ImageUrls.AVES_1, ImageUrls.AVES_2, ImageUrls.AVES_3),
-				4.7109, -74.0721));
+				10, 4.7109, -74.0721));
 
-		HotelService senderismo = serviceRepository.save(new HotelService(
-				"Senderismo Místico", "Tour",
+		ServiceOffering senderismo = serviceRepository.save(new ServiceOffering(
+				"Senderismo Místico", "Tours", "",
 				"Explora caminos ancestrales y conecta con la naturaleza en rutas llenas de energía y tradición.",
-				List.of(), 500000, "Disponible",
+				List.of(), 50000, 60,
 				List.of(ImageUrls.SENDERISMO_1, ImageUrls.SENDERISMO_2, ImageUrls.SENDERISMO_3),
-				11.2408, -74.1990));
+				10, 11.2408, -74.1990));
 
-		HotelService suite = serviceRepository.save(new HotelService(
-				"Suite Presidencial", "Hotel",
+		ServiceOffering suite = serviceRepository.save(new ServiceOffering(
+				"Suite Presidencial", "Hotel", "",
 				"La experiencia más exclusiva con vista panorámica, jacuzzi privado y servicio de mayordomo 24/7.",
-				List.of(), 350000, "Disponible",
+				List.of(), 350.00, 60,
 				List.of(ImageUrls.SUITE_PRESIDENCIAL_1, ImageUrls.SUITE_PRESIDENCIAL_2, ImageUrls.SUITE_PRESIDENCIAL_3),
-				4.6014, -74.0661));
+				2, 4.6014, -74.0661));
 
-		HotelService cabanas = serviceRepository.save(new HotelService(
-				"Cabañas Ecológicas", "Hotel",
+		ServiceOffering cabanas = serviceRepository.save(new ServiceOffering(
+				"Cabañas Ecológicas", "Hotel", "",
 				"Alojamiento sostenible en medio de la naturaleza, construido con materiales autóctonos y energía solar.",
-				List.of(), 9500000, "Disponible",
+				List.of(), 95.00, 60,
 				List.of(ImageUrls.CABANAS_1, ImageUrls.CABANAS_2, ImageUrls.CABANAS_3),
-				6.2442, -75.5736));
+				4, 6.2442, -75.5736));
 
-		HotelService cafe = serviceRepository.save(new HotelService(
-				"Taller de Café Premium", "Comida",
+		ServiceOffering cafe = serviceRepository.save(new ServiceOffering(
+				"Taller de Café Premium", "Comida", "",
 				"Aprende sobre el proceso del café colombiano desde el grano hasta la taza, con cata guiada.",
-				List.of(), 300000, "Disponible",
+				List.of(), 30.00, 60,
 				List.of(ImageUrls.CAFE_1, ImageUrls.CAFE_2, ImageUrls.CAFE_3),
-				5.0689, -75.5174));
+				10, 5.0689, -75.5174));
 
-		HotelService chef = serviceRepository.save(new HotelService(
-				"Cena con Chef Estrella", "Comida",
+		ServiceOffering chef = serviceRepository.save(new ServiceOffering(
+				"Cena con Chef Estrella", "Comida", "",
 				"Menú degustación de 7 platos con maridaje de vinos, preparado por nuestro chef galardonado.",
-				List.of(), 120000, "Disponible",
+				List.of(), 120.00, 60,
 				List.of(ImageUrls.CHEF_1, ImageUrls.CHEF_2, ImageUrls.CHEF_3),
-				6.2518, -75.5636));
+				10, 6.2518, -75.5636));
 
-		HotelService desayuno = serviceRepository.save(new HotelService(
-				"Desayuno Tradicional", "Comida",
+		ServiceOffering desayuno = serviceRepository.save(new ServiceOffering(
+				"Desayuno Tradicional", "Comida", "",
 				"Desayuno completo con arepas, huevos pericos, chocolate caliente y frutas tropicales.",
-				List.of(), 15.50, "Disponible",
+				List.of(), 15.50, 60,
 				List.of(ImageUrls.DESAYUNO_1, ImageUrls.DESAYUNO_2, ImageUrls.DESAYUNO_3),
-				10.9639, -74.7964));
+				10, 10.9639, -74.7964));
 
-		// Amenidad 1: Piscina Infinity (ya estaba con imagen)
-		HotelService piscina = serviceRepository.save(new HotelService(
+		// Amenidad 1: Piscina Infinity
+		ServiceOffering piscina = serviceRepository.save(new ServiceOffering(
 				"Piscina Infinity",
-				"Hotel",
+				"Hotel", "Piscina",
 				"Piscina infinita con vistas panorámicas",
 				List.of(),
-				49900,
-				"Disponible",
+				49900, 60,
 				List.of(ImageUrls.PISCINA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 2: Spa Ancestral
-		HotelService spa = serviceRepository.save(new HotelService(
+		ServiceOffering spa = serviceRepository.save(new ServiceOffering(
 				"Spa Ancestral",
-				"Hotel",
+				"Hotel", "Spa",
 				"Terapias de sanación tradicional con técnicas indígenas",
 				List.of(),
-				52900,
-				"Disponible",
+				52900, 60,
 				List.of(ImageUrls.SPA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 3: Restaurante Gourmet
-		HotelService restaurante = serviceRepository.save(new HotelService(
+		ServiceOffering restaurante = serviceRepository.save(new ServiceOffering(
 				"Restaurante Gourmet",
-				"Hotel",
+				"Hotel", "Restaurante",
 				"Gastronomía fina con cocina regional colombiana",
 				List.of(),
-				57900,
-				"Disponible",
+				57900, 60,
 				List.of(ImageUrls.RESTAURANTE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 4: Bar de Cócteles
-		HotelService bar = serviceRepository.save(new HotelService(
+		ServiceOffering bar = serviceRepository.save(new ServiceOffering(
 				"Bar de Cócteles",
-				"Hotel",
+				"Hotel", "Bar",
 				"Cócteles artesanales con frutas y licores locales",
 				List.of(),
-				45900,
-				"Disponible",
+				45900, 60,
 				List.of(ImageUrls.BAR),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 5: Taller de Artesanías
-		HotelService taller = serviceRepository.save(new HotelService(
+		ServiceOffering taller = serviceRepository.save(new ServiceOffering(
 				"Taller de Artesanías",
-				"Hotel",
+				"Hotel", "Taller",
 				"Talleres prácticos con artesanos locales",
 				List.of(),
-				48900,
-				"Disponible",
+				48900, 90,
 				List.of(ImageUrls.ARTESANIAS),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 6: Biblioteca Cultural
-		HotelService biblioteca = serviceRepository.save(new HotelService(
+		ServiceOffering biblioteca = serviceRepository.save(new ServiceOffering(
 				"Biblioteca Cultural",
-				"Hotel",
+				"Hotel", "Biblioteca",
 				"Colección de literatura e historia colombiana",
 				List.of(),
-				41900,
-				"Disponible",
+				41900, 60,
 				List.of(ImageUrls.BIBLIOTECA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 7: Gimnasio Eco
-		HotelService gimnasio = serviceRepository.save(new HotelService(
+		ServiceOffering gimnasio = serviceRepository.save(new ServiceOffering(
 				"Gimnasio Eco",
-				"Hotel",
+				"Hotel", "Gimnasio",
 				"Centro de fitness con equipos sostenibles",
 				List.of(),
-				39900,
-				"Disponible",
+				39900, 60,
 				List.of(ImageUrls.GIMNASIO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 8: Jardín Botánico
-		HotelService jardin = serviceRepository.save(new HotelService(
+		ServiceOffering jardin = serviceRepository.save(new ServiceOffering(
 				"Jardín Botánico",
-				"Hotel",
+				"Hotel", "Jardín",
 				"Jardín de plantas nativas con hierbas medicinales",
 				List.of(),
-				44900,
-				"Disponible",
+				44900, 60,
 				List.of(ImageUrls.JARDIN),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 9: Salón de Eventos
-		HotelService salon = serviceRepository.save(new HotelService(
+		ServiceOffering salon = serviceRepository.save(new ServiceOffering(
 				"Salón de Eventos",
-				"Hotel",
+				"Hotel", "Eventos",
 				"Espacio versátil para celebraciones y reuniones",
 				List.of(),
-				55900,
-				"Disponible",
+				55900, 120,
 				List.of(ImageUrls.SALON),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 10: Terraza Mirador
-		HotelService terraza = serviceRepository.save(new HotelService(
+		ServiceOffering terraza = serviceRepository.save(new ServiceOffering(
 				"Terraza Mirador",
-				"Hotel",
+				"Hotel", "Terraza",
 				"Terraza en azotea con vistas regionales",
 				List.of(),
-				42900,
-				"Disponible",
+				42900, 60,
 				List.of(ImageUrls.TERRAZA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		// Amenidad 11: Centro de Negocios
-		HotelService negocios = serviceRepository.save(new HotelService(
+		// Amenidad 11: Centro de Negocios (nota: constante tiene typo como NEGOSCIOS)
+		ServiceOffering negocios = serviceRepository.save(new ServiceOffering(
 				"Centro de Negocios",
-				"Hotel",
+				"Hotel", "Negocios",
 				"Centro de negocios con tecnología moderna",
 				List.of(),
-				53900,
-				"Disponible",
+				53900, 60,
 				List.of(ImageUrls.NEGOSCIOS),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		// Amenidad 12: Servicio de Concierge
-		HotelService concierge = serviceRepository.save(new HotelService(
+		ServiceOffering concierge = serviceRepository.save(new ServiceOffering(
 				"Servicio de Concierge",
-				"Hotel",
+				"Hotel", "Concierge",
 				"Asistencia personalizada al huésped 24/7",
 				List.of(),
-				46900,
-				"Disponible",
+				46900, 30,
 				List.of(ImageUrls.CONCIERGE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		/* === Platos Principales === */
-		HotelService bandeja = serviceRepository.save(new HotelService(
+		ServiceOffering bandeja = serviceRepository.save(new ServiceOffering(
 				"Bandeja Paisa Tradicional",
-				"Comida",
-				"Plato Principal - Plato paisa completo con frijoles, arroz, chicharrón y arepa",
+				"Comida", "Plato Principal",
+				"Plato paisa completo con frijoles, arroz, chicharrón y arepa",
 				List.of(),
-				35000,
-				"Disponible",
+				35000, 60,
 				List.of(ImageUrls.BANDEJA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService sancocho = serviceRepository.save(new HotelService(
+		ServiceOffering sancocho = serviceRepository.save(new ServiceOffering(
 				"Sancocho Costeño",
-				"Comida",
-				"Plato Principal - Guiso tradicional costeño con pescado, yuca y plátano",
+				"Comida", "Plato Principal",
+				"Guiso tradicional costeño con pescado, yuca y plátano",
 				List.of(),
-				32000,
-				"Disponible",
+				32000, 60,
 				List.of(ImageUrls.SANCOCHO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService ajiaco = serviceRepository.save(new HotelService(
+		ServiceOffering ajiaco = serviceRepository.save(new ServiceOffering(
 				"Ajiaco Santafereño",
-				"Comida",
-				"Plato Principal - Sopa de pollo y papa estilo Bogotá con mazorca y alcaparras",
+				"Comida", "Plato Principal",
+				"Sopa de pollo y papa estilo Bogotá con mazorca y alcaparras",
 				List.of(),
-				28000,
-				"Disponible",
+				28000, 60,
 				List.of(ImageUrls.AJIACO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService pescado = serviceRepository.save(new HotelService(
+		ServiceOffering pescado = serviceRepository.save(new ServiceOffering(
 				"Pescado Frito Isleño",
-				"Comida",
-				"Plato Principal - Pescado frito con arroz de coco y patacones, estilo San Andrés",
+				"Comida", "Plato Principal",
+				"Pescado frito con arroz de coco y patacones, estilo San Andrés",
 				List.of(),
-				38000,
-				"Disponible",
+				38000, 60,
 				List.of(ImageUrls.PESCADO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService lechona = serviceRepository.save(new HotelService(
+		ServiceOffering lechona = serviceRepository.save(new ServiceOffering(
 				"Lechona Tolimense",
-				"Comida",
-				"Plato Principal - Cerdo relleno asado con arroz y arvejas, tradición tolimense",
+				"Comida", "Plato Principal",
+				"Cerdo relleno asado con arroz y arvejas, tradición tolimense",
 				List.of(),
-				42000,
-				"Disponible",
+				42000, 60,
 				List.of(ImageUrls.LECHONA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService mondongo = serviceRepository.save(new HotelService(
+		ServiceOffering mondongo = serviceRepository.save(new ServiceOffering(
 				"Mondongo Antioqueño",
-				"Comida",
-				"Plato Principal - Sopa tradicional de mondongo con verduras y hierbas",
+				"Comida", "Plato Principal",
+				"Sopa tradicional de mondongo con verduras y hierbas",
 				List.of(),
-				30000,
-				"Disponible",
+				30000, 60,
 				List.of(ImageUrls.MONDONGO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService cazuela = serviceRepository.save(new HotelService(
+		ServiceOffering cazuela = serviceRepository.save(new ServiceOffering(
 				"Cazuela de Mariscos",
-				"Comida",
-				"Plato Principal - Cazuela de mariscos con leche de coco, estilo caribeño",
+				"Comida", "Plato Principal",
+				"Cazuela de mariscos con leche de coco, estilo caribeño",
 				List.of(),
-				45000,
-				"Disponible",
+				45000, 60,
 				List.of(ImageUrls.CAZUELA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService trucha = serviceRepository.save(new HotelService(
+		ServiceOffering trucha = serviceRepository.save(new ServiceOffering(
 				"Trucha a la Plancha",
-				"Comida",
-				"Plato Principal - Trucha a la plancha con hierbas de los Andes",
+				"Comida", "Plato Principal",
+				"Trucha a la plancha con hierbas de los Andes",
 				List.of(),
-				36000,
-				"Disponible",
+				36000, 60,
 				List.of(ImageUrls.TRUCHA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		/* === Postres === */
-		HotelService tresLeches = serviceRepository.save(new HotelService(
+		ServiceOffering tresLeches = serviceRepository.save(new ServiceOffering(
 				"Tres Leches Costeño",
-				"Comida",
-				"Postre - Torta de tres leches con frutas tropicales",
+				"Comida", "Postre",
+				"Torta de tres leches con frutas tropicales",
 				List.of(),
-				15000,
-				"Disponible",
+				15000, 30,
 				List.of(ImageUrls.TRELECHES),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService arequipe = serviceRepository.save(new HotelService(
+		ServiceOffering arequipe = serviceRepository.save(new ServiceOffering(
 				"Arequipe con Brevas",
-				"Comida",
-				"Postre - Brevas con dulce de leche, especialidad antioqueña",
+				"Comida", "Postre",
+				"Brevas con dulce de leche, especialidad antioqueña",
 				List.of(),
-				12000,
-				"Disponible",
+				12000, 30,
 				List.of(ImageUrls.AREQUIPE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService coco = serviceRepository.save(new HotelService(
+		ServiceOffering coco = serviceRepository.save(new ServiceOffering(
 				"Cocadas Isleñas",
-				"Comida",
-				"Postre - Dulces de coco de la tradición isleña de San Andrés",
+				"Comida", "Postre",
+				"Dulces de coco de la tradición isleña de San Andrés",
 				List.of(),
-				8000,
-				"Disponible",
+				8000, 20,
 				List.of(ImageUrls.COCADAS),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService cuajada = serviceRepository.save(new HotelService(
+		ServiceOffering cuajada = serviceRepository.save(new ServiceOffering(
 				"Cuajada con Melao",
-				"Comida",
-				"Postre - Queso fresco con miel de caña, estilo boyacense",
+				"Comida", "Postre",
+				"Queso fresco con miel de caña, estilo boyacense",
 				List.of(),
-				10000,
-				"Disponible",
+				10000, 20,
 				List.of(ImageUrls.CUAJADA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService torta = serviceRepository.save(new HotelService(
+		ServiceOffering torta = serviceRepository.save(new ServiceOffering(
 				"Torta de Natas",
-				"Comida",
-				"Postre - Torta de natas de la costa caribeña",
+				"Comida", "Postre",
+				"Torta de natas de la costa caribeña",
 				List.of(),
-				14000,
-				"Disponible",
+				14000, 30,
 				List.of(ImageUrls.TORTA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService manjar = serviceRepository.save(new HotelService(
+		ServiceOffering manjar = serviceRepository.save(new ServiceOffering(
 				"Manjar Blanco",
-				"Comida",
-				"Postre - Delicia blanca del Valle del Cauca",
+				"Comida", "Postre",
+				"Delicia blanca del Valle del Cauca",
 				List.of(),
-				11000,
-				"Disponible",
+				11000, 20,
 				List.of(ImageUrls.MANJAR),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService nispero = serviceRepository.save(new HotelService(
+		ServiceOffering nispero = serviceRepository.save(new ServiceOffering(
 				"Postre de Níspero",
-				"Comida",
-				"Postre - Postre de níspero de la región cafetera",
+				"Comida", "Postre",
+				"Postre de níspero de la región cafetera",
 				List.of(),
-				13000,
-				"Disponible",
+				13000, 20,
 				List.of(ImageUrls.NISPERO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService papayuela = serviceRepository.save(new HotelService(
+		ServiceOffering papayuela = serviceRepository.save(new ServiceOffering(
 				"Dulce de Papayuela",
-				"Comida",
-				"Postre - Conserva dulce de papayuela de montaña",
+				"Comida", "Postre",
+				"Conserva dulce de papayuela de montaña",
 				List.of(),
-				9000,
-				"Disponible",
+				9000, 20,
 				List.of(ImageUrls.PAPAYUELA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		/* === Bebidas === */
-		HotelService babidaCafe = serviceRepository.save(new HotelService( // (nombre de variable con typo, ok)
+		ServiceOffering babidaCafe = serviceRepository.save(new ServiceOffering(
 				"Café de Origen Especial",
-				"Comida",
-				"Bebida - Café de origen único de fincas locales",
+				"Comida", "Bebida",
+				"Café de origen único de fincas locales",
 				List.of(),
-				8000,
-				"Disponible",
+				8000, 15,
 				List.of(ImageUrls.BEBIDACAFE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService aguaPanela = serviceRepository.save(new HotelService(
+		ServiceOffering aguaPanela = serviceRepository.save(new ServiceOffering(
 				"Agua de Panela con Limón",
-				"Comida",
-				"Bebida - Agua de panela con limón, refresco tradicional",
+				"Comida", "Bebida",
+				"Agua de panela con limón, refresco tradicional",
 				List.of(),
-				5000,
-				"Disponible",
+				5000, 10,
 				List.of(ImageUrls.AGUAPANELA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService jugoCorozo = serviceRepository.save(new HotelService(
+		ServiceOffering jugoCorozo = serviceRepository.save(new ServiceOffering(
 				"Jugo de Corozo",
-				"Comida",
-				"Bebida - Jugo de fruta de palma corozo, especialidad caribeña",
+				"Comida", "Bebida",
+				"Jugo de fruta de palma corozo, especialidad caribeña",
 				List.of(),
-				7000,
-				"Disponible",
+				7000, 10,
 				List.of(ImageUrls.COROZO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService chicha = serviceRepository.save(new HotelService(
+		ServiceOffering chicha = serviceRepository.save(new ServiceOffering(
 				"Chicha de Maíz",
-				"Comida",
-				"Bebida - Bebida tradicional de maíz de cultura indígena",
+				"Comida", "Bebida",
+				"Bebida tradicional de maíz de cultura indígena",
 				List.of(),
-				6000,
-				"Disponible",
+				6000, 20,
 				List.of(ImageUrls.CHICHA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService lulada = serviceRepository.save(new HotelService(
+		ServiceOffering lulada = serviceRepository.save(new ServiceOffering(
 				"Lulada Vallecaucana",
-				"Comida",
-				"Bebida - Bebida de lulo con hielo y limón",
+				"Comida", "Bebida",
+				"Bebida de lulo con hielo y limón",
 				List.of(),
-				8000,
-				"Disponible",
+				8000, 15,
 				List.of(ImageUrls.LULADA),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService chocolate = serviceRepository.save(new HotelService(
+		ServiceOffering chocolate = serviceRepository.save(new ServiceOffering(
 				"Chocolate Santafereño",
-				"Comida",
-				"Bebida - Chocolate caliente con queso, tradición bogotana",
+				"Comida", "Bebida",
+				"Chocolate caliente con queso, tradición bogotana",
 				List.of(),
-				9000,
-				"Disponible",
+				9000, 20,
 				List.of(ImageUrls.CHOCOLATE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService cocoLoco = serviceRepository.save(new HotelService(
+		ServiceOffering cocoLoco = serviceRepository.save(new ServiceOffering(
 				"Coco Loco Isleño",
-				"Comida",
-				"Bebida - Cóctel de coco con ron local",
+				"Comida", "Bebida",
+				"Cóctel de coco con ron local",
 				List.of(),
-				15000,
-				"Disponible",
+				15000, 15,
 				List.of(ImageUrls.COCO),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
-		HotelService aguardiente = serviceRepository.save(new HotelService(
+		ServiceOffering aguardiente = serviceRepository.save(new ServiceOffering(
 				"Aguardiente Antioqueño",
-				"Comida",
-				"Bebida - Experiencia de degustación de licor de anís tradicional",
+				"Comida", "Bebida",
+				"Experiencia de degustación de licor de anís tradicional",
 				List.of(),
-				12000,
-				"Disponible",
+				12000, 30,
 				List.of(ImageUrls.AGUARDIENTE),
-				10.3910, -75.4794));
+				10, 10.3910, -75.4794));
 
 		/* === Tours Cartagena === */
-		HotelService tourCartagena = serviceRepository.save(new HotelService(
-				"Tour Ciudad Amurallada", "Tour",
-				"Cultural - Tour caminando por la Cartagena colonial con perspectivas históricas",
-				List.of(), 45000, "Disponible", List.of(ImageUrls.AMURALLADA),
-				10.3910, -75.4794));
+		ServiceOffering tourCartagena = serviceRepository.save(new ServiceOffering(
+				"Tour Ciudad Amurallada",
+				"Tour", "Cultural",
+				"Tour caminando por la Cartagena colonial con perspectivas históricas",
+				List.of(),
+				45000, 180,
+				List.of(ImageUrls.AMURALLADA),
+				15, 10.3910, -75.4794));
 
-		HotelService tourIslas = serviceRepository.save(new HotelService(
-				"Islas del Rosario", "Tour",
-				"Naturaleza - Excursión en bote a islas coralinas con snorkel y tiempo de playa",
-				List.of(), 85000, "Disponible", List.of(ImageUrls.ISLAS),
-				10.3910, -75.4794));
+		ServiceOffering tourIslas = serviceRepository.save(new ServiceOffering(
+				"Islas del Rosario",
+				"Tour", "Naturaleza",
+				"Excursión en bote a islas coralinas con snorkel y tiempo de playa",
+				List.of(),
+				85000, 480,
+				List.of(ImageUrls.ISLAS),
+				15, 10.3910, -75.4794));
 
-		HotelService tourPalenque = serviceRepository.save(new HotelService(
-				"Palenque Cultural", "Tour",
-				"Cultural - Visita a San Basilio de Palenque, primer pueblo africano libre en América",
-				List.of(), 65000, "Disponible", List.of(ImageUrls.PALENQUE),
-				10.3910, -75.4794));
+		ServiceOffering tourPalenque = serviceRepository.save(new ServiceOffering(
+				"Palenque Cultural",
+				"Tour", "Cultural",
+				"Visita a San Basilio de Palenque, primer pueblo africano libre en América",
+				List.of(),
+				65000, 360,
+				List.of(ImageUrls.PALENQUE),
+				15, 10.3910, -75.4794));
 
 		/* === Tours Eje Cafetero === */
-		HotelService tourFincaCafetera = serviceRepository.save(new HotelService(
-				"Finca Cafetera Tradicional", "Tour",
-				"Cultural - Experiencia en finca cafetera con cosecha y degustación",
-				List.of(), 55000, "Disponible", List.of(ImageUrls.FINCA),
-				10.3910, -75.4794));
+		ServiceOffering tourFincaCafetera = serviceRepository.save(new ServiceOffering(
+				"Finca Cafetera Tradicional",
+				"Tour", "Cultural",
+				"Experiencia en finca cafetera con cosecha y degustación",
+				List.of(),
+				55000, 240,
+				List.of(ImageUrls.FINCA),
+				15, 10.3910, -75.4794));
 
-		HotelService tourValleCocora = serviceRepository.save(new HotelService(
-				"Valle de Cocora", "Tour",
-				"Naturaleza - Caminata por bosque de palmas de cera, árbol nacional de Colombia",
-				List.of(), 70000, "Disponible", List.of(ImageUrls.COCORA),
-				10.3910, -75.4794));
+		ServiceOffering tourValleCocora = serviceRepository.save(new ServiceOffering(
+				"Valle de Cocora",
+				"Tour", "Naturaleza",
+				"Caminata por bosque de palmas de cera, árbol nacional de Colombia",
+				List.of(),
+				70000, 300,
+				List.of(ImageUrls.COCORA),
+				15, 10.3910, -75.4794));
 
-		HotelService tourSalamina = serviceRepository.save(new HotelService(
-				"Pueblo Patrimonio Salamina", "Tour",
-				"Cultural - Tour por pueblo colonial con arquitectura tradicional y artesanías",
-				List.of(), 40000, "Disponible", List.of(ImageUrls.PUEBLO),
-				10.3910, -75.4794));
+		ServiceOffering tourSalamina = serviceRepository.save(new ServiceOffering(
+				"Pueblo Patrimonio Salamina",
+				"Tour", "Cultural",
+				"Tour por pueblo colonial con arquitectura tradicional y artesanías",
+				List.of(),
+				40000, 240,
+				List.of(ImageUrls.PUEBLO),
+				15, 10.3910, -75.4794));
 
 		/* === Tours San Andrés === */
-		HotelService tourHoyo = serviceRepository.save(new HotelService(
-				"Hoyo Soplador y Cueva Morgan", "Tour",
-				"Naturaleza - Exploración de géiser natural y cueva de piratas",
-				List.of(), 35000, "Disponible", List.of(ImageUrls.CUEVA),
-				10.3910, -75.4794));
+		ServiceOffering tourHoyo = serviceRepository.save(new ServiceOffering(
+				"Hoyo Soplador y Cueva Morgan",
+				"Tour", "Naturaleza",
+				"Exploración de géiser natural y cueva de piratas",
+				List.of(),
+				35000, 240,
+				List.of(ImageUrls.CUEVA),
+				15, 10.3910, -75.4794));
 
-		HotelService tourRaizal = serviceRepository.save(new HotelService(
-				"Cultura Raizal", "Tour",
-				"Cultural - Inmersión en cultura raizal con música, danza y gastronomía",
-				List.of(), 50000, "Disponible", List.of(ImageUrls.RAIZAL),
-				10.3910, -75.4794));
+		ServiceOffering tourRaizal = serviceRepository.save(new ServiceOffering(
+				"Cultura Raizal",
+				"Tour", "Cultural",
+				"Inmersión en cultura raizal con música, danza y gastronomía",
+				List.of(),
+				50000, 240,
+				List.of(ImageUrls.RAIZAL),
+				15, 10.3910, -75.4794));
 
-		HotelService tourAcuario = serviceRepository.save(new HotelService(
-				"Acuario y Johnny Cay", "Tour",
-				"Naturaleza - Viaje en bote a acuario natural y playa prístina",
-				List.of(), 75000, "Disponible", List.of(ImageUrls.ACUARIO),
-				10.3910, -75.4794));
+		ServiceOffering tourAcuario = serviceRepository.save(new ServiceOffering(
+				"Acuario y Johnny Cay",
+				"Tour", "Naturaleza",
+				"Viaje en bote a acuario natural y playa prístina",
+				List.of(),
+				75000, 360,
+				List.of(ImageUrls.ACUARIO),
+				15, 10.3910, -75.4794));
 
 		/* === Tours Santa Marta === */
-		HotelService tourTayrona = serviceRepository.save(new HotelService(
-				"Tayrona Ancestral", "Tour",
-				"Cultural - Caminata a sitios arqueológicos indígenas Tayrona",
-				List.of(), 80000, "Disponible", List.of(ImageUrls.TAYRONA),
-				10.3910, -75.4794));
+		ServiceOffering tourTayrona = serviceRepository.save(new ServiceOffering(
+				"Tayrona Ancestral",
+				"Tour", "Cultural",
+				"Caminata a sitios arqueológicos indígenas Tayrona",
+				List.of(),
+				80000, 480,
+				List.of(ImageUrls.TAYRONA),
+				15, 10.3910, -75.4794));
 
-		HotelService tourCiudadPerdida = serviceRepository.save(new HotelService(
-				"Ciudad Perdida Teyuna", "Tour",
-				"Aventura - Caminata de varios días a la Ciudad Perdida de la civilización Tayrona",
-				List.of(), 450000, "Disponible", List.of(ImageUrls.TEYUNA),
-				10.3910, -75.4794));
+		ServiceOffering tourCiudadPerdida = serviceRepository.save(new ServiceOffering(
+				"Ciudad Perdida Teyuna",
+				"Tour", "Aventura",
+				"Caminata de varios días a la Ciudad Perdida de la civilización Tayrona",
+				List.of(),
+				450000, 4320, // 3 días
+				List.of(ImageUrls.TEYUNA),
+				12, 10.3910, -75.4794));
 
-		HotelService tourSierraNevada = serviceRepository.save(new HotelService(
-				"Avistamiento de Aves Sierra Nevada", "Tour",
-				"Naturaleza - Observación de aves en la cordillera costera más alta del mundo",
-				List.of(), 60000, "Disponible", List.of(ImageUrls.AVES),
-				10.3910, -75.4794));
+		ServiceOffering tourSierraNevada = serviceRepository.save(new ServiceOffering(
+				"Avistamiento de Aves Sierra Nevada",
+				"Tour", "Naturaleza",
+				"Observación de aves en la cordillera costera más alta del mundo",
+				List.of(),
+				60000, 300,
+				List.of(ImageUrls.AVES),
+				12, 10.3910, -75.4794));
 
 		/* === Tours Villa de Leyva === */
-		HotelService tourFosiles = serviceRepository.save(new HotelService(
-				"Ruta de los Fósiles", "Tour",
-				"Educativo - Tour paleontológico con descubrimientos de fósiles y museos",
-				List.of(), 35000, "Disponible", List.of(ImageUrls.FOSILES),
-				10.3910, -75.4794));
+		ServiceOffering tourFosiles = serviceRepository.save(new ServiceOffering(
+				"Ruta de los Fósiles",
+				"Tour", "Educativo",
+				"Tour paleontológico con descubrimientos de fósiles y museos",
+				List.of(),
+				35000, 240,
+				List.of(ImageUrls.FOSILES),
+				15, 10.3910, -75.4794));
 
-		HotelService tourAstro = serviceRepository.save(new HotelService(
-				"Observatorio Astronómico", "Tour",
-				"Educativo - Experiencia de observación estelar con perspectivas astronómicas precolombinas",
-				List.of(), 45000, "Disponible", List.of(ImageUrls.OBSERVATORIO),
-				10.3910, -75.4794));
+		ServiceOffering tourAstro = serviceRepository.save(new ServiceOffering(
+				"Observatorio Astronómico",
+				"Tour", "Educativo",
+				"Experiencia de observación estelar con perspectivas astronómicas precolombinas",
+				List.of(),
+				45000, 180,
+				List.of(ImageUrls.OBSERVATORIO),
+				15, 10.3910, -75.4794));
 
-		HotelService tourVinos = serviceRepository.save(new HotelService(
-				"Viñedos Boyacenses", "Tour",
-				"Cultural - Tour de degustación de vinos en viñedos de alta altitud de Boyacá",
-				List.of(), 65000, "Disponible", List.of(ImageUrls.VINO),
-				10.3910, -75.4794));
+		ServiceOffering tourVinos = serviceRepository.save(new ServiceOffering(
+				"Viñedos Boyacenses",
+				"Tour", "Cultural",
+				"Tour de degustación de vinos en viñedos de alta altitud de Boyacá",
+				List.of(),
+				65000, 240,
+				List.of(ImageUrls.VINO),
+				15, 10.3910, -75.4794));
 
 		// === Schedules por servicio: usar scheduleService con un ServiceSchedule base
 		// ===
 		scheduleService.seedSchedules(
-				new ServiceSchedule(gastronomia, LocalDate.now().plusDays(1), LocalTime.of(19, 0), 20), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(tours, LocalDate.now().plusDays(1), LocalTime.of(8, 30), 15),
+				new ServiceSchedule(gastronomia, LocalDate.now().plusDays(1), LocalTime.of(19, 0), LocalTime.of(20, 0),
+						true),
+				7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(tours, LocalDate.now().plusDays(1), LocalTime.of(8, 30), LocalTime.of(9, 30), true),
 				7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(rituales, LocalDate.now().plusDays(1), LocalTime.of(16, 0), 10), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(boutique, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
+				.seedSchedules(new ServiceSchedule(rituales, LocalDate.now().plusDays(1), LocalTime.of(16, 0),
+						LocalTime.of(17, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(boutique, LocalDate.now(), LocalTime.of(15, 0), LocalTime.of(16, 0), true), 7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(ecoturismo, LocalDate.now().plusDays(2), LocalTime.of(9, 0), 12), 7);
+				.seedSchedules(new ServiceSchedule(ecoturismo, LocalDate.now().plusDays(2), LocalTime.of(9, 0),
+						LocalTime.of(10, 0), true), 7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(cultura, LocalDate.now().plusDays(3), LocalTime.of(14, 0), 25), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cacao, LocalDate.now().plusDays(2), LocalTime.of(17, 30), 8),
+				.seedSchedules(new ServiceSchedule(cultura, LocalDate.now().plusDays(3), LocalTime.of(14, 0),
+						LocalTime.of(15, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cacao, LocalDate.now().plusDays(2), LocalTime.of(17, 30), LocalTime.of(18, 30),
+						true),
 				7);
-		scheduleService.seedSchedules(new ServiceSchedule(aves, LocalDate.now().plusDays(1), LocalTime.of(6, 0), 10),
-				7);
-		scheduleService
-				.seedSchedules(new ServiceSchedule(senderismo, LocalDate.now().plusDays(2), LocalTime.of(7, 0), 15), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(suite, LocalDate.now(), LocalTime.of(15, 0), 1), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cabanas, LocalDate.now(), LocalTime.of(14, 0), 5), 7);
-		scheduleService.seedSchedules(new ServiceSchedule(cafe, LocalDate.now().plusDays(2), LocalTime.of(10, 0), 8),
-				7);
-		scheduleService.seedSchedules(new ServiceSchedule(chef, LocalDate.now().plusDays(3), LocalTime.of(20, 0), 12),
+		scheduleService.seedSchedules(
+				new ServiceSchedule(aves, LocalDate.now().plusDays(1), LocalTime.of(6, 0), LocalTime.of(7, 0), true),
 				7);
 		scheduleService
-				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30), 30), 7);
+				.seedSchedules(new ServiceSchedule(senderismo, LocalDate.now().plusDays(2), LocalTime.of(7, 0),
+						LocalTime.of(8, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(suite, LocalDate.now(), LocalTime.of(15, 0), LocalTime.of(16, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cabanas, LocalDate.now(), LocalTime.of(14, 0), LocalTime.of(15, 0), true), 7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(cafe, LocalDate.now().plusDays(2), LocalTime.of(10, 0), LocalTime.of(11, 0), true),
+				7);
+		scheduleService.seedSchedules(
+				new ServiceSchedule(chef, LocalDate.now().plusDays(3), LocalTime.of(20, 0), LocalTime.of(21, 0), true),
+				7);
+		scheduleService
+				.seedSchedules(new ServiceSchedule(desayuno, LocalDate.now().plusDays(1), LocalTime.of(7, 30),
+						LocalTime.of(8, 30), true), 7);
+
+		// Juntar horarios a los Servicios
+		gastronomia.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(gastronomia)));
+		tours.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(tours)));
+		rituales.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(rituales)));
+		boutique.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(boutique)));
+		ecoturismo.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(ecoturismo)));
+		cultura.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cultura)));
+		cacao.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cacao)));
+		aves.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(aves)));
+		senderismo.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(senderismo)));
+		suite.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(suite)));
+		cabanas.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cabanas)));
+		cafe.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(cafe)));
+		chef.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(chef)));
+		desayuno.setServiceSchedules(new java.util.ArrayList<>(scheduleService.findByService(desayuno)));
+
+		// Persistir las relaciones
+		serviceRepository.saveAll(java.util.Arrays.asList(
+				gastronomia, tours, rituales, boutique, ecoturismo, cultura, cacao, aves,
+				senderismo, suite, cabanas, cafe, chef, desayuno));
 
 		// === Usuarios y Clientes ===
-		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890");
-		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321");
-		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555",
-				"5555555555");
+		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890",
+				"/images/icons/icono3.png");
+		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321",
+				"/images/icons/icono3.png");
+		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555", "5555555555",
+				"/images/icons/icono3.png");
 
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
+		// +7 adicionales (todos con email único)
+		HotelUser user4 = new HotelUser("Carlos Mendoza", "carlos.mendoza@gmail.com", "password123", "3001234567",
+				"CC1001", "/images/icons/icono3.png");
+		HotelUser user5 = new HotelUser("María Rodríguez", "maria.rodriguez@hotmail.com", "password123", "3109876543",
+				"CC1002", "/images/icons/icono3.png");
+		HotelUser user6 = new HotelUser("Andrés Gómez", "andres.gomez@yahoo.com", "password123", "3205555555",
+				"CC1003", "/images/icons/icono3.png");
+		HotelUser user7 = new HotelUser("Lucía Herrera", "lucia.herrera@gmail.com", "password123", "3157777777",
+				"CC1004", "/images/icons/icono3.png");
+		HotelUser user8 = new HotelUser("Diego Vargas", "diego.vargas@outlook.com", "password123", "3018888888",
+				"CC1005", "/images/icons/icono3.png");
+		HotelUser user9 = new HotelUser("Sofía Castro", "sofia.castro@gmail.com", "password123", "3112222222",
+				"CC1006", "/images/icons/icono3.png");
+		HotelUser user10 = new HotelUser("Miguel Torres", "miguel.torres@yahoo.com", "password123", "3213333333",
+				"CC1007", "/images/icons/icono3.png");
 
-		Client client1 = new Client(user1);
-		Client client2 = new Client(user2);
-		Client client3 = new Client(user3);
+		// Guarda usuarios
+		userRepository.saveAll(java.util.Arrays.asList(
+				user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
 
-		clientRepository.save(client1);
-		clientRepository.save(client2);
-		clientRepository.save(client3);
+		// Crea y guarda clientes 1:1 con los usuarios
+		clientRepository.saveAll(java.util.Arrays.asList(
+				new Client(user1), new Client(user2), new Client(user3),
+				new Client(user4), new Client(user5), new Client(user6),
+				new Client(user7), new Client(user8), new Client(user9),
+				new Client(user10)));
+
+		// =========================
+		// 1) ROOM TYPES (asegurar 5)
+		// =========================
+		Map<String, RoomType> typesByName = roomTypeRepository.findAll().stream()
+				.collect(Collectors.toMap(rt -> rt.getName().toLowerCase(Locale.ROOT), rt -> rt, (a, b) -> a,
+						LinkedHashMap::new));
+
+		RoomType rtStd = ensureType(typesByName, "Estándar Regional",
+				"Habitaciones cómodas con decoración típica de cada región colombiana",
+				new BigDecimal("120000"), 2, "WiFi, AC, Baño privado, Arte local, Textiles regionales");
+
+		RoomType rtDel = ensureType(typesByName, "Deluxe Cultural",
+				"Habitaciones amplias con elementos culturales auténticos de la región",
+				new BigDecimal("180000"), 3, "WiFi, AC, Minibar, Balcón, Mobiliario artesanal, Biblioteca regional");
+
+		RoomType rtSuite = ensureType(typesByName, "Suite Ancestral",
+				"Suites de lujo con sala separada y diseño premium colombiano",
+				new BigDecimal("280000"), 4,
+				"WiFi, AC, Minibar, Sala de estar, Ropa de cama premium, Colección cultural");
+
+		RoomType rtFam = ensureType(typesByName, "Familiar Colombiana",
+				"Habitaciones familiares amplias con espacios conectados y temática local",
+				new BigDecimal("220000"), 6, "WiFi, AC, Cocineta, Literas, Juegos tradicionales, Juguetes artesanales");
+
+		RoomType rtEco = ensureType(typesByName, "Eco Boutique",
+				"Habitación eco-friendly con materiales locales y energía renovable",
+				new BigDecimal("200000"), 3, "WiFi, Ventilación natural, Kit ecológico, Terraza verde");
+
+		Map<Integer, RoomType> typeByFloor = Map.of(
+				1, rtStd, 2, rtDel, 3, rtSuite, 4, rtFam, 5, rtEco);
+
+		// ==========================================
+		// 2) ROOMS (100) — solo si no existen rooms
+		// ==========================================
+		if (roomRepository.count() == 0L) {
+			for (int hotelId = 1; hotelId <= 5; hotelId++) {
+				for (int floor = 1; floor <= 5; floor++) {
+					RoomType floorType = typeByFloor.get(floor);
+					for (int i = 1; i <= 4; i++) {
+						Room r = new Room();
+						r.setHotelId((long) hotelId);
+						r.setRoomType(floorType);
+
+						// N° habitación único por hotel (ej: "1-101", "2-101", etc.)
+						String roomNumber = String.format("%d-%d0%d", hotelId, floor, i);
+						r.setRoomNumber(roomNumber);
+
+						r.setFloorNumber(floor);
+
+						// Estados demo: variedad para que los filtros muestren algo
+						Room.ReservationStatus res = switch (i) {
+							case 2 -> Room.ReservationStatus.BOOKED;
+							case 3 -> Room.ReservationStatus.OCCUPIED;
+							case 4 -> Room.ReservationStatus.MAINTENANCE;
+							default -> Room.ReservationStatus.AVAILABLE;
+						};
+						r.setResStatus(res);
+
+						r.setCleStatus((i % 2 == 0) ? Room.CleaningStatus.DIRTY : Room.CleaningStatus.CLEAN);
+
+						// Temas por hotel/piso (nombres culturales)
+						r.setThemeName(themeNameFor(hotelId, floor));
+						r.setThemeDescription("Habitación temática personalizada por destino y piso.");
+
+						roomRepository.save(r);
+					}
+				}
+			}
+		}
+
+	}
+
+	/** Crea el RoomType si no existe por nombre; si existe, lo reutiliza. */
+	private RoomType ensureType(Map<String, RoomType> existing,
+			String name, String desc, BigDecimal price, Integer maxOcc, String amenities) {
+		RoomType found = existing.get(name.toLowerCase(Locale.ROOT));
+		if (found != null)
+			return found;
+
+		RoomType rt = new RoomType();
+		rt.setName(name);
+		rt.setDescription(desc);
+		rt.setBasePrice(price);
+		rt.setMaxOccupancy(maxOcc);
+		rt.setAmenities(amenities);
+
+		rt = roomTypeRepository.save(rt);
+		existing.put(name.toLowerCase(Locale.ROOT), rt);
+		return rt;
+	}
+
+	/** Nombres de tema por hotel (1..5) y piso (1..5). */
+	private String themeNameFor(int hotelId, int floor) {
+		return switch (hotelId) {
+			case 1 -> switch (floor) {
+				case 1 -> "Balcones Coloniales";
+				case 2 -> "Brisa Marina";
+				case 3 -> "Palacio Virreinal";
+				case 4 -> "Casa de Familias";
+				default -> "Terraza Tropical";
+			};
+			case 2 -> switch (floor) {
+				case 1 -> "Finca Cafetera";
+				case 2 -> "Valle del Cocora";
+				case 3 -> "Balcón Montañero";
+				case 4 -> "Casa Paisa";
+				default -> "Guadual Eco";
+			};
+			case 3 -> switch (floor) {
+				case 1 -> "Mar de Siete Colores";
+				case 2 -> "Johnny Cay";
+				case 3 -> "Cayo Acuario";
+				case 4 -> "Casa Raizal";
+				default -> "Brisa Caribe";
+			};
+			case 4 -> switch (floor) {
+				case 1 -> "Tayrona Ancestral";
+				case 2 -> "Sierra Nevada";
+				case 3 -> "Ciudad Perdida";
+				case 4 -> "Kogui Sagrado";
+				default -> "Eco Tayrona";
+			};
+			case 5 -> switch (floor) {
+				case 1 -> "Plaza Mayor";
+				case 2 -> "Casa Colonial";
+				case 3 -> "Observatorio Muisca";
+				case 4 -> "Hogar Boyacense";
+				default -> "Viñedos Andinos";
+			};
+			default -> "Tema Regional";
+		};
 	}
 }

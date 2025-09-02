@@ -3,174 +3,118 @@ package com.runasagrada.demo.controller;
 import com.runasagrada.demo.entities.Room;
 import com.runasagrada.demo.entities.RoomType;
 import com.runasagrada.demo.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import com.runasagrada.demo.service.RoomTypeService;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityGraph;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 @Controller
-@RequestMapping("/rooms")
+@RequestMapping("/rooms/staff")
 public class RoomController {
 
-    @Autowired
-    private RoomService roomService;
+    private final RoomService roomService;
+    private final RoomTypeService roomTypeService;
 
-    @Autowired
-    private EntityManager entityManager;
-
-    Logger logger = Logger.getLogger(RoomController.class.getName());
-
-    // Root endpoint for /rooms - redirects to staff dashboard
-    @GetMapping
-    public String showRooms() {
-        return "redirect:/rooms/staff";
+    public RoomController(RoomService roomService, RoomTypeService roomTypeService) {
+        this.roomService = roomService;
+        this.roomTypeService = roomTypeService;
     }
 
-    @GetMapping("/staff")
-    public String showRoomsStaff(Model model) {
-        model.addAttribute("newroom", new Room());
-        model.addAttribute("newroomtype", new com.runasagrada.demo.entities.RoomType());
-        model.addAttribute("rooms", roomService.findAll());
-        model.addAttribute("roomTypes", roomService.getAllRoomTypes());
+    /**
+     * Convierte "" en null en params/form fields para que los filtros opcionales
+     * funcionen.
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    /*
+     * =========================
+     * Vista
+     * =========================
+     */
+
+    /** Sirve la página principal de habitaciones (roomsPage.html). */
+    @GetMapping({ "", "/", "/page" })
+    public String roomsPage(Model model) {
+        // combos para selects en la vista
+        List<RoomType> roomTypes = roomTypeService.findAll();
+        model.addAttribute("roomTypes", roomTypes);
         model.addAttribute("reservationStatuses", Room.ReservationStatus.values());
         model.addAttribute("cleaningStatuses", Room.CleaningStatus.values());
+
+        // para formularios create/update con th:object
+        model.addAttribute("roomForm", new Room());
         return "roomsPage";
     }
 
-    @PostMapping("/staff/add")
-    public String registerRoom(@ModelAttribute("newroom") Room newRoom,
-            @RequestParam("roomType") Long roomTypeId,
-            RedirectAttributes redirectAttributes) {
-        try {
-            // Set the room type by ID
-            if (roomTypeId != null) {
-                RoomType roomType = new RoomType();
-                roomType.setId(roomTypeId);
-                newRoom.setRoomType(roomType);
-            }
-            roomService.create(newRoom);
-            redirectAttributes.addFlashAttribute("successMessage", "Room registered successfully!");
-        } catch (DataIntegrityViolationException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error: Room number already exists on this floor.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error creating room: " + e.getMessage());
-        }
-        return "redirect:/rooms/staff";
-    }
+    /*
+     * =========================
+     * Endpoints AJAX (JSON)
+     * =========================
+     */
 
-    @GetMapping("/staff/update/{id}")
+    /**
+     * Búsqueda con filtros opcionales (coincide con tu HTML:
+     * /rooms/staff/search-ajax).
+     */
+    @GetMapping("/search-ajax")
     @ResponseBody
-    public Room getRoom(@PathVariable Long id) {
-        EntityGraph<?> graph = entityManager.createEntityGraph("Room.withRoomType");
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("jakarta.persistence.fetchgraph", graph);
-        Room room = entityManager.find(Room.class, id, properties);
-
-        if (room == null) {
-            throw new RuntimeException("Room not found with id " + id);
-        }
-        return room;
-    }
-
-    @PostMapping("/staff/update")
-    public String updateRoom(@ModelAttribute("newroom") Room updatedRoom,
-            @RequestParam("roomType") Long roomTypeId,
-            RedirectAttributes redirectAttributes) {
-        try {
-            // Set the room type by ID
-            if (roomTypeId != null) {
-                RoomType roomType = new RoomType();
-                roomType.setId(roomTypeId);
-                updatedRoom.setRoomType(roomType);
-            }
-            roomService.update(updatedRoom.getId(), updatedRoom);
-            redirectAttributes.addFlashAttribute("successMessage", "Room updated successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error updating room: " + e.getMessage());
-        }
-        return "redirect:/rooms/staff";
-    }
-
-    @GetMapping("/staff/delete/{id}")
-    public String deleteRoom(@PathVariable Long id,
-            RedirectAttributes redirectAttributes) {
-        try {
-            roomService.delete(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Room deleted successfully!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting room: " + e.getMessage());
-        }
-        return "redirect:/rooms/staff";
-    }
-
-    @PostMapping("/staff/search")
-    public String searchRooms(@RequestParam(required = false) String roomNumber,
+    public List<Room> searchAjax(@RequestParam(required = false) String roomNumber,
             @RequestParam(required = false) Integer floorNumber,
-            @RequestParam(name = "resStatus", required = false) Room.ReservationStatus resStatus,
-            @RequestParam(name = "cleStatus", required = false) Room.CleaningStatus cleStatus,
-            @RequestParam(required = false) Long hotelId, // optional if you later add a field
-            @RequestParam(required = false) String themeName,
-            Model model) {
-
-        List<Room> rooms = roomService.search(roomNumber, floorNumber, resStatus, cleStatus, hotelId, themeName);
-
-        model.addAttribute("rooms", rooms);
-        model.addAttribute("newroom", new Room());
-        model.addAttribute("newroomtype", new RoomType());
-        model.addAttribute("roomTypes", roomService.getAllRoomTypes());
-        model.addAttribute("reservationStatuses", Room.ReservationStatus.values());
-        model.addAttribute("cleaningStatuses", Room.CleaningStatus.values());
-        model.addAttribute("searchPerformed", true);
-
-        if (rooms.isEmpty()) {
-            model.addAttribute("errorMessage", "No se encontraron habitaciones con los criterios ingresados.");
-        }
-        return "roomsPage";
+            @RequestParam(required = false) Room.ReservationStatus resStatus,
+            @RequestParam(required = false) Room.CleaningStatus cleStatus,
+            @RequestParam(required = false) String themeName) {
+        return roomService.search(roomNumber, floorNumber, resStatus, cleStatus, themeName);
     }
 
-    // Additional endpoints for specific searches
-    @GetMapping("/by-room-number")
+    /**
+     * Carga una habitación para editar (coincide con tu HTML:
+     * /rooms/staff/update/{id}).
+     */
+    @GetMapping("/update/{id}")
     @ResponseBody
-    public List<Room> getRoomsByNumber(@RequestParam String roomNumber) {
-        return roomService.findByRoomNumber(roomNumber);
+    public Room getOneAjax(@PathVariable Long id) {
+        return roomService.getById(id);
     }
 
-    @GetMapping("/by-floor")
-    @ResponseBody
-    public List<Room> getRoomsByFloor(@RequestParam Integer floorNumber) {
-        return roomService.findByFloorNumber(floorNumber);
+    /*
+     * =========================
+     * CRUD via formularios
+     * =========================
+     */
+
+    /** Crear (form POST). Usa binding de roomType.id desde la vista. */
+    @PostMapping("/create")
+    public String create(@ModelAttribute("roomForm") Room room,
+            RedirectAttributes ra) {
+        roomService.create(room);
+        ra.addFlashAttribute("msgSuccess", "Habitación creada correctamente.");
+        return "redirect:/rooms/staff/page";
     }
 
-    @GetMapping("/by-reservation-status")
-    @ResponseBody
-    public List<Room> getRoomsByReservationStatus(@RequestParam Room.ReservationStatus resStatus) {
-        return roomService.findByReservationStatus(resStatus);
+    /** Actualizar (form POST). */
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id,
+            @ModelAttribute("roomForm") Room room,
+            RedirectAttributes ra) {
+        roomService.update(id, room);
+        ra.addFlashAttribute("msgSuccess", "Habitación actualizada correctamente.");
+        return "redirect:/rooms/staff/page";
     }
 
-    @GetMapping("/by-cleaning-status")
-    @ResponseBody
-    public List<Room> getRoomsByCleaningStatus(@RequestParam Room.CleaningStatus cleStatus) {
-        return roomService.findByCleaningStatus(cleStatus);
-    }
-
-    @GetMapping("/by-hotel")
-    @ResponseBody
-    public List<Room> getRoomsByHotel(@RequestParam Long hotelId) {
-        return roomService.findByHotelId(hotelId);
-    }
-
-    @GetMapping("/by-theme")
-    @ResponseBody
-    public List<Room> getRoomsByTheme(@RequestParam String themeName) {
-        return roomService.findByThemeName(themeName);
+    /** Eliminar (form POST para compatibilidad con HTML simple). */
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id,
+            RedirectAttributes ra) {
+        roomService.delete(id);
+        ra.addFlashAttribute("msgSuccess", "Habitación eliminada.");
+        return "redirect:/rooms/staff/page";
     }
 }
