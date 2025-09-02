@@ -192,17 +192,12 @@
           </div>
         </div>
 
-        <!-- Descriction and state -->
+        <!-- Description and details -->
         <div class="row align-items-start mb-5">
           <div class="col-md-8 offset-md-2">
             <p class="text-center" th:text="${serviceDetail.description}">
               Aquí va la descripción del servicio. Explica en detalle qué
               incluye, beneficios, duración, y lo que el usuario necesita saber.
-            </p>
-            <p class="text-start">
-              <strong th:text="'Estado: ' + ${serviceDetail.status}"
-                >Estado</strong
-              >
             </p>
           </div>
         </div>
@@ -214,7 +209,7 @@
             <div
               class="p-4 mb-4 h-100 w-100 border border-3 border-light rounded"
             >
-              <h5 class="mb-3">Detalles</h5>
+              <h5 class="mb-3">Horarios</h5>
 
               <!-- Schedule table -->
               <div
@@ -225,25 +220,32 @@
                     <thead class="table-light">
                       <tr>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Capacidad</th>
+                        <th scope="col">Inicio</th>
+                        <th scope="col">Fin</th>
+                        <th scope="col">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr th:each="sched : ${serviceDetail.serviceSchedules}">
                         <td
-                          th:text="${#temporals.format(sched.sched_date, 'dd/MM/yyyy')}"
+                          th:text="${#temporals.format(sched.schedDate, 'dd/MM/yyyy')}"
                         >
                           12/10/2025
                         </td>
                         <td
-                          th:text="${#temporals.format(sched.sched_time, 'HH:mm')}"
+                          th:text="${#temporals.format(sched.startTime, 'HH:mm')}"
                         >
                           10:00
                         </td>
-                        <td>
-                          <span th:text="${sched.capacity}">20</span>
-                          <span class="text-muted">personas</span>
+                        <td
+                          th:text="${#temporals.format(sched.endTime, 'HH:mm')}"
+                        >
+                          11:00
+                        </td>
+                        <td
+                          th:text="${sched.is_active} ? 'Activo' : 'Inactivo'"
+                        >
+                          Activo
                         </td>
                       </tr>
                     </tbody>
@@ -272,6 +274,17 @@
               <p>
                 <strong>Precio base:</strong>
                 <span th:text="|${serviceDetail.basePrice} USD|">$150 USD</span>
+              </p>
+              <p>
+                <strong>Duración:</strong>
+                <span th:text="|${serviceDetail.durationMinutes} min|"
+                  >60 min</span
+                >
+              </p>
+              <p>
+                <strong>Cupo máximo:</strong>
+                <span th:text="${serviceDetail.maxParticipants}">10</span>
+                <span>personas</span>
               </p>
 
               <a

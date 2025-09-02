@@ -171,7 +171,7 @@
         <!-- Buscador -->
         <form
           id="search-form"
-          th:action="@{/staff/client/search}"
+          th:action="@{/ops/client/search}"
           method="post"
           class="row g-2"
         >
@@ -283,7 +283,7 @@
                       </button>
                       <a
                         class="btn-glass btn-glass-danger"
-                        th:href="@{/staff/client/delete/{id}(id=${cliente.id})}"
+                        th:href="@{/ops/client/delete/{id}(id=${cliente.id})}"
                         title="Eliminar"
                       >
                         <i class="fas fa-trash"></i>
@@ -331,7 +331,7 @@
     >
       <div class="modal-dialog">
         <form
-          th:action="@{/staff/client/add}"
+          th:action="@{/ops/client/add}"
           th:object="${newclientuser}"
           method="post"
           class="modal-content"
@@ -430,7 +430,7 @@
     >
       <div class="modal-dialog">
         <form
-          th:action="@{/staff/client/update}"
+          th:action="@{/ops/client/update}"
           th:object="${newclientuser}"
           method="post"
           class="modal-content"
