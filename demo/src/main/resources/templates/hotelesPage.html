@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Runa Sagrada - Panel de Administración" />
+    <meta name="keywords" content="staff, dashboard, gestión, clientes" />
+    <meta name="author" content="Runa Sagrada" />
+
+    <title>Admin Dashboard - Runa Sagrada</title>
+
+    <!-- Preload critical assets -->
+    <link rel="preload" th:href="@{/images/logito.png}" as="image" />
+
+    <!-- Stylesheets -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" th:href="@{/styles/styles.css}" />
+    <link rel="stylesheet" th:href="@{/styles/styles1.css}" />
+  </head>
+  <body class="dashboard-container">
+    <button
+      class="sidebar-toggle d-lg-none"
+      type="button"
+      id="sidebarToggle"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      aria-label="Alternar navegación"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img
+          th:src="@{/images/logito.png}"
+          alt="Runa Sagrada"
+          class="sidebar-logo"
+        />
+        <h2 class="sidebar-title">Staff Panel</h2>
+      </div>
+
+      <nav
+        class="sidebar-nav nav flex-column"
+        id="sidebarTab"
+        role="tablist"
+        aria-orientation="vertical"
+      >
+        <a class="sidebar-nav-link" th:href="@{/dashboard}" role="tab">
+          <span>Dashboard</span>
+        </a>
+
+        <a class="sidebar-nav-link" th:href="@{/hotel/staff}" role="tab">
+          <span>Gestión Hoteles</span>
+        </a>
+
+        <a class="sidebar-nav-link" th:href="@{/rooms/staff}" role="tab">
+          <span>Gestión Habitaciones</span>
+        </a>
+
+        <a class="sidebar-nav-link" th:href="@{/service/staff}" role="tab">
+          <span>Gestión Servicios</span>
+        </a>
+
+        <a class="sidebar-nav-link" th:href="@{/finance/staff}" role="tab">
+          <span>Finanzas</span>
+        </a>
+
+        <a class="sidebar-nav-link" th:href="@{/report/staff}" role="tab">
+          <span>Reportes</span>
+        </a>
+
+        <a
+          class="sidebar-nav-link text-white bg-danger rounded-pill mt-3 text-center"
+          th:href="@{/}"
+          role="tab"
+        >
+          <span>Volver al sitio</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">Panel de Administración</h1>
+      <p class="dashboard-subtitle">
+        Gestiona todos los aspectos de Runa Sagrada desde un solo lugar
+      </p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content tab-content">
+      <!-- Tabla Section Hoteles -->
+      <section class="tabla-section tab-pane fade show active" id="hoteles">
+        <div class="tabla-header">
+          <h2 class="tabla-title">Gestión de Hoteles</h2>
+          <div class="tabla-actions">
+            <button
+              class="btn btn-gradient"
+              data-bs-toggle="modal"
+              data-bs-target="#modalCHotel"
+            >
+              <i class="fas fa-plus me-2"></i>Agregar Nuevo Hotel
+            </button>
+            <button
+              class="btn btn-outline-light"
+              onclick="window.location.reload()"
+            >
+              <i class="fas fa-sync-alt me-2"></i>Actualizar
+            </button>
+          </div>
+        </div>
+
+        <div class="tabla-content">
+          <div class="tabla-placeholder">
+            <i class="fas fa-hotel fa-3x mb-3 text-muted"></i>
+            <h3>Gestión de Hoteles</h3>
+            <p>
+              En esta sección puedes gestionar todos los hoteles de la cadena.
+            </p>
+            <button
+              class="btn btn-gradient mt-3"
+              data-bs-toggle="modal"
+              data-bs-target="#modalCHotel"
+            >
+              <i class="fas fa-plus me-2"></i>Registrar Hotel
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Otras secciones -->
+      <section class="tabla-section tab-pane fade" id="servicios">
+        <h1>TODO</h1>
+      </section>
+
+      <section class="tabla-section tab-pane fade" id="dashboard">
+        <h1>TODO</h1>
+      </section>
+    </main>
+
+    <!-- Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script th:src="@{/js/script.js}" defer></script>
+  </body>
+</html>

@@ -771,10 +771,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const toggle = document.getElementById("sidebarToggle");
 
       if (sidebar && toggle && window.innerWidth <= 768) {
-        if (
-          !sidebar.contains(event.target) &&
-          !toggle.contains(event.target)
-        ) {
+        if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
           sidebar.classList.remove("show");
         }
       }
@@ -821,3 +818,78 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const nav = document.querySelector(".navbar-services");
+
+//staffPage.html
+
+// Load client information into update modal
+const modalUCliente = document.getElementById("modalUCliente");
+if (modalUCliente) {
+  modalUCliente.addEventListener("show.bs.modal", function (event) {
+    var button = event.relatedTarget;
+    var clientId = button.getAttribute("data-id");
+
+    fetch("/staff/client/update/" + clientId)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const clientIdEdit = document.getElementById("clientIdEdit");
+        const nameEdit = document.getElementById("nameEdit");
+        const emailEdit = document.getElementById("emailEdit");
+        const phoneEdit = document.getElementById("phoneEdit");
+        const nationalIdEdit = document.getElementById("nationalIdEdit");
+
+        if (clientIdEdit) clientIdEdit.value = data.id;
+        if (nameEdit) nameEdit.value = data.name;
+        if (emailEdit) emailEdit.value = data.email;
+        if (phoneEdit) phoneEdit.value = data.phone;
+        if (nationalIdEdit) nationalIdEdit.value = data.nationalId;
+      })
+      .catch((err) => console.error("Error cargando cliente:", err));
+  });
+}
+
+function passDelClient(clientId) {
+  fetch("/staff/client/delete/" + clientId)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => console.error("Error cargando cliente:", err));
+}
+
+function loadRoomData(element) {
+  const id = element.getAttribute("data-id");
+  const name = element.getAttribute("data-name");
+  const capacity = element.getAttribute("data-capacity");
+  const basePrice = element.getAttribute("data-baseprice");
+  const description = element.getAttribute("data-description");
+
+  document.getElementById("updateId").value = id;
+  document.getElementById("updateName").value = name;
+  document.getElementById("updateCapacity").value = capacity;
+  document.getElementById("updateBasePrice").value = basePrice;
+  document.getElementById("updateDescription").value = description || "";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize Bootstrap tooltips
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+
+  // Initialize components
+  if (typeof ParallaxController !== 'undefined') {
+    new ParallaxController();
+  }
+  
+  if (typeof HotelSlider !== 'undefined') {
+    new HotelSlider();
+  }
+  
+  if (typeof BookingBar !== 'undefined') {
+    new BookingBar();
+  }
+});
