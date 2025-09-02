@@ -613,7 +613,7 @@ public class DatabaseInit implements ApplicationRunner {
 		/* === Tours Cartagena === */
 		ServiceOffering tourCartagena = serviceRepository.save(new ServiceOffering(
 				"Tour Ciudad Amurallada",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Tour caminando por la Cartagena colonial con perspectivas históricas",
 				List.of(),
 				45000, 180,
@@ -622,7 +622,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourIslas = serviceRepository.save(new ServiceOffering(
 				"Islas del Rosario",
-				"Tour", "Naturaleza",
+				"Tours", "Naturaleza",
 				"Excursión en bote a islas coralinas con snorkel y tiempo de playa",
 				List.of(),
 				85000, 480,
@@ -631,7 +631,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourPalenque = serviceRepository.save(new ServiceOffering(
 				"Palenque Cultural",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Visita a San Basilio de Palenque, primer pueblo africano libre en América",
 				List.of(),
 				65000, 360,
@@ -641,7 +641,7 @@ public class DatabaseInit implements ApplicationRunner {
 		/* === Tours Eje Cafetero === */
 		ServiceOffering tourFincaCafetera = serviceRepository.save(new ServiceOffering(
 				"Finca Cafetera Tradicional",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Experiencia en finca cafetera con cosecha y degustación",
 				List.of(),
 				55000, 240,
@@ -650,7 +650,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourValleCocora = serviceRepository.save(new ServiceOffering(
 				"Valle de Cocora",
-				"Tour", "Naturaleza",
+				"Tours", "Naturaleza",
 				"Caminata por bosque de palmas de cera, árbol nacional de Colombia",
 				List.of(),
 				70000, 300,
@@ -659,7 +659,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourSalamina = serviceRepository.save(new ServiceOffering(
 				"Pueblo Patrimonio Salamina",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Tour por pueblo colonial con arquitectura tradicional y artesanías",
 				List.of(),
 				40000, 240,
@@ -669,7 +669,7 @@ public class DatabaseInit implements ApplicationRunner {
 		/* === Tours San Andrés === */
 		ServiceOffering tourHoyo = serviceRepository.save(new ServiceOffering(
 				"Hoyo Soplador y Cueva Morgan",
-				"Tour", "Naturaleza",
+				"Tours", "Naturaleza",
 				"Exploración de géiser natural y cueva de piratas",
 				List.of(),
 				35000, 240,
@@ -678,7 +678,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourRaizal = serviceRepository.save(new ServiceOffering(
 				"Cultura Raizal",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Inmersión en cultura raizal con música, danza y gastronomía",
 				List.of(),
 				50000, 240,
@@ -687,7 +687,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourAcuario = serviceRepository.save(new ServiceOffering(
 				"Acuario y Johnny Cay",
-				"Tour", "Naturaleza",
+				"Tours", "Naturaleza",
 				"Viaje en bote a acuario natural y playa prístina",
 				List.of(),
 				75000, 360,
@@ -697,7 +697,7 @@ public class DatabaseInit implements ApplicationRunner {
 		/* === Tours Santa Marta === */
 		ServiceOffering tourTayrona = serviceRepository.save(new ServiceOffering(
 				"Tayrona Ancestral",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Caminata a sitios arqueológicos indígenas Tayrona",
 				List.of(),
 				80000, 480,
@@ -706,7 +706,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourCiudadPerdida = serviceRepository.save(new ServiceOffering(
 				"Ciudad Perdida Teyuna",
-				"Tour", "Aventura",
+				"Tours", "Aventura",
 				"Caminata de varios días a la Ciudad Perdida de la civilización Tayrona",
 				List.of(),
 				450000, 4320, // 3 días
@@ -715,7 +715,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourSierraNevada = serviceRepository.save(new ServiceOffering(
 				"Avistamiento de Aves Sierra Nevada",
-				"Tour", "Naturaleza",
+				"Tours", "Naturaleza",
 				"Observación de aves en la cordillera costera más alta del mundo",
 				List.of(),
 				60000, 300,
@@ -725,7 +725,7 @@ public class DatabaseInit implements ApplicationRunner {
 		/* === Tours Villa de Leyva === */
 		ServiceOffering tourFosiles = serviceRepository.save(new ServiceOffering(
 				"Ruta de los Fósiles",
-				"Tour", "Educativo",
+				"Tours", "Educativo",
 				"Tour paleontológico con descubrimientos de fósiles y museos",
 				List.of(),
 				35000, 240,
@@ -734,7 +734,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourAstro = serviceRepository.save(new ServiceOffering(
 				"Observatorio Astronómico",
-				"Tour", "Educativo",
+				"Tours", "Educativo",
 				"Experiencia de observación estelar con perspectivas astronómicas precolombinas",
 				List.of(),
 				45000, 180,
@@ -743,7 +743,7 @@ public class DatabaseInit implements ApplicationRunner {
 
 		ServiceOffering tourVinos = serviceRepository.save(new ServiceOffering(
 				"Viñedos Boyacenses",
-				"Tour", "Cultural",
+				"Tours", "Cultural",
 				"Tour de degustación de vinos en viñedos de alta altitud de Boyacá",
 				List.of(),
 				65000, 240,
