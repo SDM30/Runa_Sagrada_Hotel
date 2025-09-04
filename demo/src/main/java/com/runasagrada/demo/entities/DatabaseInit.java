@@ -114,6 +114,59 @@ public class DatabaseInit implements ApplicationRunner {
 		static final String DESAYUNO_1 = "https://i.ytimg.com/vi/r4FgfmO3zLg/maxresdefault.jpg";
 		static final String DESAYUNO_2 = "https://saboresdecolombianj.com/wp-content/uploads/2025/04/HUEVOS-Y-AREPA-CON-QUESO.jpg";
 		static final String DESAYUNO_3 = "https://live.staticflickr.com/6209/6147056621_15c60d28cf_b.jpg";
+
+		static final String PISCINA = "https://www.patiodepilar.com/img/cms/Piscina%20Infinity/piscina-infinita-que-es.jpg";
+		static final String SPA = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/483180906.jpg?k=cb923aa311360020d113175cd13556cafbe65103f2c2ab90a5e7553fab302c03&o=&hp=1";
+		static final String RESTAURANTE = "https://lirp.cdn-website.com/ba701a07/dms3rep/multi/opt/Hotel-Las-Americas-Cartagena-de-Indias-Colombia---Las-Americas-Hotels-Group---Gastronom-C3-ADa---Erre-de-Ram-C3-B3n-Freixa-6-640w.png";
+		static final String BAR = "https://www.palladiohotelbuenosaires.com/wp-content/uploads/sites/7/2021/11/palladio_hotel_mgallery_restaurant_negresco_bar_slide_01-2200x1200.jpg";
+		static final String ARTESANIAS = "https://media-cdn.tripadvisor.com/media/photo-s/10/c7/82/f1/getlstd-property-photo.jpg";
+		static final String BIBLIOTECA = "https://media.admagazine.com/photos/6585f094b83aa25ed6cd5397/master/w_1600%2Cc_limit/Library%2520Hotel.jpg";
+		static final String GIMNASIO = "https://image-tc.galaxy.tf/wijpeg-blu54hydt85v0io6vu4lmnjrr/gimnasio_standard.jpg?crop=112%2C0%2C1777%2C1333";
+		static final String JARDIN = "https://z.cdrst.com/foto/hotel-sf/123119a8/granderesp/foto-hotel-12310efe.jpg";
+		static final String SALON = "https://www.hotelestequendama.com.co/assets/cache/uploads/tequendama-hoteles/Hotel%20Tequendama%20Bogot%C3%A1/salas/salon-crystal-view/1920x1080/interior-sala-crystal-view-mesas-boda-tequendama-hoteles-santa-fe-bogota-colombia-1691572149.jpg";
+		static final String TERRAZA = "https://media-cdn.tripadvisor.com/media/photo-s/06/74/87/fc/best-western-plus-93.jpg";
+		static final String NEGOSCIOS = "https://img.pikbest.com/wp/202346/wood-room-modern-style-business-meeting-in-3d-rendering_9730531.jpg!w700wp";
+		static final String CONCIERGE = "https://www.ncakey.org/wp-content/uploads/2017/10/bell-2.jpg";
+
+		static final String BANDEJA = "https://i.blogs.es/bb0cca/bandeja_paisa/1200_900.jpg";
+		static final String SANCOCHO = "https://www.cheekyfoods.com.au/cdn/shop/articles/Untitled_design_87.jpg?v=1698649815";
+		static final String AJIACO = "https://www.semana.com/resizer/v2/GBBYJH5YMZC6PEINHE3HZZH4TY.jpg?auth=f21d7fbf15c15316b80dd213fb2c635e4445db8e08133172d69a4956d7f417db&smart=true&quality=75&width=1920&height=1080&fitfill=false";
+		static final String PESCADO = "https://us.123rf.com/450wm/echeverriurrealuis/echeverriurrealuis2311/echeverriurrealuis231100466/218354595-fried-horse-mackerel-fish-with-coconut-rice-patacon-and-vegetable-salad.jpg";
+		static final String LECHONA = "https://media.istockphoto.com/id/1442283646/photo/lechona-with-rice-arepa-and-potato-on-a-white-plate-and-a-background-with-plants.jpg?s=612x612&w=0&k=20&c=3GsgmLQfsWEJcPjOld1n2Fhhb2kICye50IU557P7m4I=";
+		static final String MONDONGO = "https://media.istockphoto.com/id/1205769953/photo/mondongo-typical-dish-of-the-center-of-colombia.jpg?s=612x612&w=0&k=20&c=BJL_ngH3nOc_LRkxFAdl8j2OCaAcpNGQ9w765AEmkZM=";
+		static final String CAZUELA = "https://media.istockphoto.com/id/607991782/es/foto/paella-tradicional-espa%C3%B1ola-con-marisco-y-pollo.jpg?s=612x612&w=0&k=20&c=2q56wjPHIcSqje4SbsJdvA7Zy0I2Xy67XSdE6pQrmlo=";
+		static final String TRUCHA = "https://thumbs.dreamstime.com/b/prendedero-de-la-trucha-cocinada-109983171.jpg";
+		static final String TRELECHES = "https://easyways.cl/storage/20211229090337postre-tres-leches.jpg";
+		static final String AREQUIPE = "https://easyways.cl/storage/20211229090337postre-tres-leches.jpg";
+		static final String COCADAS = "https://www.shutterstock.com/image-photo/peruvian-cocadas-traditional-coconut-dessert-600nw-380640118.jpg";
+		static final String CUAJADA = "https://static.bainet.es/clip/315db07b-3610-42cc-9c94-8abe9baef742_source-aspect-ratio_1600w_0.jpg";
+		static final String TORTA = "https://api.photon.aremedia.net.au/wp-content/uploads/sites/4/2021/07/23/12909/HL1121E15-scaled.jpg?fit=2560%2C2134";
+		static final String MANJAR = "https://elrinconcolombiano.com/wp-content/uploads/2023/04/Manjar-blanco-receta-colombiana.jpg";
+		static final String NISPERO = "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ETKI3DOT3NFMBEKOML6FNT346M.jpg";
+		static final String PAPAYUELA = "https://yucatan.travel/wp-content/uploads/2022/09/365-Sabores-en-Yucata%CC%81n-Dulce-de-papaya-con-queso-de-bola-3.jpg";
+		static final String BEBIDACAFE = "https://st2.depositphotos.com/1773130/7605/i/450/depositphotos_76054953-stock-photo-iced-coffee-in-a-tall.jpg";
+		static final String AGUAPANELA = "https://media.istockphoto.com/id/1181234339/es/foto/aguapanela-casera-fresca-agua-de-panela-o-aguadulce-una-popular-bebida-dulce-latinoamericana.jpg?s=612x612&w=0&k=20&c=wv78sAHw4zohimed6F0xdQrE7VIGtL6whjbpagllnek=";
+		static final String COROZO = "https://imagenes.eltiempo.com/files/image_1200_535/uploads/2024/02/20/65d4e89c2c395.jpeg";
+		static final String CHICHA = "https://cdn.colombia.com/gastronomia/2011/08/03/chicha-1604.gif";
+		static final String LULADA = "https://www.elespectador.com/resizer/VQS-41ig6YKYg4qcH5zr5B1XXBw=/arc-anglerfish-arc2-prod-elespectador/public/GTELHVJGBZARLL3GLVUEGRCMJY.JPG";
+		static final String CHOCOLATE = "https://sabor.eluniverso.com/wp-content/uploads/2023/12/shutterstock_1665115558-1024x683.jpg";
+		static final String COCO = "https://jappi.com.co/wp-content/uploads/2023/03/Jappi-Final.webp";
+		static final String AGUARDIENTE = "https://desquite.com/en/wp-content/uploads/2025/03/Desquite-Tradicion-Artisanal-Authentic-Colombian-Aguardiente-m.webp";
+		static final String AMURALLADA = "https://viajerofacil.com/wp-content/uploads/2019/07/Webp.net-resizeimage-11-min.jpg";
+		static final String ISLAS = "https://www.cartagenaexplorer.com/wp-content/uploads/2020/07/Depositphotos_156273740_xl-2015-scaled.jpg";
+		static final String PALENQUE = "https://turismo.encolombia.com/wp-content/uploads/2019/09/Cartagena-de-Indias.jpg";
+		static final String FINCA = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/19/08/27/finca-el-ocaso-salento.jpg?w=900&h=-1&s=1";
+		static final String COCORA = "https://content-viajes.nationalgeographic.com.es/medio/2020/04/03/y-por-fin-el-valle_a092a848_1257x835.jpg";
+		static final String PUEBLO = "https://www.infobae.com/new-resizer/GTDQWXVcyONBZkezz8NbuyrMMa4=/arc-anglerfish-arc2-prod-infobae/public/3WMFVPC5OFBF3LI652Z6V4LS2Q.jpg";
+		static final String CUEVA = "https://www.regiocantabrorum.es/img/publicaciones/441/cueva_los_tornillos_index.jpg";
+		static final String RAIZAL = "https://regionesnaturalescolombia.com/wp-content/uploads/2023/03/Traje-tipico-de-la-region-insular.png";
+		static final String ACUARIO = "https://www.arserver.info/img/excursions/40/acuario-rio-de-janeiro-aquario-16.jpg";
+		static final String TAYRONA = "https://ciudadperdidacolombia.com/wp-content/uploads/2023/12/todo-sobre-los-tairona.jpg";
+		static final String TEYUNA = "https://content-viajes.nationalgeographic.com.es/medio/2019/09/16/istock-501625632_0eac7a9a_1200x630.jpg";
+		static final String AVES = "https://media.istockphoto.com/id/153187546/es/foto/p%C3%A1jaro-watcher-silueta.jpg?s=612x612&w=0&k=20&c=Z7bdiVI9amwRG9NA8OEiNaM93F2CmTFQLzBkwfxUCFM=";
+		static final String FOSILES = "https://humanidades.com/wp-content/uploads/2018/09/fosiles-e1579375905679.jpg";
+		static final String OBSERVATORIO = "https://pbs.twimg.com/media/DUa0PLFUQAAlYJl.jpg";
+		static final String VINO = "https://raizdeguzman.com/wp-content/uploads/2019/05/vinedos-raiz.png";
 	}
 
 	@Override
@@ -218,6 +271,485 @@ public class DatabaseInit implements ApplicationRunner {
 				List.of(ImageUrls.DESAYUNO_1, ImageUrls.DESAYUNO_2, ImageUrls.DESAYUNO_3),
 				10, 10.9639, -74.7964));
 
+		// Amenidad 1: Piscina Infinity
+		ServiceOffering piscina = serviceRepository.save(new ServiceOffering(
+				"Piscina Infinity",
+				"Hotel", "Piscina",
+				"Piscina infinita con vistas panorámicas",
+				List.of(),
+				49900, 60,
+				List.of(ImageUrls.PISCINA),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 2: Spa Ancestral
+		ServiceOffering spa = serviceRepository.save(new ServiceOffering(
+				"Spa Ancestral",
+				"Hotel", "Spa",
+				"Terapias de sanación tradicional con técnicas indígenas",
+				List.of(),
+				52900, 60,
+				List.of(ImageUrls.SPA),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 3: Restaurante Gourmet
+		ServiceOffering restaurante = serviceRepository.save(new ServiceOffering(
+				"Restaurante Gourmet",
+				"Hotel", "Restaurante",
+				"Gastronomía fina con cocina regional colombiana",
+				List.of(),
+				57900, 60,
+				List.of(ImageUrls.RESTAURANTE),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 4: Bar de Cócteles
+		ServiceOffering bar = serviceRepository.save(new ServiceOffering(
+				"Bar de Cócteles",
+				"Hotel", "Bar",
+				"Cócteles artesanales con frutas y licores locales",
+				List.of(),
+				45900, 60,
+				List.of(ImageUrls.BAR),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 5: Taller de Artesanías
+		ServiceOffering taller = serviceRepository.save(new ServiceOffering(
+				"Taller de Artesanías",
+				"Hotel", "Taller",
+				"Talleres prácticos con artesanos locales",
+				List.of(),
+				48900, 90,
+				List.of(ImageUrls.ARTESANIAS),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 6: Biblioteca Cultural
+		ServiceOffering biblioteca = serviceRepository.save(new ServiceOffering(
+				"Biblioteca Cultural",
+				"Hotel", "Biblioteca",
+				"Colección de literatura e historia colombiana",
+				List.of(),
+				41900, 60,
+				List.of(ImageUrls.BIBLIOTECA),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 7: Gimnasio Eco
+		ServiceOffering gimnasio = serviceRepository.save(new ServiceOffering(
+				"Gimnasio Eco",
+				"Hotel", "Gimnasio",
+				"Centro de fitness con equipos sostenibles",
+				List.of(),
+				39900, 60,
+				List.of(ImageUrls.GIMNASIO),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 8: Jardín Botánico
+		ServiceOffering jardin = serviceRepository.save(new ServiceOffering(
+				"Jardín Botánico",
+				"Hotel", "Jardín",
+				"Jardín de plantas nativas con hierbas medicinales",
+				List.of(),
+				44900, 60,
+				List.of(ImageUrls.JARDIN),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 9: Salón de Eventos
+		ServiceOffering salon = serviceRepository.save(new ServiceOffering(
+				"Salón de Eventos",
+				"Hotel", "Eventos",
+				"Espacio versátil para celebraciones y reuniones",
+				List.of(),
+				55900, 120,
+				List.of(ImageUrls.SALON),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 10: Terraza Mirador
+		ServiceOffering terraza = serviceRepository.save(new ServiceOffering(
+				"Terraza Mirador",
+				"Hotel", "Terraza",
+				"Terraza en azotea con vistas regionales",
+				List.of(),
+				42900, 60,
+				List.of(ImageUrls.TERRAZA),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 11: Centro de Negocios (nota: constante tiene typo como NEGOSCIOS)
+		ServiceOffering negocios = serviceRepository.save(new ServiceOffering(
+				"Centro de Negocios",
+				"Hotel", "Negocios",
+				"Centro de negocios con tecnología moderna",
+				List.of(),
+				53900, 60,
+				List.of(ImageUrls.NEGOSCIOS),
+				10, 10.3910, -75.4794));
+
+		// Amenidad 12: Servicio de Concierge
+		ServiceOffering concierge = serviceRepository.save(new ServiceOffering(
+				"Servicio de Concierge",
+				"Hotel", "Concierge",
+				"Asistencia personalizada al huésped 24/7",
+				List.of(),
+				46900, 30,
+				List.of(ImageUrls.CONCIERGE),
+				10, 10.3910, -75.4794));
+
+		/* === Platos Principales === */
+		ServiceOffering bandeja = serviceRepository.save(new ServiceOffering(
+				"Bandeja Paisa Tradicional",
+				"Comida", "Plato Principal",
+				"Plato paisa completo con frijoles, arroz, chicharrón y arepa",
+				List.of(),
+				35000, 60,
+				List.of(ImageUrls.BANDEJA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering sancocho = serviceRepository.save(new ServiceOffering(
+				"Sancocho Costeño",
+				"Comida", "Plato Principal",
+				"Guiso tradicional costeño con pescado, yuca y plátano",
+				List.of(),
+				32000, 60,
+				List.of(ImageUrls.SANCOCHO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering ajiaco = serviceRepository.save(new ServiceOffering(
+				"Ajiaco Santafereño",
+				"Comida", "Plato Principal",
+				"Sopa de pollo y papa estilo Bogotá con mazorca y alcaparras",
+				List.of(),
+				28000, 60,
+				List.of(ImageUrls.AJIACO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering pescado = serviceRepository.save(new ServiceOffering(
+				"Pescado Frito Isleño",
+				"Comida", "Plato Principal",
+				"Pescado frito con arroz de coco y patacones, estilo San Andrés",
+				List.of(),
+				38000, 60,
+				List.of(ImageUrls.PESCADO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering lechona = serviceRepository.save(new ServiceOffering(
+				"Lechona Tolimense",
+				"Comida", "Plato Principal",
+				"Cerdo relleno asado con arroz y arvejas, tradición tolimense",
+				List.of(),
+				42000, 60,
+				List.of(ImageUrls.LECHONA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering mondongo = serviceRepository.save(new ServiceOffering(
+				"Mondongo Antioqueño",
+				"Comida", "Plato Principal",
+				"Sopa tradicional de mondongo con verduras y hierbas",
+				List.of(),
+				30000, 60,
+				List.of(ImageUrls.MONDONGO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering cazuela = serviceRepository.save(new ServiceOffering(
+				"Cazuela de Mariscos",
+				"Comida", "Plato Principal",
+				"Cazuela de mariscos con leche de coco, estilo caribeño",
+				List.of(),
+				45000, 60,
+				List.of(ImageUrls.CAZUELA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering trucha = serviceRepository.save(new ServiceOffering(
+				"Trucha a la Plancha",
+				"Comida", "Plato Principal",
+				"Trucha a la plancha con hierbas de los Andes",
+				List.of(),
+				36000, 60,
+				List.of(ImageUrls.TRUCHA),
+				10, 10.3910, -75.4794));
+
+		/* === Postres === */
+		ServiceOffering tresLeches = serviceRepository.save(new ServiceOffering(
+				"Tres Leches Costeño",
+				"Comida", "Postre",
+				"Torta de tres leches con frutas tropicales",
+				List.of(),
+				15000, 30,
+				List.of(ImageUrls.TRELECHES),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering arequipe = serviceRepository.save(new ServiceOffering(
+				"Arequipe con Brevas",
+				"Comida", "Postre",
+				"Brevas con dulce de leche, especialidad antioqueña",
+				List.of(),
+				12000, 30,
+				List.of(ImageUrls.AREQUIPE),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering coco = serviceRepository.save(new ServiceOffering(
+				"Cocadas Isleñas",
+				"Comida", "Postre",
+				"Dulces de coco de la tradición isleña de San Andrés",
+				List.of(),
+				8000, 20,
+				List.of(ImageUrls.COCADAS),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering cuajada = serviceRepository.save(new ServiceOffering(
+				"Cuajada con Melao",
+				"Comida", "Postre",
+				"Queso fresco con miel de caña, estilo boyacense",
+				List.of(),
+				10000, 20,
+				List.of(ImageUrls.CUAJADA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering torta = serviceRepository.save(new ServiceOffering(
+				"Torta de Natas",
+				"Comida", "Postre",
+				"Torta de natas de la costa caribeña",
+				List.of(),
+				14000, 30,
+				List.of(ImageUrls.TORTA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering manjar = serviceRepository.save(new ServiceOffering(
+				"Manjar Blanco",
+				"Comida", "Postre",
+				"Delicia blanca del Valle del Cauca",
+				List.of(),
+				11000, 20,
+				List.of(ImageUrls.MANJAR),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering nispero = serviceRepository.save(new ServiceOffering(
+				"Postre de Níspero",
+				"Comida", "Postre",
+				"Postre de níspero de la región cafetera",
+				List.of(),
+				13000, 20,
+				List.of(ImageUrls.NISPERO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering papayuela = serviceRepository.save(new ServiceOffering(
+				"Dulce de Papayuela",
+				"Comida", "Postre",
+				"Conserva dulce de papayuela de montaña",
+				List.of(),
+				9000, 20,
+				List.of(ImageUrls.PAPAYUELA),
+				10, 10.3910, -75.4794));
+
+		/* === Bebidas === */
+		ServiceOffering babidaCafe = serviceRepository.save(new ServiceOffering(
+				"Café de Origen Especial",
+				"Comida", "Bebida",
+				"Café de origen único de fincas locales",
+				List.of(),
+				8000, 15,
+				List.of(ImageUrls.BEBIDACAFE),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering aguaPanela = serviceRepository.save(new ServiceOffering(
+				"Agua de Panela con Limón",
+				"Comida", "Bebida",
+				"Agua de panela con limón, refresco tradicional",
+				List.of(),
+				5000, 10,
+				List.of(ImageUrls.AGUAPANELA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering jugoCorozo = serviceRepository.save(new ServiceOffering(
+				"Jugo de Corozo",
+				"Comida", "Bebida",
+				"Jugo de fruta de palma corozo, especialidad caribeña",
+				List.of(),
+				7000, 10,
+				List.of(ImageUrls.COROZO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering chicha = serviceRepository.save(new ServiceOffering(
+				"Chicha de Maíz",
+				"Comida", "Bebida",
+				"Bebida tradicional de maíz de cultura indígena",
+				List.of(),
+				6000, 20,
+				List.of(ImageUrls.CHICHA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering lulada = serviceRepository.save(new ServiceOffering(
+				"Lulada Vallecaucana",
+				"Comida", "Bebida",
+				"Bebida de lulo con hielo y limón",
+				List.of(),
+				8000, 15,
+				List.of(ImageUrls.LULADA),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering chocolate = serviceRepository.save(new ServiceOffering(
+				"Chocolate Santafereño",
+				"Comida", "Bebida",
+				"Chocolate caliente con queso, tradición bogotana",
+				List.of(),
+				9000, 20,
+				List.of(ImageUrls.CHOCOLATE),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering cocoLoco = serviceRepository.save(new ServiceOffering(
+				"Coco Loco Isleño",
+				"Comida", "Bebida",
+				"Cóctel de coco con ron local",
+				List.of(),
+				15000, 15,
+				List.of(ImageUrls.COCO),
+				10, 10.3910, -75.4794));
+
+		ServiceOffering aguardiente = serviceRepository.save(new ServiceOffering(
+				"Aguardiente Antioqueño",
+				"Comida", "Bebida",
+				"Experiencia de degustación de licor de anís tradicional",
+				List.of(),
+				12000, 30,
+				List.of(ImageUrls.AGUARDIENTE),
+				10, 10.3910, -75.4794));
+
+		/* === Tours Cartagena === */
+		ServiceOffering tourCartagena = serviceRepository.save(new ServiceOffering(
+				"Tour Ciudad Amurallada",
+				"Tours", "Cultural",
+				"Tour caminando por la Cartagena colonial con perspectivas históricas",
+				List.of(),
+				45000, 180,
+				List.of(ImageUrls.AMURALLADA),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourIslas = serviceRepository.save(new ServiceOffering(
+				"Islas del Rosario",
+				"Tours", "Naturaleza",
+				"Excursión en bote a islas coralinas con snorkel y tiempo de playa",
+				List.of(),
+				85000, 480,
+				List.of(ImageUrls.ISLAS),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourPalenque = serviceRepository.save(new ServiceOffering(
+				"Palenque Cultural",
+				"Tours", "Cultural",
+				"Visita a San Basilio de Palenque, primer pueblo africano libre en América",
+				List.of(),
+				65000, 360,
+				List.of(ImageUrls.PALENQUE),
+				15, 10.3910, -75.4794));
+
+		/* === Tours Eje Cafetero === */
+		ServiceOffering tourFincaCafetera = serviceRepository.save(new ServiceOffering(
+				"Finca Cafetera Tradicional",
+				"Tours", "Cultural",
+				"Experiencia en finca cafetera con cosecha y degustación",
+				List.of(),
+				55000, 240,
+				List.of(ImageUrls.FINCA),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourValleCocora = serviceRepository.save(new ServiceOffering(
+				"Valle de Cocora",
+				"Tours", "Naturaleza",
+				"Caminata por bosque de palmas de cera, árbol nacional de Colombia",
+				List.of(),
+				70000, 300,
+				List.of(ImageUrls.COCORA),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourSalamina = serviceRepository.save(new ServiceOffering(
+				"Pueblo Patrimonio Salamina",
+				"Tours", "Cultural",
+				"Tour por pueblo colonial con arquitectura tradicional y artesanías",
+				List.of(),
+				40000, 240,
+				List.of(ImageUrls.PUEBLO),
+				15, 10.3910, -75.4794));
+
+		/* === Tours San Andrés === */
+		ServiceOffering tourHoyo = serviceRepository.save(new ServiceOffering(
+				"Hoyo Soplador y Cueva Morgan",
+				"Tours", "Naturaleza",
+				"Exploración de géiser natural y cueva de piratas",
+				List.of(),
+				35000, 240,
+				List.of(ImageUrls.CUEVA),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourRaizal = serviceRepository.save(new ServiceOffering(
+				"Cultura Raizal",
+				"Tours", "Cultural",
+				"Inmersión en cultura raizal con música, danza y gastronomía",
+				List.of(),
+				50000, 240,
+				List.of(ImageUrls.RAIZAL),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourAcuario = serviceRepository.save(new ServiceOffering(
+				"Acuario y Johnny Cay",
+				"Tours", "Naturaleza",
+				"Viaje en bote a acuario natural y playa prístina",
+				List.of(),
+				75000, 360,
+				List.of(ImageUrls.ACUARIO),
+				15, 10.3910, -75.4794));
+
+		/* === Tours Santa Marta === */
+		ServiceOffering tourTayrona = serviceRepository.save(new ServiceOffering(
+				"Tayrona Ancestral",
+				"Tours", "Cultural",
+				"Caminata a sitios arqueológicos indígenas Tayrona",
+				List.of(),
+				80000, 480,
+				List.of(ImageUrls.TAYRONA),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourCiudadPerdida = serviceRepository.save(new ServiceOffering(
+				"Ciudad Perdida Teyuna",
+				"Tours", "Aventura",
+				"Caminata de varios días a la Ciudad Perdida de la civilización Tayrona",
+				List.of(),
+				450000, 4320, // 3 días
+				List.of(ImageUrls.TEYUNA),
+				12, 10.3910, -75.4794));
+
+		ServiceOffering tourSierraNevada = serviceRepository.save(new ServiceOffering(
+				"Avistamiento de Aves Sierra Nevada",
+				"Tours", "Naturaleza",
+				"Observación de aves en la cordillera costera más alta del mundo",
+				List.of(),
+				60000, 300,
+				List.of(ImageUrls.AVES),
+				12, 10.3910, -75.4794));
+
+		/* === Tours Villa de Leyva === */
+		ServiceOffering tourFosiles = serviceRepository.save(new ServiceOffering(
+				"Ruta de los Fósiles",
+				"Tours", "Educativo",
+				"Tour paleontológico con descubrimientos de fósiles y museos",
+				List.of(),
+				35000, 240,
+				List.of(ImageUrls.FOSILES),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourAstro = serviceRepository.save(new ServiceOffering(
+				"Observatorio Astronómico",
+				"Tours", "Educativo",
+				"Experiencia de observación estelar con perspectivas astronómicas precolombinas",
+				List.of(),
+				45000, 180,
+				List.of(ImageUrls.OBSERVATORIO),
+				15, 10.3910, -75.4794));
+
+		ServiceOffering tourVinos = serviceRepository.save(new ServiceOffering(
+				"Viñedos Boyacenses",
+				"Tours", "Cultural",
+				"Tour de degustación de vinos en viñedos de alta altitud de Boyacá",
+				List.of(),
+				65000, 240,
+				List.of(ImageUrls.VINO),
+				15, 10.3910, -75.4794));
+
 		// === Schedules por servicio: usar scheduleService con un ServiceSchedule base
 		// ===
 		scheduleService.seedSchedules(
@@ -284,9 +816,12 @@ public class DatabaseInit implements ApplicationRunner {
 				senderismo, suite, cabanas, cafe, chef, desayuno));
 
 		// === Usuarios y Clientes ===
-		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890", "/images/icons/icono3.png");
-		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321", "/images/icons/icono3.png");
-		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555", "5555555555", "/images/icons/icono3.png");
+		HotelUser user1 = new HotelUser("John Doe", "john.doe@example.com", "password123", "1234567890", "1234567890",
+				"/images/icons/icono3.png");
+		HotelUser user2 = new HotelUser("Jane Doe", "jane.doe@example.com", "password123", "0987654321", "0987654321",
+				"/images/icons/icono3.png");
+		HotelUser user3 = new HotelUser("Bob Smith", "bob.smith@example.com", "password123", "5555555555", "5555555555",
+				"/images/icons/icono3.png");
 
 		// +7 adicionales (todos con email único)
 		HotelUser user4 = new HotelUser("Carlos Mendoza", "carlos.mendoza@gmail.com", "password123", "3001234567",
