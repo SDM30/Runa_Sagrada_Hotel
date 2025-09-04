@@ -19,11 +19,6 @@ import com.runasagrada.demo.service.ClientService;
 import com.runasagrada.demo.service.HotelUserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
 
 @Controller
 public class ClientController {
@@ -201,7 +196,7 @@ public class ClientController {
     }
 
     // Mostrar perfil
-    @GetMapping("/cliente/perfil/{id}")
+    @GetMapping("/client/profile/{id}")
     public String mostrarPerfil(@PathVariable Long id, Model model) {
         HotelUser hotelUser = userService.searchById(id);
         model.addAttribute("hotelUser", hotelUser);
@@ -209,7 +204,7 @@ public class ClientController {
     }
 
     // Editar perfil
-    @PostMapping("/cliente/editar")
+    @PostMapping("/client/profile/edit")
     public String editarPerfil(@ModelAttribute("hotelUser") HotelUser hotelUser, Model model) {
 
         HotelUser original = userService.searchById(hotelUser.getId());
@@ -226,7 +221,7 @@ public class ClientController {
         original.setProfileIcon(hotelUser.getProfileIcon());
 
         userService.save(original);
-        return "redirect:/cliente/perfil/" + original.getId();
+        return "redirect:/client/profile/" + original.getId();
     }
     // Actualizar Cliente funcion privada
 }

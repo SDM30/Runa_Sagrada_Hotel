@@ -25,7 +25,6 @@
     <link rel="stylesheet" th:href="@{/styles/styles.css}" />
     <link rel="stylesheet" th:href="@{/styles/styles1.css}" />
     <style>
-    
       .btn-gradient {
         background: linear-gradient(135deg, #a0400c, #ff6200);
         color: white;
@@ -37,7 +36,6 @@
         box-shadow: 0 6px 16px rgba(37, 117, 252, 0.4);
       }
 
-      
       .profile-card {
         border: none;
         border-radius: 1rem;
@@ -48,7 +46,6 @@
         transform: translateY(-3px);
       }
 
-     
       .modal-content {
         border-radius: 1rem;
         border: none;
@@ -73,15 +70,38 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <img th:src="@{/images/logito.png}" alt="Runa Sagrada" class="sidebar-logo" />
+        <img
+          th:src="@{/images/logito.png}"
+          alt="Runa Sagrada"
+          class="sidebar-logo"
+        />
         <h2 class="sidebar-title">Cliente</h2>
       </div>
-      <nav class="sidebar-nav nav flex-column" role="tablist" aria-orientation="vertical">
-        <a class="sidebar-nav-link" th:href="@{/cliente/dashboard}" role="tab">Dashboard</a>
-        <a class="sidebar-nav-link active" th:href="@{/cliente/perfil}" role="tab">Mi Perfil</a>
-        <a class="sidebar-nav-link" th:href="@{/cliente/pagos}" role="tab">Pagos</a>
-        <a class="sidebar-nav-link" th:href="@{/cliente/reservas}" role="tab">Reservas</a>
-        <a class="sidebar-nav-link text-white bg-danger rounded-pill mt-3 text-center" th:href="@{/}" role="tab">
+      <nav
+        class="sidebar-nav nav flex-column"
+        role="tablist"
+        aria-orientation="vertical"
+      >
+        <a class="sidebar-nav-link" th:href="@{/client/dashboard}" role="tab"
+          >Dashboard</a
+        >
+        <a
+          class="sidebar-nav-link active"
+          th:href="@{/client/profile}"
+          role="tab"
+          >Mi Perfil</a
+        >
+        <a class="sidebar-nav-link" th:href="@{/client/pagos}" role="tab"
+          >Pagos</a
+        >
+        <a class="sidebar-nav-link" th:href="@{/client/reservas}" role="tab"
+          >Reservas</a
+        >
+        <a
+          class="sidebar-nav-link text-white bg-danger rounded-pill mt-3 text-center"
+          th:href="@{/}"
+          role="tab"
+        >
           Volver al sitio
         </a>
       </nav>
@@ -90,38 +110,69 @@
     <!-- Header -->
     <header class="dashboard-header text-center py-4">
       <h1 class="dashboard-title">Perfil del Cliente</h1>
-      <p class="dashboard-subtitle">Gestiona tu información personal y preferencias</p>
+      <p class="dashboard-subtitle">
+        Gestiona tu información personal y preferencias
+      </p>
     </header>
 
     <!-- Contenido -->
     <main class="main-content tab-content">
       <section class="tabla-section tab-pane fade show active" id="perfil">
         <div class="tabla-content d-flex justify-content-center">
-          <div class="card profile-card p-4 text-center" style="max-width: 600px; width: 100%;">
+          <div
+            class="card profile-card p-4 text-center"
+            style="max-width: 600px; width: 100%"
+          >
             <div class="d-flex flex-column align-items-center">
               <div class="position-relative">
-                <img th:src="${hotelUser.profileIcon}" alt="Foto de perfil"
-                     class="rounded-circle shadow" width="120" height="120">
-                <span class="position-absolute bottom-0 end-0 bg-gradient rounded-circle p-2 shadow-sm"
-                      style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editModal">
+                <img
+                  th:src="${hotelUser.profileIcon}"
+                  alt="Foto de perfil"
+                  class="rounded-circle shadow"
+                  width="120"
+                  height="120"
+                />
+                <span
+                  class="position-absolute bottom-0 end-0 bg-gradient rounded-circle p-2 shadow-sm"
+                  style="cursor: pointer"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                >
                   <i class="fas fa-pen text-white"></i>
                 </span>
               </div>
-              <h3 class="mt-3 mb-1 fw-bold text-dark" th:text="${hotelUser.name}">Nombre Apellido</h3>
+              <h3
+                class="mt-3 mb-1 fw-bold text-dark"
+                th:text="${hotelUser.name}"
+              >
+                Nombre Apellido
+              </h3>
               <p class="text-muted small">Cliente registrado</p>
             </div>
-            <hr>
+            <hr />
             <div class="text-start px-3">
-              <p><i class="fas fa-envelope text-primary me-2"></i>
-                <strong>Email:</strong> <span th:text="${hotelUser.email}">correo@ejemplo.com</span></p>
-              <p><i class="fas fa-phone text-success me-2"></i>
-                <strong>Teléfono:</strong> <span th:text="${hotelUser.phone}">999999999</span></p>
-              <p><i class="fas fa-id-card text-warning me-2"></i>
-                <strong>DNI:</strong> <span th:text="${hotelUser.nationalId}">12345678</span></p>
+              <p>
+                <i class="fas fa-envelope text-primary me-2"></i>
+                <strong>Email:</strong>
+                <span th:text="${hotelUser.email}">correo@ejemplo.com</span>
+              </p>
+              <p>
+                <i class="fas fa-phone text-success me-2"></i>
+                <strong>Teléfono:</strong>
+                <span th:text="${hotelUser.phone}">999999999</span>
+              </p>
+              <p>
+                <i class="fas fa-id-card text-warning me-2"></i>
+                <strong>DNI:</strong>
+                <span th:text="${hotelUser.nationalId}">12345678</span>
+              </p>
             </div>
             <div class="text-center mt-3">
-              <button class="btn btn-gradient px-4 py-2 rounded-pill shadow-sm"
-                      data-bs-toggle="modal" data-bs-target="#editModal">
+              <button
+                class="btn btn-gradient px-4 py-2 rounded-pill shadow-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal"
+              >
                 <i class="fas fa-user-edit me-2"></i> Editar Perfil
               </button>
             </div>
@@ -131,62 +182,148 @@
     </main>
 
     <!-- Modal Editar Perfil -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="editModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
-        <form th:action="@{/cliente/editar}" th:object="${hotelUser}" method="post" class="modal-content">
+        <form
+          th:action="@{/client/profile/edit}"
+          th:object="${hotelUser}"
+          method="post"
+          class="modal-content"
+        >
           <input type="hidden" th:field="*{id}" />
           <div class="modal-header">
             <h5 class="modal-title" id="editModalLabel">Editar Perfil</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
               <label for="name" class="form-label">Nombre</label>
-              <input type="text" th:field="*{name}" class="form-control" id="name" required>
+              <input
+                type="text"
+                th:field="*{name}"
+                class="form-control"
+                id="name"
+                required
+              />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Correo</label>
-              <input type="email" th:field="*{email}" class="form-control" id="email" required>
+              <input
+                type="email"
+                th:field="*{email}"
+                class="form-control"
+                id="email"
+                required
+              />
             </div>
             <div class="mb-3">
               <label for="phone" class="form-label">Teléfono</label>
-              <input type="text" th:field="*{phone}" class="form-control" id="phone">
+              <input
+                type="text"
+                th:field="*{phone}"
+                class="form-control"
+                id="phone"
+              />
             </div>
             <div class="mb-3">
               <label for="nationalId" class="form-label">DNI</label>
-              <input type="text" th:field="*{nationalId}" class="form-control" id="nationalId">
+              <input
+                type="text"
+                th:field="*{nationalId}"
+                class="form-control"
+                id="nationalId"
+              />
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
-              <input type="password" th:field="*{password}" class="form-control" id="password" autocomplete="new-password">
+              <input
+                type="password"
+                th:field="*{password}"
+                class="form-control"
+                id="password"
+                autocomplete="new-password"
+              />
             </div>
             <div class="mb-3 text-center">
               <label class="form-label">Foto de perfil</label>
               <div class="d-flex justify-content-center gap-3">
                 <label>
-                  <input type="radio" th:field="*{profileIcon}" value="/images/icons/icono1.png" required>
-                  <img src="/images/icons/icono1.png" alt="Icono 1" width="48" height="48" class="rounded-circle shadow-sm">
+                  <input
+                    type="radio"
+                    th:field="*{profileIcon}"
+                    value="/images/icons/icono1.png"
+                    required
+                  />
+                  <img
+                    src="/images/icons/icono1.png"
+                    alt="Icono 1"
+                    width="48"
+                    height="48"
+                    class="rounded-circle shadow-sm"
+                  />
                 </label>
                 <label>
-                  <input type="radio" th:field="*{profileIcon}" value="/images/icons/icono2.png">
-                  <img src="/images/icons/icono2.png" alt="Icono 2" width="48" height="48" class="rounded-circle shadow-sm">
+                  <input
+                    type="radio"
+                    th:field="*{profileIcon}"
+                    value="/images/icons/icono2.png"
+                  />
+                  <img
+                    src="/images/icons/icono2.png"
+                    alt="Icono 2"
+                    width="48"
+                    height="48"
+                    class="rounded-circle shadow-sm"
+                  />
                 </label>
                 <label>
-                  <input type="radio" th:field="*{profileIcon}" value="/images/icons/icono3.png">
-                  <img src="/images/icons/icono3.png" alt="Icono 3" width="48" height="48" class="rounded-circle shadow-sm">
+                  <input
+                    type="radio"
+                    th:field="*{profileIcon}"
+                    value="/images/icons/icono3.png"
+                  />
+                  <img
+                    src="/images/icons/icono3.png"
+                    alt="Icono 3"
+                    width="48"
+                    height="48"
+                    class="rounded-circle shadow-sm"
+                  />
                 </label>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-gradient rounded-pill">Guardar Cambios</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary rounded-pill"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-gradient rounded-pill">
+              Guardar Cambios
+            </button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
