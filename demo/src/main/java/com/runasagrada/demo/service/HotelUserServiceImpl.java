@@ -3,6 +3,7 @@ package com.runasagrada.demo.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.runasagrada.demo.entities.HotelUser;
@@ -37,5 +38,27 @@ public class HotelUserServiceImpl implements HotelUserService {
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserFields(HotelUser updatedUser) {
+        try {
+            HotelUser user = userRepository.findById(updatedUser.getId()).get();
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setPhone(updatedUser.getPhone());
+            user.setNationalId(updatedUser.getNationalId());
+
+            if (updatedUser.getProfileIcon() != null)
+                user.setProfileIcon(updatedUser.getProfileIcon());
+
+            if (updatedUser.getPassword() != null)
+                user.setPassword(updatedUser.getPassword());
+
+            userRepository.save(user);
+        } catch (Exception ex) {
+            throw new DataIntegrityViolationException(
+                    "No se pudo actualizar: el correo, teléfono o ID nacional ya está registrados.");
+        }
     }
 }

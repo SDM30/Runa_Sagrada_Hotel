@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 
 import com.runasagrada.demo.entities.ServiceOffering;
 import com.runasagrada.demo.service.ServiceOfferingService;
+import java.util.List;
+import java.util.function.Predicate;
 
 @RequestMapping("/service")
 @Controller
@@ -28,15 +30,6 @@ public class ServiceOfferingController {
         // http://localhost:8080/service/available
         @GetMapping("/available")
         public String showAvailableServices(Model model) {
-                model.addAttribute("amenities",
-                                service.getAllServices().stream()
-                                                .filter(service -> service.getCategory().equals("Hotel")).toList());
-                model.addAttribute("gastronomy",
-                                service.getAllServices().stream()
-                                                .filter(service -> service.getCategory().equals("Comida")).toList());
-                model.addAttribute("tours",
-                                service.getAllServices().stream()
-                                                .filter(service -> service.getCategory().equals("Tours")).toList());
                 return "services_cards";
         }
 
@@ -50,30 +43,23 @@ public class ServiceOfferingController {
         @GetMapping("/gastronomy")
         public String showGastronomia(Model model) {
                 // Todos los servicios de comida
-                model.addAttribute("gastronomy", service.getAllServices().stream()
-                                .filter(service -> service.getCategory().equals("Comida"))
-                                .toList());
+                model.addAttribute("gastronomy",
+                                filter(s -> "Comida".equals(s.getCategory())));
 
                 // Platos fuertes - buscar por subcategoría
-                model.addAttribute("platosFuertes", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Comida") &&
-                                                item.getSubcategory() != null &&
-                                                item.getSubcategory().equals("Plato Principal"))
-                                .toList());
+                model.addAttribute("platosFuertes",
+                                filter(item -> "Comida".equals(item.getCategory())
+                                                && "Plato Principal".equals(item.getSubcategory())));
 
                 // Postres - buscar por subcategoría
-                model.addAttribute("postres", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Comida") &&
-                                                item.getSubcategory() != null &&
-                                                item.getSubcategory().equals("Postre"))
-                                .toList());
+                model.addAttribute("postres",
+                                filter(item -> "Comida".equals(item.getCategory())
+                                                && "Postre".equals(item.getSubcategory())));
 
                 // Bebidas - buscar por subcategoría
-                model.addAttribute("bebidas", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Comida") &&
-                                                item.getSubcategory() != null &&
-                                                item.getSubcategory().equals("Bebida"))
-                                .toList());
+                model.addAttribute("bebidas",
+                                filter(item -> "Comida".equals(item.getCategory())
+                                                && "Bebida".equals(item.getSubcategory())));
                 return "gastronomyPage";
         }
 
@@ -81,32 +67,26 @@ public class ServiceOfferingController {
         public String showTours(Model model) {
 
                 // Todos los tours
-                model.addAttribute("tours", service.getAllServices().stream()
-                                .filter(service -> service.getCategory().equals("Tours"))
-                                .toList());
+                model.addAttribute("tours",
+                                filter(s -> "Tours".equals(s.getCategory())));
 
                 // Tours culturales - buscar por subcategoría
-                model.addAttribute("toursCulturales", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Tours") &&
-                                                item.getSubcategory() != null &&
-                                                item.getSubcategory().equals("Cultural"))
-                                .toList());
+                model.addAttribute("toursCulturales",
+                                filter(item -> "Tours".equals(item.getCategory())
+                                                && "Cultural".equals(item.getSubcategory())));
 
                 // Tours de naturaleza - buscar por subcategoría
-                model.addAttribute("toursNaturaleza", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Tours") &&
-                                                item.getSubcategory() != null &&
-                                                item.getSubcategory().equals("Naturaleza"))
-                                .toList());
+                model.addAttribute("toursNaturaleza",
+                                filter(item -> "Tours".equals(item.getCategory())
+                                                && "Naturaleza".equals(item.getSubcategory())));
 
                 // Otros tours - los que no son Cultural ni Naturaleza
-                model.addAttribute("otrosTours", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Tours") &&
-                                                (item.getSubcategory() == null ||
-                                                                (!item.getSubcategory().equals("Cultural") &&
-                                                                                !item.getSubcategory()
-                                                                                                .equals("Naturaleza"))))
-                                .toList());
+                model.addAttribute("otrosTours",
+                                filter(item -> "Tours".equals(item.getCategory())
+                                                && (item.getSubcategory() == null
+                                                                || (!"Cultural".equals(item.getSubcategory())
+                                                                                && !"Naturaleza".equals(item
+                                                                                                .getSubcategory())))));
                 return "toursPage";
         }
 
@@ -114,33 +94,34 @@ public class ServiceOfferingController {
         public String showComodidades(Model model) {
 
                 // Todos los servicios de hotel
-                model.addAttribute("amenities", service.getAllServices().stream()
-                                .filter(service -> service.getCategory().equals("Hotel"))
-                                .toList());
+                model.addAttribute("amenities",
+                                filter(s -> "Hotel".equals(s.getCategory())));
 
                 // Servicios de bienestar - solo Spa y Gimnasio
-                model.addAttribute("bienestar", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Hotel") &&
-                                                (item.getName().contains("Spa") ||
-                                                                item.getName().contains("Gimnasio")))
-                                .toList());
+                model.addAttribute("bienestar",
+                                filter(item -> "Hotel".equals(item.getCategory())
+                                                && (item.getName().contains("Spa")
+                                                                || item.getName().contains("Gimnasio"))));
 
                 // Servicios de hospedaje - solo Suite y Cabañas
-                model.addAttribute("hospedaje", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Hotel") &&
-                                                (item.getName().contains("Suite") ||
-                                                                item.getName().contains("Cabañas")))
-                                .toList());
+                model.addAttribute("hospedaje",
+                                filter(item -> "Hotel".equals(item.getCategory())
+                                                && (item.getName().contains("Suite")
+                                                                || item.getName().contains("Cabañas"))));
 
                 // Otros servicios - todo lo demás
-                model.addAttribute("servicios", service.getAllServices().stream()
-                                .filter(item -> item.getCategory().equals("Hotel") &&
-                                                !item.getName().contains("Spa") &&
-                                                !item.getName().contains("Gimnasio") &&
-                                                !item.getName().contains("Suite") &&
-                                                !item.getName().contains("Cabañas"))
-                                .toList());
+                model.addAttribute("servicios",
+                                filter(item -> "Hotel".equals(item.getCategory())
+                                                && !item.getName().contains("Spa")
+                                                && !item.getName().contains("Gimnasio")
+                                                && !item.getName().contains("Suite")
+                                                && !item.getName().contains("Cabañas")));
                 return "amenitiesPage";
+        }
+
+        // Método privado reutilizable para filtrar servicios
+        private List<ServiceOffering> filter(Predicate<ServiceOffering> predicate) {
+                return service.getAllServices().stream().filter(predicate).toList();
         }
 
 }

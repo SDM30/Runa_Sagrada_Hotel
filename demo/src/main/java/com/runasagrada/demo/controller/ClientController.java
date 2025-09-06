@@ -175,13 +175,7 @@ public class ClientController {
     public String updateClient(@ModelAttribute("newclientuser") HotelUser updatedUser,
             RedirectAttributes redirectAttributes) {
         try {
-            HotelUser user = userService.searchById(updatedUser.getId());
-            user.setName(updatedUser.getName());
-            user.setEmail(updatedUser.getEmail());
-            user.setPhone(updatedUser.getPhone());
-            user.setNationalId(updatedUser.getNationalId());
-
-            userService.save(user);
+            userService.updateUserFields(updatedUser);
 
             redirectAttributes.addFlashAttribute("successMessage",
                     "El cliente fue actualizado correctamente.");
@@ -218,23 +212,17 @@ public class ClientController {
 
     // Editar perfil
     @PostMapping("/client/profile/edit")
-    public String editarPerfil(@ModelAttribute("hotelUser") HotelUser hotelUser, Model model) {
-
-        HotelUser original = userService.searchById(hotelUser.getId());
-        if (original == null) {
-            model.addAttribute("error", "Usuario no encontrado");
-            return "hotelUserProfile";
+    public String editarPerfil(@ModelAttribute("hotelUser") HotelUser hotelUser,
+            RedirectAttributes redirectAttributes) {
+        try {
+            // Aplica los cambios recibidos desde el formulario
+            userService.updateUserFields(hotelUser);
+            redirectAttributes.addFlashAttribute("successMessage", "Perfil actualizado correctamente.");
+            return "redirect:/client/profile/" + hotelUser.getId();
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "No se pudo actualizar: el correo, teléfono o ID nacional ya está registrado.");
+            return "redirect:/client/profile/" + hotelUser.getId();
         }
-
-        original.setName(hotelUser.getName());
-        original.setEmail(hotelUser.getEmail());
-        original.setPhone(hotelUser.getPhone());
-        original.setNationalId(hotelUser.getNationalId());
-        original.setPassword(hotelUser.getPassword());
-        original.setProfileIcon(hotelUser.getProfileIcon());
-
-        userService.save(original);
-        return "redirect:/client/profile/" + original.getId();
     }
-    // Actualizar Cliente funcion privada
 }

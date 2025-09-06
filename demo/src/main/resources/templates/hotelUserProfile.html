@@ -117,6 +117,22 @@
 
     <!-- Contenido -->
     <main class="main-content tab-content">
+      <!-- Flash / Inline Alerts -->
+      <div class="container mt-2">
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+          <span th:text="${successMessage}">Operación exitosa.</span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <span th:text="${errorMessage}">Ha ocurrido un error.</span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+        <!-- Soporta errores no-flash cuando se retorna la misma vista -->
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <span th:text="${error}">Ha ocurrido un error.</span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      </div>
       <section class="tabla-section tab-pane fade show active" id="perfil">
         <div class="tabla-content d-flex justify-content-center">
           <div

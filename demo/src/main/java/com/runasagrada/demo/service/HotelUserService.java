@@ -16,4 +16,6 @@ public interface HotelUserService {
     public void save(HotelUser user);
 
     public void delete(Long id);
+
+    public void updateUserFields(HotelUser updatedUser);
 }
