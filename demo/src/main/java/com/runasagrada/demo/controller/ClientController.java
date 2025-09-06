@@ -56,7 +56,7 @@ public class ClientController {
         if (clients.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage",
                     "No se encontraron clientes con los criterios ingresados.");
-            clients = (List<Client>) clientService.getAllClients(); // fallbackç
+            clients = (List<Client>) clientService.getAllClients(); // fallback
             return "redirect:/ops/client";
         }
 
@@ -78,10 +78,6 @@ public class ClientController {
     @PostMapping("/ops/client/add")
     public String registerClient(@ModelAttribute("newclientuser") HotelUser newClientUser,
             RedirectAttributes redirectAttributes) {
-        if (newClientUser.getPassword() == null || newClientUser.getPassword().isBlank()) {
-            newClientUser.setPassword("123456");
-        }
-
         try {
             userService.save(newClientUser);
 
@@ -136,21 +132,15 @@ public class ClientController {
     }
 
     @PostMapping("/client/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model,
+            RedirectAttributes redirectAttributes) {
         HotelUser user = userService.searchByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("user", user);
-
-            if ("admin@runasagrada.com".equals(email) && "admin123".equals(password)) {
-                return "redirect:/rooms/staff";
-            } else if ("operador@runasagrada.com".equals(email) && "operador123".equals(password)) {
-                return "redirect:/ops/client";
-            } else {
-                return "redirect:/client/profile/" + user.getId();
-            }
+            return redirectUserTypeMock(email, password, user.getId());
         } else {
-            model.addAttribute("error", "Invalid credentials");
-            return "login";
+            redirectAttributes.addFlashAttribute("errorMessage", "Credenciales incorrectas.");
+            return "redirect:/client/login";
         }
     }
 
@@ -223,6 +213,16 @@ public class ClientController {
             redirectAttributes.addFlashAttribute("errorMessage",
                     "No se pudo actualizar: el correo, teléfono o ID nacional ya está registrado.");
             return "redirect:/client/profile/" + hotelUser.getId();
+        }
+    }
+
+    private String redirectUserTypeMock(String email, String password, Long id) {
+        if ("admin@runasagrada.com".equals(email) && "admin123".equals(password)) {
+            return "redirect:/rooms/staff";
+        } else if ("operador@runasagrada.com".equals(email) && "operador123".equals(password)) {
+            return "redirect:/ops/client";
+        } else {
+            return "redirect:/client/profile/" + id;
         }
     }
 }

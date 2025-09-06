@@ -32,6 +32,9 @@ public class HotelUserServiceImpl implements HotelUserService {
 
     @Override
     public void save(HotelUser user) {
+        if (user.getPassword() == null) {
+            user.setPassword("12345678");
+        }
         userRepository.save(user);
     }
 
