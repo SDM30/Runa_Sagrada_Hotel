@@ -843,7 +843,16 @@ public class DatabaseInit implements ApplicationRunner {
 		userRepository.saveAll(java.util.Arrays.asList(
 				user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
 
-		// Crea y guarda clientes 1:1 con los usuarios
+		// Crear usuarios especiales para roles de sistema
+		HotelUser adminUser = new HotelUser("Administrador", "admin@runasagrada.com", "admin123", "3000000000",
+				"ADMIN001", "/images/icons/icono1.png");
+		HotelUser operatorUser = new HotelUser("Operador", "operador@runasagrada.com", "operador123", "3000000001",
+				"OPER001", "/images/icons/icono2.png");
+
+		// Guardar usuarios especiales
+		userRepository.saveAll(java.util.Arrays.asList(adminUser, operatorUser));
+
+		// Crea y guarda clientes 1:1 con los usuarios (solo usuarios normales)
 		clientRepository.saveAll(java.util.Arrays.asList(
 				new Client(user1), new Client(user2), new Client(user3),
 				new Client(user4), new Client(user5), new Client(user6),
