@@ -20,6 +20,8 @@ import com.runasagrada.demo.service.HotelUserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ClientController {
 
@@ -112,39 +114,50 @@ public class ClientController {
     public String signupClient(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
         logger.info(user.toString());
         try {
+            user.setProfileIcon("/images/icons/icono3.png");
             userService.save(user);
             clientService.save(new Client(user));
             redirectAttributes.addFlashAttribute("successMessage",
                     "El cliente fue registrado correctamente.");
+            // Redirigir al perfil del usuario recién creado
+            return "redirect:/client/profile/" + user.getId();
         } catch (DataIntegrityViolationException ex) {
             redirectAttributes.addFlashAttribute("errorMessage",
                     "El correo, teléfono o ID nacional ya está registrado. Por favor verifica los datos.");
             return "redirect:/client/signup";
         }
-
-        return "redirect:/client/main";
     }
 
-    // Client login
+    // Login general del sistema (admin, operador, clientes)
     // http://localhost:8080/client/login
     @GetMapping("/client/login")
-    public String loginForm(Model model) {
-        HotelUser user = new HotelUser(null, null, null, null, null, null);
-        model.addAttribute("newuser", user);
+    public String login() {
         return "login";
     }
 
     @PostMapping("/client/login")
-    public String loginClient(@ModelAttribute("newuser") HotelUser user, RedirectAttributes redirectAttributes) {
-        Client clientFound = clientService.login(user.getEmail(), user.getPassword());
-        if (clientFound != null) {
-            // Logica en el servicio, el controlador recibe excepciones
-            return "redirect:/client/main";
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        HotelUser user = userService.searchByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("user", user);
+
+            if ("admin@runasagrada.com".equals(email) && "admin123".equals(password)) {
+                return "redirect:/rooms/staff";
+            } else if ("operador@runasagrada.com".equals(email) && "operador123".equals(password)) {
+                return "redirect:/ops/client";
+            } else {
+                return "redirect:/client/profile/" + user.getId();
+            }
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage",
-                    "Credenciales inválidas. Por favor, intenta de nuevo.");
-            return "redirect:/client/login";
+            model.addAttribute("error", "Invalid credentials");
+            return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 
     // Update client
