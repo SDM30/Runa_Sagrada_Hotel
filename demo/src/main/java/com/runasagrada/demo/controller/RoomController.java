@@ -4,6 +4,8 @@ import com.runasagrada.demo.entities.Room;
 import com.runasagrada.demo.entities.RoomType;
 import com.runasagrada.demo.service.RoomService;
 import com.runasagrada.demo.service.RoomTypeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/rooms/staff")
 public class RoomController {
-    // Autowired
+    @Autowired
     private final RoomService roomService;
+    @Autowired
     private final RoomTypeService roomTypeService;
 
     public RoomController(RoomService roomService, RoomTypeService roomTypeService) {

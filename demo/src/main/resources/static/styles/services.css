@@ -1,0 +1,230 @@
+/* SERVICES CARDS*/
+.navbar-services {
+  background: rgba(0, 0, 0, 0.788);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+}
+
+.hero-with-bg {
+  background-image: url("/images/servicios-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
+  min-width: 200px;
+}
+
+.services-title-banner {
+  text-align: center;
+  margin: 200px;
+}
+
+.services-title-banner h1 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.services-title-banner .lead {
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.services-card {
+  position: relative;
+  height: 250px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.featured-card {
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 15px 35px rgba(252, 148, 25, 0.3);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(252, 148, 25, 0.4);
+}
+
+.featured-badge i {
+  font-size: 10px;
+}
+
+.featured-card-large {
+  width: 20rem !important;
+  height: 280px !important;
+}
+
+.featured-card-large .services-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.featured-card-large .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.featured-card-large .services-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.featured-card-large .services-description {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.featured-card-large {
+  width: 20rem !important;
+  height: 320px !important;
+}
+
+.featured-card-large .services-overlay {
+  padding: 1.5rem;
+}
+
+.featured-card-large .services-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.featured-card-large .services-description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.services-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.services-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease;
+}
+
+.services-card:hover .services-image {
+  transform: scale(1.05);
+}
+
+.services-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.services-overlay-amenities {
+  background: linear-gradient(
+    135deg,
+    rgba(252, 148, 25, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.services-overlay-restaurants {
+  background: linear-gradient(
+    135deg,
+    rgb(42, 94, 121, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.services-overlay-tours {
+  background: linear-gradient(
+    135deg,
+    rgb(223, 54, 9, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.services-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+.services-description {
+  font-size: 1rem;
+  color: white;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+#divider-footer {
+  margin: 0px !important;
+  padding: 0px;
+}
+
+/* SERVICES DETAIL*/
+#navbar-service-detail {
+  background: rgba(0, 0, 0, 0.788);
+}
+
+#serviceCarousel .carousel-indicators {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  #serviceCarousel .carousel-item {
+    height: 30vh;
+  }
+}
+@media (min-width: 577px) and (max-width: 992px) {
+  #serviceCarousel .carousel-item {
+    height: 45vh;
+  }
+}

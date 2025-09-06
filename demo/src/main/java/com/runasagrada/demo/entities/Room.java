@@ -1,5 +1,8 @@
 package com.runasagrada.demo.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +23,7 @@ public class Room {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_type_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private RoomType roomType;
 
     @Column(name = "room_number", length = 20, nullable = false)

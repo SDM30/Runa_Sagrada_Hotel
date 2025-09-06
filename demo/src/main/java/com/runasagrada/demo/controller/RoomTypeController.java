@@ -2,6 +2,8 @@ package com.runasagrada.demo.controller;
 
 import com.runasagrada.demo.entities.RoomType;
 import com.runasagrada.demo.service.RoomTypeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequestMapping("/roomtype/staff")
 public class RoomTypeController {
 
+    @Autowired
     private final RoomTypeService roomTypeService;
 
     public RoomTypeController(RoomTypeService roomTypeService) {
@@ -66,6 +69,6 @@ public class RoomTypeController {
     public String delete(@PathVariable Long id, RedirectAttributes ra) {
         roomTypeService.delete(id);
         ra.addFlashAttribute("msgSuccess", "Tipo de habitación eliminado.");
-        return "redirect:/rooms/staff/page";
+        return "redirect:/rooms/staff/page#types-pane";
     }
 }

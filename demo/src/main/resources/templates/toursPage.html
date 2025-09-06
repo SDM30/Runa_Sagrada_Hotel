@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Runa Sagrada - Tours sagrados y experiencias místicas en Colombia, avistamiento de aves, ecoturismo" />
+      content="Runa Sagrada - Tours sagrados y experiencias místicas en Colombia, avistamiento de aves, ecoturismo"
+    />
     <meta
       name="keywords"
-      content="tours, ecoturismo, avistamiento aves, ceremonias cacao, experiencias místicas, Colombia" />
+      content="tours, ecoturismo, avistamiento aves, ceremonias cacao, experiencias místicas, Colombia"
+    />
     <meta name="author" content="Runa Sagrada" />
 
     <title>Tours Sagrados - Runa Sagrada</title>
@@ -18,34 +20,42 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" th:href="@{/styles/styles.css}" />
+    <link rel="stylesheet" th:href="@{/styles/services.css}" />
+    <link rel="stylesheet" th:href="@{/styles/services_detail.css}" />
   </head>
   <body>
     <div
       class="hero-with-bg"
       style="
         background-image: url('https://traveler.marriott.com/es/wp-content/uploads/sites/2/2024/07/The_Westin_Reserva_Conchal_-_Edgardo_Contreras-1.jpg');
-      ">
+      "
+    >
       <!--===== NAVBAR =====-->
       <header
         class="navbar navbar-expand-lg navbar-dark fixed-top nav-glass navbar-services"
         role="navigation"
-        aria-label="Navegación principal">
+        aria-label="Navegación principal"
+      >
         <div class="container">
           <a
             class="navbar-brand d-flex align-items-center gap-2"
             th:href="@{/}"
-            aria-label="Runa Sagrada - Inicio">
+            aria-label="Runa Sagrada - Inicio"
+          >
             <img
               th:src="@{/images/logito.png}"
               alt="Runa Sagrada"
-              class="brand-logo" />
+              class="brand-logo"
+            />
           </a>
 
           <button
@@ -55,7 +65,8 @@
             data-bs-target="#mainNav"
             aria-controls="mainNav"
             aria-expanded="false"
-            aria-label="Alternar navegación">
+            aria-label="Alternar navegación"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -95,7 +106,8 @@
       <section
         id="tours"
         class="services-section py-5"
-        aria-labelledby="tours-heading">
+        aria-labelledby="tours-heading"
+      >
         <div class="container">
           <header class="text-center mb-5 services-title-banner">
             <h1 id="tours-heading" class="display-5 fw-semibold mb-3">
@@ -116,7 +128,8 @@
       <section
         class="py-5"
         id="destacados"
-        aria-labelledby="destacados-heading">
+        aria-labelledby="destacados-heading"
+      >
         <div class="container">
           <header class="text-center mb-5">
             <h2 id="destacados-heading" class="display-5 fw-semibold mb-3">
@@ -131,12 +144,14 @@
             <div
               class="col-xl-3 col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mb-4"
               th:each="tour, iterStat: ${tours}"
-              th:if="${iterStat.index < 4}">
+              th:if="${iterStat.index < 4}"
+            >
               <a th:href="@{/service/available/{id}(id=${tour.id})}">
                 <div class="services-card featured-card featured-card-large">
                   <div
                     class="services-image"
-                    th:style="|background-image: url('${tour.imageUrls[0]}');|"></div>
+                    th:style="|background-image: url('${tour.imageUrls[0]}');|"
+                  ></div>
                   <div class="featured-badge">
                     <i class="fas fa-star"></i>
                     <span>Destacado</span>
@@ -146,7 +161,8 @@
                       <h5 class="services-title" th:text="${tour.name}"></h5>
                       <p
                         class="services-description"
-                        th:text="${tour.description}"></p>
+                        th:text="${tour.description}"
+                      ></p>
                       <div class="mt-3">
                         <span
                           class="badge bg-warning fs-6"
@@ -167,12 +183,14 @@
       <section
         class="py-5"
         id="tours-culturales"
-        aria-labelledby="tours-culturales-heading">
+        aria-labelledby="tours-culturales-heading"
+      >
         <div class="container">
           <header class="text-center mb-5">
             <h2
               id="tours-culturales-heading"
-              class="display-6 fw-semibold mb-3">
+              class="display-6 fw-semibold mb-3"
+            >
               <i class="fas fa-landmark me-3"></i>Tours Culturales
             </h2>
             <p class="lead">
@@ -183,21 +201,25 @@
           <div class="row gap-3 justify-content-center">
             <div
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-              th:each="tourCultural: ${toursCulturales}">
+              th:each="tourCultural: ${toursCulturales}"
+            >
               <a th:href="@{/service/available/{id}(id=${tourCultural.id})}">
                 <div class="services-card" style="width: 18rem">
                   <div
                     class="services-image"
-                    th:style="|background-image: url('${tourCultural.imageUrls[0]}');|"></div>
+                    th:style="|background-image: url('${tourCultural.imageUrls[0]}');|"
+                  ></div>
 
                   <div class="services-overlay services-overlay-tours">
                     <div class="card-body">
                       <h5
                         class="services-title"
-                        th:text="${tourCultural.name}"></h5>
+                        th:text="${tourCultural.name}"
+                      ></h5>
                       <p
                         class="services-description"
-                        th:text="${tourCultural.description}"></p>
+                        th:text="${tourCultural.description}"
+                      ></p>
                       <div class="mt-3">
                         <span
                           class="badge bg-warning fs-6"
@@ -218,12 +240,14 @@
       <section
         class="py-5"
         id="tours-naturaleza"
-        aria-labelledby="tours-naturaleza-heading">
+        aria-labelledby="tours-naturaleza-heading"
+      >
         <div class="container">
           <header class="text-center mb-5">
             <h2
               id="tours-naturaleza-heading"
-              class="display-6 fw-semibold mb-3">
+              class="display-6 fw-semibold mb-3"
+            >
               <i class="fas fa-tree me-3"></i>Tours de Naturaleza
             </h2>
             <p class="lead">
@@ -235,21 +259,25 @@
           <div class="row gap-3 justify-content-center">
             <div
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-              th:each="tourNaturaleza: ${toursNaturaleza}">
+              th:each="tourNaturaleza: ${toursNaturaleza}"
+            >
               <a th:href="@{/service/available/{id}(id=${tourNaturaleza.id})}">
                 <div class="services-card" style="width: 18rem">
                   <div
                     class="services-image"
-                    th:style="|background-image: url('${tourNaturaleza.imageUrls[0]}');|"></div>
+                    th:style="|background-image: url('${tourNaturaleza.imageUrls[0]}');|"
+                  ></div>
 
                   <div class="services-overlay services-overlay-tours">
                     <div class="card-body">
                       <h5
                         class="services-title"
-                        th:text="${tourNaturaleza.name}"></h5>
+                        th:text="${tourNaturaleza.name}"
+                      ></h5>
                       <p
                         class="services-description"
-                        th:text="${tourNaturaleza.description}"></p>
+                        th:text="${tourNaturaleza.description}"
+                      ></p>
                       <div class="mt-3">
                         <span
                           class="badge bg-warning fs-6"
@@ -270,7 +298,8 @@
       <section
         class="py-5"
         id="otros-tours"
-        aria-labelledby="otros-tours-heading">
+        aria-labelledby="otros-tours-heading"
+      >
         <div class="container">
           <header class="text-center mb-5">
             <h2 id="otros-tours-heading" class="display-6 fw-semibold mb-3">
@@ -285,21 +314,25 @@
           <div class="row gap-3 justify-content-center">
             <div
               class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center"
-              th:each="otroTour: ${otrosTours}">
+              th:each="otroTour: ${otrosTours}"
+            >
               <a th:href="@{/service/available/{id}(id=${otroTour.id})}">
                 <div class="services-card" style="width: 18rem">
                   <div
                     class="services-image"
-                    th:style="|background-image: url('${otroTour.imageUrls[0]}');|"></div>
+                    th:style="|background-image: url('${otroTour.imageUrls[0]}');|"
+                  ></div>
 
                   <div class="services-overlay services-overlay-tours">
                     <div class="card-body">
                       <h5
                         class="services-title"
-                        th:text="${otroTour.name}"></h5>
+                        th:text="${otroTour.name}"
+                      ></h5>
                       <p
                         class="services-description"
-                        th:text="${otroTour.description}"></p>
+                        th:text="${otroTour.description}"
+                      ></p>
                       <div class="mt-3">
                         <span
                           class="badge bg-warning fs-6"
@@ -396,7 +429,8 @@
               <img
                 th:src="@{/images/logito.png}"
                 alt="Runa Sagrada"
-                class="footer-logo" />
+                class="footer-logo"
+              />
               <h5 class="footer-title">Runa Sagrada</h5>
               <p class="footer-description">
                 Experiencias auténticas en el corazón de Colombia
@@ -470,7 +504,8 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <script th:src="@{/js/script.js}" defer></script>
   </body>
 </html>
