@@ -14,6 +14,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("""
             select r from Room r
             left join fetch r.roomType rt
+            left join fetch r.hotel h
             where (:roomNumber is null or :roomNumber = '' or lower(r.roomNumber) like lower(concat('%', :roomNumber, '%')))
               and (:floorNumber is null or r.floorNumber = :floorNumber)
               and (:resStatus is null or r.resStatus = :resStatus)
@@ -31,6 +32,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query(value = """
             select r from Room r
             left join fetch r.roomType rt
+            left join fetch r.hotel h
             where (:roomNumber is null or :roomNumber = '' or lower(r.roomNumber) like lower(concat('%', :roomNumber, '%')))
               and (:floorNumber is null or r.floorNumber = :floorNumber)
               and (:resStatus is null or r.resStatus = :resStatus)
@@ -52,7 +54,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             @Param("themeName") String themeName,
             Pageable pageable);
 
-    @Query("select r from Room r left join fetch r.roomType where r.id = :id")
+    @Query("select r from Room r left join fetch r.roomType rt left join fetch r.hotel h where r.id = :id")
     Optional<Room> findByIdFetchType(@Param("id") Long id);
 
     boolean existsByRoomNumberIgnoreCase(String roomNumber);

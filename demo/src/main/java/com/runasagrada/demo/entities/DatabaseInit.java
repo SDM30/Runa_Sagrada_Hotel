@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import com.runasagrada.demo.repository.ClientRepository;
 import com.runasagrada.demo.repository.ServiceOfferingRepository;
 import com.runasagrada.demo.repository.HotelUserRepository;
+import com.runasagrada.demo.repository.HotelRepository;
 import com.runasagrada.demo.service.ServiceScheduleService;
 
 import jakarta.transaction.Transactional;
@@ -41,6 +42,9 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Autowired
 	private RoomRepository roomRepository;
+
+	@Autowired
+	private HotelRepository hotelRepository;
 
 	// URLs de imágenes organizadas por categoría - Enlaces actualizados y
 	// verificados
@@ -171,6 +175,39 @@ public class DatabaseInit implements ApplicationRunner {
 
 	@Override
 	public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
+		// === Crear Hoteles (5) y mantener referencia para asignación ===
+		List<Hotel> hotels = new ArrayList<>();
+		if (hotelRepository.count() == 0L) {
+			String[] names = {
+				"Hotel Colonial Cartagena",
+				"Hotel Cafetero Quindío",
+				"Hotel Isla San Andrés",
+				"Hotel Sierra Santa Marta",
+				"Hotel Villa de Leyva"
+			};
+			String[] descs = {
+				"Alojamiento boutique en el corazón de la ciudad amurallada.",
+				"Hospedaje con encanto cafetero y vistas a cafetales.",
+				"Hotel frente al mar con el mar de siete colores.",
+				"Refugio entre la Sierra Nevada y el Parque Tayrona.",
+				"Encanto colonial cerca de plazas y museos."
+			};
+			String[] lats = {"10.4236", "4.5339", "12.5847", "11.2408", "5.6333"};
+			String[] lngs = {"-75.5490", "-75.6811", "-81.7005", "-74.1990", "-73.5333"};
+
+			for (int i = 0; i < 5; i++) {
+				Hotel h = new Hotel();
+				h.setName(names[i]);
+				h.setDescription(descs[i]);
+				h.setLatitude(lats[i]);
+				h.setLongitude(lngs[i]);
+				h = hotelRepository.save(h);
+				hotels.add(h);
+			}
+		} else {
+			hotels = hotelRepository.findAll();
+		}
+
 		// === Crear servicios (sin fecha/hora/capacidad) ===
 		ServiceOffering gastronomia = serviceRepository.save(new ServiceOffering(
 				"Gastronomía Ancestral", "Comida", "",
@@ -894,16 +931,19 @@ public class DatabaseInit implements ApplicationRunner {
 		// 2) ROOMS (100) — solo si no existen rooms
 		// ==========================================
 		if (roomRepository.count() == 0L) {
-			for (int hotelId = 1; hotelId <= 5; hotelId++) {
+			int hotelsToUse = Math.min(5, hotels.size());
+			for (int idx = 0; idx < hotelsToUse; idx++) {
+				Hotel hotel = hotels.get(idx);
+				int hotelOrdinal = idx + 1; // para numeración y temas
 				for (int floor = 1; floor <= 5; floor++) {
 					RoomType floorType = typeByFloor.get(floor);
 					for (int i = 1; i <= 4; i++) {
 						Room r = new Room();
-						r.setHotelId((long) hotelId);
+						r.setHotel(hotel);
 						r.setRoomType(floorType);
 
 						// N° habitación único por hotel (ej: "1-101", "2-101", etc.)
-						String roomNumber = String.format("%d-%d0%d", hotelId, floor, i);
+						String roomNumber = String.format("%d-%d0%d", hotelOrdinal, floor, i);
 						r.setRoomNumber(roomNumber);
 
 						r.setFloorNumber(floor);
@@ -920,7 +960,7 @@ public class DatabaseInit implements ApplicationRunner {
 						r.setCleStatus((i % 2 == 0) ? Room.CleaningStatus.DIRTY : Room.CleaningStatus.CLEAN);
 
 						// Temas por hotel/piso (nombres culturales)
-						r.setThemeName(themeNameFor(hotelId, floor));
+						r.setThemeName(themeNameFor(hotelOrdinal, floor));
 						r.setThemeDescription("Habitación temática personalizada por destino y piso.");
 
 						roomRepository.save(r);

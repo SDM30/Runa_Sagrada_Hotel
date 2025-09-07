@@ -427,10 +427,13 @@
               <div class="col-md-4">
                 <label class="form-label">Hotel ID</label>
                 <input
-                  th:field="*{hotelId}"
+                  th:field="*{hotel.id}"
                   type="number"
                   class="form-control"
                   required
+                  min="1"
+                  max="5"
+                  step="1"
                 />
               </div>
               <div class="col-md-8">
@@ -535,11 +538,14 @@
               <div class="col-md-4">
                 <label class="form-label">Hotel ID</label>
                 <input
-                  name="hotelId"
+                  name="hotel.id"
                   id="hotelIdEdit"
                   type="number"
                   class="form-control"
                   required
+                  min="1"
+                  max="5"
+                  step="1"
                 />
               </div>
               <div class="col-md-8">
@@ -878,7 +884,7 @@
           const tr = document.createElement("tr");
           tr.innerHTML = `
         <td><strong>#${r.id}</strong></td>
-        <td>${r.hotelId ?? ""}</td>
+        <td>${r.hotel?.id ?? ""}</td>
         <td>${rtName}</td>
         <td>${r.roomNumber ?? ""}</td>
         <td>${r.floorNumber ?? ""}</td>
@@ -939,7 +945,7 @@
           const res = await fetch(ROOMS_GET_URL(id));
           const r = await res.json();
           qs("roomEditId").value = r.id;
-          qs("hotelIdEdit").value = r.hotelId ?? "";
+          qs("hotelIdEdit").value = r.hotel?.id ?? "";
           qs("roomTypeIdEdit").value = r.roomType?.id ?? r.roomTypeId ?? "";
           qs("roomNumberEdit").value = r.roomNumber ?? "";
           qs("floorNumberEdit").value = r.floorNumber ?? "";

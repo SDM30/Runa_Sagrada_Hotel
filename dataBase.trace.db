@@ -1,0 +1,4 @@
+2025-09-07 17:21:37.726326-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "BASE_PRICE NUMERIC(12, 2)": "1000000000000000.00 (18)"
+Value too long for column "BASE_PRICE NUMERIC(12, 2)": "1000000000000000.00 (18)"; SQL statement:
+insert into room_type (amenities,base_price,description,max_occupancy,name,id) values (?,?,?,?,?,default) [22001-232]

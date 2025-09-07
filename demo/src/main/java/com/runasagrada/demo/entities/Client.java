@@ -1,12 +1,11 @@
 package com.runasagrada.demo.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,6 +17,18 @@ public class Client {
 
     @OneToOne(cascade = CascadeType.REMOVE)
     private HotelUser user;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<PaymentMethod> paymentMethods = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<ServiceRating> serviceRatings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
 
     public Client(HotelUser user) {
         this.user = user;

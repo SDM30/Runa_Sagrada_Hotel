@@ -6,6 +6,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,8 +20,9 @@ public class Room {
     private Long id;
 
     // simple numeric FK to a hotel; no Hotel entity required for now
-    @Column(name = "hotel_id", nullable = false)
-    private Long hotelId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "hotel_id", nullable = false)
+    private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_type_id", nullable = false)
@@ -58,6 +61,13 @@ public class Room {
 
     @Column(name = "theme_description", length = 500)
     private String themeDescription;
+
+    // Relations to Task and RoomLock
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private List<Task> tasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private List<RoomLock> roomLocks = new ArrayList<>();
 
     public Room() {
     }

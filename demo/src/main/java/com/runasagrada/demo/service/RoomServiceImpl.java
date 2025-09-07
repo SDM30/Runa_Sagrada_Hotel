@@ -3,6 +3,7 @@ package com.runasagrada.demo.service;
 import com.runasagrada.demo.entities.Room;
 import com.runasagrada.demo.entities.RoomType;
 import com.runasagrada.demo.repository.RoomRepository;
+import com.runasagrada.demo.repository.HotelRepository;
 import com.runasagrada.demo.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,24 +23,27 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomTypeRepository roomTypeRepository;
 
+    @Autowired
+    private HotelRepository hotelRepository;
+
     @Override
     @Transactional(readOnly = true)
     public List<Room> search(String roomNumber,
-                             Integer floorNumber,
-                             Room.ReservationStatus resStatus,
-                             Room.CleaningStatus cleStatus,
-                             String themeName) {
+            Integer floorNumber,
+            Room.ReservationStatus resStatus,
+            Room.CleaningStatus cleStatus,
+            String themeName) {
         return roomRepository.search(roomNumber, floorNumber, resStatus, cleStatus, themeName);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Room> search(String roomNumber,
-                             Integer floorNumber,
-                             Room.ReservationStatus resStatus,
-                             Room.CleaningStatus cleStatus,
-                             String themeName,
-                             Pageable pageable) {
+            Integer floorNumber,
+            Room.ReservationStatus resStatus,
+            Room.CleaningStatus cleStatus,
+            String themeName,
+            Pageable pageable) {
         return roomRepository.search(roomNumber, floorNumber, resStatus, cleStatus, themeName, pageable);
     }
 
@@ -81,7 +85,7 @@ public class RoomServiceImpl implements RoomService {
 
         attachRoomTypeReference(updated);
 
-        current.setHotelId(updated.getHotelId());
+        current.setHotel(updated.getHotel());
         current.setRoomType(updated.getRoomType());
         current.setRoomNumber(updated.getRoomNumber());
         current.setFloorNumber(updated.getFloorNumber());
@@ -104,8 +108,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private void validateRoomBasics(Room room) {
-        if (room.getHotelId() == null)
+        if (room.getHotel() == null)
             throw new IllegalArgumentException("HotelId is required.");
+        if (!hotelRepository.existsById(room.getHotel().getId()))
+            throw new IllegalArgumentException("HotelId not found: " + room.getHotel().getId());
         if (room.getRoomNumber() == null || room.getRoomNumber().isBlank())
             throw new IllegalArgumentException("Room number is required.");
         if (room.getFloorNumber() == null)
@@ -124,4 +130,3 @@ public class RoomServiceImpl implements RoomService {
         room.setRoomType(rtRef);
     }
 }
-
