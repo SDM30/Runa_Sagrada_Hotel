@@ -17,8 +17,8 @@ public class ServiceRating {
     @Column(name = "rating_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "res_service_id", nullable = false, unique = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "res_service_id", nullable = false)
     private ReservationService reservationService;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,9 +36,10 @@ public class ServiceRating {
 
     @PrePersist
     protected void onCreate() {
-        if (createdAt == null) createdAt = LocalDateTime.now();
+        if (createdAt == null)
+            createdAt = LocalDateTime.now();
     }
 
-    public ServiceRating() {}
+    public ServiceRating() {
+    }
 }
-

@@ -1,9 +1,11 @@
 package com.runasagrada.demo.entities;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -30,13 +32,28 @@ public class Hotel {
     private String description;
 
     @ManyToMany
-    @JoinTable(
-            name = "hotel_amenities",
-            joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "amenity_id")
-    )
+    @JoinTable(name = "hotel_amenities", joinColumns = @JoinColumn(name = "hotel_id"), inverseJoinColumns = @JoinColumn(name = "amenity_id"))
     private Set<Amenity> amenities;
 
-    public Hotel() {}
-}
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private Set<Review> reviews;
 
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    @JsonManagedReference("hotel-rooms") // avoid serialization recursion (rooms dont load)
+    private List<Room> rooms;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private List<ServiceOffering> services;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private List<Department> departments;
+
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
+    private List<StaffMember> staffMembers;
+
+    public Hotel() {
+    }
+}

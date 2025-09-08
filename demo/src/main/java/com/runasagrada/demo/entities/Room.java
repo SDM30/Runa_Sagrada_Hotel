@@ -4,6 +4,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.util.ArrayList;
@@ -12,16 +14,16 @@ import java.util.List;
 @Data
 @Entity
 @AllArgsConstructor
-@Table(name = "Room") // matches your INSERTs
+@Table(name = "Room")
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // simple numeric FK to a hotel; no Hotel entity required for now
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hotel_id", nullable = false)
+    @JsonBackReference("hotel-rooms") // avoid serialization recursion (rooms dont load)
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -62,12 +64,17 @@ public class Room {
     @Column(name = "theme_description", length = 500)
     private String themeDescription;
 
-    // Relations to Task and RoomLock
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RoomLock> roomLocks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Reservation> reservations = new ArrayList<>();
 
     public Room() {
     }

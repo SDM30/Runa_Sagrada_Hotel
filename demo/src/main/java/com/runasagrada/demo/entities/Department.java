@@ -1,5 +1,7 @@
 package com.runasagrada.demo.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +24,9 @@ public class Department {
     @Column(name = "name", length = 60, nullable = false)
     private String name;
 
-    public Department() {}
-}
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    private List<StaffMember> staffMembers;
 
+    public Department() {
+    }
+}

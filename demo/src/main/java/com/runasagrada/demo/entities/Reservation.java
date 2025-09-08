@@ -51,6 +51,9 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY)
     private List<Payment> payments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY)
+    private List<ReservationService> services = new ArrayList<>();
+
     public enum Status {
         PENDING,
         CONFIRMED,

@@ -1,5 +1,7 @@
 package com.runasagrada.demo.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +20,9 @@ public class Role {
     @Column(name = "name", length = 20, unique = true, nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<StaffMember> users;
+
     public Role() {
     }
 }
-

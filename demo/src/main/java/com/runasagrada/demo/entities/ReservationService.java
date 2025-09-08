@@ -3,8 +3,12 @@ package com.runasagrada.demo.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -39,8 +43,20 @@ public class ReservationService {
     @Column(name = "status", length = 15)
     private Status status;
 
-    public enum Status { ORDERED, DELIVERED, CANCELED }
+    // @ToString.Exclude
+    // @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationService", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServiceRating> ratings = new ArrayList<>();
 
-    public ReservationService() {}
+    // @ToString.Exclude
+    // @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationService", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
+
+    public enum Status {
+        ORDERED, DELIVERED, CANCELED
+    }
+
+    public ReservationService() {
+    }
 }
-
