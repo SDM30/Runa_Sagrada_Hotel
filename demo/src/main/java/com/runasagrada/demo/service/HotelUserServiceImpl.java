@@ -55,8 +55,10 @@ public class HotelUserServiceImpl implements HotelUserService {
             if (updatedUser.getProfileIcon() != null)
                 user.setProfileIcon(updatedUser.getProfileIcon());
 
-            if (updatedUser.getPassword() != null)
+            // Only update password if it is not null and not blank
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isBlank()) {
                 user.setPassword(updatedUser.getPassword());
+            }
 
             userRepository.save(user);
         } catch (Exception ex) {

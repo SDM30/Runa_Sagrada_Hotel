@@ -2,3 +2,7 @@
 org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "BASE_PRICE NUMERIC(12, 2)": "1000000000000000.00 (18)"
 Value too long for column "BASE_PRICE NUMERIC(12, 2)": "1000000000000000.00 (18)"; SQL statement:
 insert into room_type (amenities,base_price,description,max_occupancy,name,id) values (?,?,?,?,?,default) [22001-232]
+2025-09-08 17:12:55.475174-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM ROOM WHERE ID=90[*]HOTEL_USER"
+Syntax error in SQL statement "SELECT * FROM ROOM WHERE ID=90[*]HOTEL_USER"; SQL statement:
+SELECT * FROM ROOM WHERE ID=90HOTEL_USER [42000-232]
