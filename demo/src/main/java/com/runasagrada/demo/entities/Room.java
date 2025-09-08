@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Room {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hotel_id", nullable = false)
-    @JsonBackReference("hotel-rooms") // avoid serialization recursion (rooms dont load)
+    @JsonBackReference("hotel-rooms")
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -75,6 +76,12 @@ public class Room {
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Reservation> reservations = new ArrayList<>();
+
+    // Expose hotelId for JSON while keeping hotel back-reference hidden
+    @JsonProperty("hotelId")
+    public Long getHotelId() {
+        return hotel != null ? hotel.getId() : null;
+    }
 
     public Room() {
     }

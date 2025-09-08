@@ -884,7 +884,7 @@
           const tr = document.createElement("tr");
           tr.innerHTML = `
         <td><strong>#${r.id}</strong></td>
-        <td>${r.hotel?.id ?? ""}</td>
+        <td>${r.hotelId ?? ""}</td>
         <td>${rtName}</td>
         <td>${r.roomNumber ?? ""}</td>
         <td>${r.floorNumber ?? ""}</td>
@@ -945,7 +945,7 @@
           const res = await fetch(ROOMS_GET_URL(id));
           const r = await res.json();
           qs("roomEditId").value = r.id;
-          qs("hotelIdEdit").value = r.hotel?.id ?? "";
+          qs("hotelIdEdit").value = r.hotelId ?? "";
           qs("roomTypeIdEdit").value = r.roomType?.id ?? r.roomTypeId ?? "";
           qs("roomNumberEdit").value = r.roomNumber ?? "";
           qs("floorNumberEdit").value = r.floorNumber ?? "";
