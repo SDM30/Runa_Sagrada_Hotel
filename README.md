@@ -1,6 +1,6 @@
-# 🌟 Runa Sagrada – Donde Colombia Te Abraza
+# 🌟 Hotel Runa Sagrada – Donde Colombia Te Abraza
 
-![Runa Sagrada Banner](logo_img)
+![Runa Sagrada Logo](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/logito.png)
 
 > *"Más que un hotel, un portal a la magia de Colombia"*
 
@@ -37,6 +37,7 @@ Nuestro sistema aprende tus preferencias y te sugiere desde el mejor lugar para 
 ## 🛏️ Nuestros 5 Hoteles Sagrados
 
 ### 🏖️ **HOTEL COLONIAL CARTAGENA – La Joya del Caribe**
+![Hotel Colonial Cartagena](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/hotels/cartagena.jpg)
 *"Donde el tiempo se detiene entre murallas coloniales"*
 
 **🎨 Vive la magia de:**
@@ -54,6 +55,7 @@ Nuestro sistema aprende tus preferencias y te sugiere desde el mejor lugar para 
 ---
 
 ### ☕ **HOTEL CAFETERO QUINDÍO – El Alma Paisa**
+![Hotel Cafetero Quindío](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/hotels/ejecafe.webp)
 *"Donde cada amanecer huele a café recién molido"*
 
 **🌿 Vive la magia de:**
@@ -71,6 +73,7 @@ Nuestro sistema aprende tus preferencias y te sugiere desde el mejor lugar para 
 ---
 
 ### 🏝️ **HOTEL ISLA SAN ANDRÉS – Paraíso Raizal**
+![Hotel Isla San Andrés](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/hotels/sanandres.webp)
 *"Donde el mar de siete colores abraza tu alma"*
 
 **🐠 Vive la magia de:**
@@ -88,6 +91,7 @@ Nuestro sistema aprende tus preferencias y te sugiere desde el mejor lugar para 
 ---
 
 ### 🏔️ **HOTEL SIERRA SANTA MARTA – Portal Ancestral**
+![Hotel Sierra Santa Marta](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/hotels/santamarta.jpg)
 *"Donde la montaña más alta del mundo besa el mar"*
 
 **🦅 Vive la magia de:**
@@ -105,6 +109,7 @@ Nuestro sistema aprende tus preferencias y te sugiere desde el mejor lugar para 
 ---
 
 ### 🏺 **HOTEL VILLA DE LEYVA – Ventana al Pasado**
+![Hotel Villa de Leyva](https://raw.githubusercontent.com/SDM30/Runa_Sagrada_Hotel/main/demo/src/main/resources/static/images/hotels/villaleiva.jpg)
 *"Donde cada piedra cuenta una historia de siglos"*
 
 **⭐ Vive la magia de:**
