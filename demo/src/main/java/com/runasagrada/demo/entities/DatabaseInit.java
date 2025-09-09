@@ -179,21 +179,21 @@ public class DatabaseInit implements ApplicationRunner {
 		List<Hotel> hotels = new ArrayList<>();
 		if (hotelRepository.count() == 0L) {
 			String[] names = {
-				"Hotel Colonial Cartagena",
-				"Hotel Cafetero Quindío",
-				"Hotel Isla San Andrés",
-				"Hotel Sierra Santa Marta",
-				"Hotel Villa de Leyva"
+					"Hotel Colonial Cartagena",
+					"Hotel Cafetero Quindío",
+					"Hotel Isla San Andrés",
+					"Hotel Sierra Santa Marta",
+					"Hotel Villa de Leyva"
 			};
 			String[] descs = {
-				"Alojamiento boutique en el corazón de la ciudad amurallada.",
-				"Hospedaje con encanto cafetero y vistas a cafetales.",
-				"Hotel frente al mar con el mar de siete colores.",
-				"Refugio entre la Sierra Nevada y el Parque Tayrona.",
-				"Encanto colonial cerca de plazas y museos."
+					"Alojamiento boutique en el corazón de la ciudad amurallada.",
+					"Hospedaje con encanto cafetero y vistas a cafetales.",
+					"Hotel frente al mar con el mar de siete colores.",
+					"Refugio entre la Sierra Nevada y el Parque Tayrona.",
+					"Encanto colonial cerca de plazas y museos."
 			};
-			String[] lats = {"10.4236", "4.5339", "12.5847", "11.2408", "5.6333"};
-			String[] lngs = {"-75.5490", "-75.6811", "-81.7005", "-74.1990", "-73.5333"};
+			String[] lats = { "10.4236", "4.5339", "12.5847", "11.2408", "5.6333" };
+			String[] lngs = { "-75.5490", "-75.6811", "-81.7005", "-74.1990", "-73.5333" };
 
 			for (int i = 0; i < 5; i++) {
 				Hotel h = new Hotel();
@@ -786,6 +786,19 @@ public class DatabaseInit implements ApplicationRunner {
 				65000, 240,
 				List.of(ImageUrls.VINO),
 				15, 10.3910, -75.4794));
+
+		// === Asignar todos los servicios al Hotel con ID = 1 ===
+		Hotel hotel1 = hotelRepository.findById(1L).orElse(null);
+		if (hotel1 == null && !hotels.isEmpty()) {
+			hotel1 = hotels.get(0);
+		}
+		if (hotel1 != null) {
+			List<ServiceOffering> allServices = serviceRepository.findAll();
+			for (ServiceOffering s : allServices) {
+				s.setHotel(hotel1);
+			}
+			serviceRepository.saveAll(allServices);
+		}
 
 		// === Schedules por servicio: usar scheduleService con un ServiceSchedule base
 		// ===
