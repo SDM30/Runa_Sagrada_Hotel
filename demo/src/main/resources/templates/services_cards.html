@@ -84,25 +84,42 @@
         </div>
       </header>
 
-      <!--===== BANNER =====-->
-      <section
-        id="services"
-        class="services-section py-5"
-        aria-labelledby="services-heading"
-      >
-        <div class="container">
-          <header class="text-center mb-5 services-title-banner">
-            <h1 id="servicios-heading" class="display-5 fw-semibold mb-3">
-              Servicios
-            </h1>
-            <p class="lead">
-              Explora nuestros servicios y descubre todo lo que tenemos para
-              ofrecerte.
-            </p>
-          </header>
-        </div>
-      </section>
+<!--===== SERVICES BANNER =====-->
+<section
+  id="services"
+  class="services-section position-relative min-vh-100 overflow-hidden"
+  role="banner"
+  aria-label="Sección de servicios con efecto parallax"
+>
+  <div class="parallax-bg">
+    <!-- Fondo de imagen -->
+    <div
+      class="layer servicios-bg"
+      data-depth="0.15"
+      data-ydir="1"
+      aria-hidden="true"
+      style="position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:0;"
+    ></div>
+    <!-- Overlay negro -->
+    <div style="position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:1;pointer-events:none;"></div>
+    <!-- Contenido -->
+    <div
+      class="services-title layer d-flex flex-column justify-content-center align-items-center text-center"
+      data-depth="0.5"
+      data-ydir="1"
+      style="position:relative;z-index:2;height:100vh;"
+    >
+      <h1 id="services-heading" class="display-1 fw-bold text-white mb-4">
+        Servicios
+      </h1>
+      <p class="lead text-light">
+        Explora nuestros servicios y descubre todo lo que tenemos para ofrecerte.
+      </p>
     </div>
+  </div>
+</section>
+
+
 
     <main id="main-content-cards">
       <!--===== SERVICE CATEGORIES =====-->

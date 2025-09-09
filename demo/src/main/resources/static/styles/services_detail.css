@@ -1,125 +1,178 @@
-/* CATEGORY CARDS STYLES */
-.category-card {
-  background: linear-gradient(135deg, #2a5e79 0%, #fc9419 100%);
-  border-radius: 20px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border: none;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  text-align: center;
+/* ===== VARIABLES ===== */
+:root {
+  --font-display: "Walter Turncoat", cursive;
+  --font-body: "Poppins", sans-serif;
+  --color-bg: #1b0e0a;          /* chocolate muy oscuro */
+  --color-primary: #ffb347;     /* dorado cálido */
+  --color-primary-hover: #ffa500;
+  --color-secondary: #d2691e;   /* tono cacao */
+  --color-secondary-dark: #a0522d;
+  --color-light: #f5f5f5;
+  --color-muted: #b8b8b8;
+  --color-footer: #140a06;
+  --radius-lg: 1rem;
+  --radius-xl: 2rem;
+  --shadow-md: 0 6px 15px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
-.category-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-}
-
-.category-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  gap: 1.5rem;
-}
-
-.category-header {
-  text-align: center;
-}
-
-.category-title {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.category-description {
+/* ===== GENERAL ===== */
+body {
+  background: var(--color-bg);
+  color: var(--color-light);
+  font-family: var(--font-body);
+  line-height: 1.7;
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0;
-  line-height: 1.6;
-  text-align: center;
 }
 
-.category-action {
-  text-align: center;
-}
-
-.btn-category {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: all 0.3s ease;
+a {
+  color: var(--color-primary);
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+a:hover {
+  color: var(--color-primary-hover);
 }
 
-.btn-category:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  color: white;
+/* ===== NAVBAR ===== */
+.nav-glass {
+  background: rgba(26, 14, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 179, 71, 0.25);
+  box-shadow: var(--shadow-md);
+}
+.navbar-brand img {
+  height: 70px; /* logo más grande */
+  transition: transform 0.3s ease;
+}
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+.navbar-brand span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+}
+.nav-link {
+  font-weight: 500;
+  color: var(--color-light) !important;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--color-primary) !important;
   transform: translateY(-2px);
 }
 
-/* Specific card backgrounds */
-.comodidades-card {
-  background: linear-gradient(135deg, #fc9419 0%, #e67e22 100%);
+/* ===== TITULOS ===== */
+h1, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-primary);
+}
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+.lead {
+  font-size: 1.2rem;
+  color: #e0d7d3;
 }
 
-.gastronomia-card {
-  background: linear-gradient(135deg, #2a5e79 0%, #1a4b66 100%);
+/* ===== BOTONES ===== */
+.btn-gradient {
+  background: linear-gradient(45deg, var(--color-secondary), var(--color-secondary-dark));
+  border: none;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+}
+.btn-gradient:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-lg);
 }
 
-.tours-card {
-  background: linear-gradient(135deg, #df3609 0%, #c2310a 100%);
+/* ===== CAROUSEL ===== */
+#serviceCarousel img {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .category-card {
-    padding: 1.5rem;
-    height: 280px;
-  }
-
-  .category-title {
-    font-size: 1.8rem;
-  }
-
-  .category-description {
-    font-size: 0.9rem;
-  }
-
-  .btn-category {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-}
-
 @media (max-width: 576px) {
-  .category-card {
-    height: 250px;
-    padding: 1.2rem;
-  }
+  #serviceCarousel .carousel-item { height: 30vh; }
+}
+@media (min-width: 577px) and (max-width: 992px) {
+  #serviceCarousel .carousel-item { height: 45vh; }
+}
 
-  .category-title {
-    font-size: 1.6rem;
-    margin-bottom: 0.8rem;
-  }
+/* ===== TARJETAS DETALLE ===== */
+.info-card {
+  border: 1px solid rgba(255, 179, 71, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  background: #2a1812;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  color: var(--color-light);
+}
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
 
-  .category-description {
-    font-size: 0.85rem;
-  }
+/* ===== DIVIDER ===== */
+.ticker-wrap {
+  background: linear-gradient(90deg, var(--color-secondary-dark), var(--color-secondary));
+  padding: 12px 0;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+/* ===== FOOTER ===== */
+.footer-section {
+  background: var(--color-footer);
+  color: #d3c6c0;
+  padding: 3rem 0 1.5rem;
+}
+.footer-title {
+  font-size: 1.6rem;
+  color: var(--color-primary);
+  margin-top: 0.8rem;
+  font-family: var(--font-display);
+}
+.footer-heading {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.footer-links li {
+  list-style: none;
+  margin-bottom: 0.6rem;
+}
+.footer-links a {
+  color: #d3c6c0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover { color: #fff; }
+.footer-logo { 
+  height: 80px; /* más grande */
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255, 179, 71, 0.3);
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+.heart { 
+  color: #ff4d4d; 
+  font-size: 1.1rem;
 }

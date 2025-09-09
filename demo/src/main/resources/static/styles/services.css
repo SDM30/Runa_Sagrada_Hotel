@@ -228,3 +228,17 @@
     height: 45vh;
   }
 }
+
+.parallax-bg {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.servicios-bg {
+  background-image: url('/images/servicios-bg.jpg'); 
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+}
